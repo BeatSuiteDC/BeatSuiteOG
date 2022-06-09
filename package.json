@@ -1,7 +1,7 @@
 {
-  "name": "signal",
+  "name": "beatsuite",
   "version": "0.0.1",
-  "description": "A friendly music sequencer application for OS X and Windows.",
+  "description": "suite of music applications",
   "scripts": {
     "start": "webpack serve --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryohey/signal.git"
+    "url": "git+https://github.com/sandymandy12/beatsuite.git"
   },
-  "author": "ryohey",
+  "author": "dcat",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ryohey/signal/issues"
+    "url": "https://github.com/sandymandy12/beatsuite/issues"
   },
-  "homepage": "https://github.com/ryohey/signal/",
+  "homepage": "https://github.com/sandymandy12/beatsuite/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
