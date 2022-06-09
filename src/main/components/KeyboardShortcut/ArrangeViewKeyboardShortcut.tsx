@@ -10,7 +10,7 @@ import { KeyboardShortcut } from "./KeyboardShortcut"
 
 const SCROLL_DELTA = 24
 
-export const ArrangeViewKeyboardShortcut: FC = () => {
+export const ArrangeViewKeyboardShortcut: FC<React.PropsWithChildren<unknown>> = () => {
   const rootStore = useStores()
 
   return (

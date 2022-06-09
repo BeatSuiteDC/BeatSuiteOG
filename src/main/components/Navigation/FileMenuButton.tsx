@@ -12,9 +12,9 @@ import { Tab } from "./Navigation"
 
 const fileInputID = "OpenButtonInputFile"
 
-const FileInput: FC<{
+const FileInput: FC<React.PropsWithChildren<{
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
-}> = ({ onChange, children }) => (
+}>> = ({ onChange, children }) => (
   <>
     <input
       accept="audio/midi"
@@ -100,7 +100,7 @@ const StyledMenu = styled(Menu)`
   }
 `
 
-export const FileMenuButton: FC = observer(() => {
+export const FileMenuButton: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const rootStore = useStores()
   const { rootViewStore, exportStore } = rootStore
   const theme = useTheme()

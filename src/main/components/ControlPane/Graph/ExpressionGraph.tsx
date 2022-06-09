@@ -7,7 +7,7 @@ import LineGraphControl from "../LineGraph/LineGraph"
 
 export type ExpressionGraphProps = ISize
 
-const ExpressionGraph: FC<ExpressionGraphProps> = observer(
+const ExpressionGraph: FC<React.PropsWithChildren<ExpressionGraphProps>> = observer(
   ({ width, height }) => {
     const rootStore = useStores()
     const events = rootStore.pianoRollStore.expressionEvents

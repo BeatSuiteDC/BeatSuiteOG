@@ -35,7 +35,7 @@ export interface GraphAxisProps {
   onClick: (value: number) => void
 }
 
-export const GraphAxis: FC<GraphAxisProps> = React.memo(
+export const GraphAxis: FC<React.PropsWithChildren<GraphAxisProps>> = React.memo(
   ({ values, valueFormatter = (v: number) => v.toString(), onClick }) => {
     return (
       <Parent>

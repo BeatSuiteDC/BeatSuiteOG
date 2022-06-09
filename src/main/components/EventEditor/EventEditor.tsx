@@ -11,7 +11,7 @@ import { localized } from "../../../common/localize/localizedString"
 import { useStores } from "../../hooks/useStores"
 import EventList from "./EventList"
 
-export const EventEditor: FC = observer(() => {
+export const EventEditor: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { rootViewStore } = useStores()
   const rootStore = useStores()
   const isOpen = rootViewStore.openEventEditor

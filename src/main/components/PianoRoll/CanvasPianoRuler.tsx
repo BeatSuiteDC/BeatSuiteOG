@@ -171,7 +171,7 @@ interface TimeSignatureDialogState {
 
 const TIME_SIGNATURE_HIT_WIDTH = 20
 
-const PianoRuler: FC<PianoRulerProps> = observer(({ rulerStore, style }) => {
+const PianoRuler: FC<React.PropsWithChildren<PianoRulerProps>> = observer(({ rulerStore, style }) => {
   const rootStore = useStores()
   const theme = useTheme()
   const { onContextMenu, menuProps } = useContextMenu()

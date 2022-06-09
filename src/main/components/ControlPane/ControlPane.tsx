@@ -63,7 +63,7 @@ const Toolbar = styled.div`
   height: 30px;
 `
 
-const TabBar: FC<TabBarProps> = React.memo(({ onClick, selectedMode }) => {
+const TabBar: FC<React.PropsWithChildren<TabBarProps>> = React.memo(({ onClick, selectedMode }) => {
   const controlButton = (label: string, name: ControlMode): ButtonItem => ({
     label,
     selected: selectedMode === name,
@@ -117,7 +117,7 @@ const Parent = styled.div`
 const TAB_HEIGHT = 30
 const BORDER_WIDTH = 1
 
-const ControlPane: FC = observer(() => {
+const ControlPane: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const ref = useRef(null)
   const containerSize = useComponentSize(ref)
   const rootStore = useStores()

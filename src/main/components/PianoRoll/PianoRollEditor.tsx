@@ -21,7 +21,7 @@ const RowContainer = styled.div`
   flex-basis: 0;
 `
 
-export const PianoRollEditor: FC = observer(() => {
+export const PianoRollEditor: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { rootViewStore } = useStores()
   const open = rootViewStore.openTrackListDrawer
 

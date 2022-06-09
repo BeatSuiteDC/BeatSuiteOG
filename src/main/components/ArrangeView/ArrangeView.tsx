@@ -85,7 +85,7 @@ type DragHandler = (
   mouseUp: (handler: (e: MouseEvent) => void) => void
 ) => void
 
-export const ArrangeView: FC = observer(() => {
+export const ArrangeView: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const rootStore = useStores()
 
   const tracks = rootStore.song.tracks
@@ -338,7 +338,7 @@ export const ArrangeView: FC = observer(() => {
         <div
           ref={ref}
           onMouseDown={onMouseDown}
-          onContextMenu={useCallback((e) => e.preventDefault(), [])}
+          onContextMenu={useCallback((e: any) => e.preventDefault(), [])}
           onWheel={onWheel}
           style={{
             display: "flex",
@@ -406,5 +406,5 @@ export const ArrangeView: FC = observer(() => {
       <ArrangeContextMenu {...menuProps} />
       <ArrangeTrackContextMenu {...trackMenuProps} />
     </Wrapper>
-  )
+  );
 })

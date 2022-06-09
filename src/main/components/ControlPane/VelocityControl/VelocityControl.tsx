@@ -16,7 +16,7 @@ const Parent = styled.div`
   left: 0;
 `
 
-const PianoVelocityControl: FC<PianoVelocityControlProps> = observer(
+const PianoVelocityControl: FC<React.PropsWithChildren<PianoVelocityControlProps>> = observer(
   ({ width, height }: PianoVelocityControlProps) => {
     return (
       <Parent>

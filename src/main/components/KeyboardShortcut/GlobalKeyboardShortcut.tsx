@@ -14,7 +14,7 @@ import { redo, undo } from "../../actions/history"
 import { useStores } from "../../hooks/useStores"
 import { KeyboardShortcut } from "./KeyboardShortcut"
 
-export const GlobalKeyboardShortcut: FC = () => {
+export const GlobalKeyboardShortcut: FC<React.PropsWithChildren<unknown>> = () => {
   const rootStore = useStores()
 
   useEffect(() => {

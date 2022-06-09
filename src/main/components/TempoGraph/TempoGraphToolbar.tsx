@@ -18,7 +18,7 @@ const FlexibleSpacer = styled.div`
   flex-grow: 1;
 `
 
-export const TempoGraphToolbar: FC = observer(() => {
+export const TempoGraphToolbar: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { tempoEditorStore } = useStores()
   const { autoScroll, quantize, isQuantizeEnabled, mouseMode } =
     tempoEditorStore
@@ -41,7 +41,7 @@ export const TempoGraphToolbar: FC = observer(() => {
       <ToolSelector
         mouseMode={mouseMode}
         onSelect={useCallback(
-          (mouseMode) => (tempoEditorStore.mouseMode = mouseMode),
+          (mouseMode: any) => (tempoEditorStore.mouseMode = mouseMode),
           []
         )}
       />
@@ -58,5 +58,5 @@ export const TempoGraphToolbar: FC = observer(() => {
         selected={autoScroll}
       />
     </Toolbar>
-  )
+  );
 })

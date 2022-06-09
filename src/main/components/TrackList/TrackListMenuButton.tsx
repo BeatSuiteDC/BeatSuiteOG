@@ -24,7 +24,7 @@ const ArrowIcon = styled(ArrowLeft)<{ isOpen: boolean }>`
   transform: scale(1.5) rotateZ(${({ isOpen }) => (isOpen ? "0deg" : "-90deg")});
 `
 
-export const TrackListMenuButton: FC = observer(() => {
+export const TrackListMenuButton: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { rootViewStore } = useStores()
   const open = rootViewStore.openTrackListDrawer
   const onClickNavBack = useCallback(

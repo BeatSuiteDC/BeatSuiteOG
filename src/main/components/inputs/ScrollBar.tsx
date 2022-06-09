@@ -290,7 +290,7 @@ function getPoint(e: MouseEvent | React.MouseEvent): IPoint {
 type VerticalScrollBar_Props = Omit<ScrollBarProps, "isVertical" | "barLength">
 type HorizontalScrollBar_Props = VerticalScrollBar_Props
 
-const VerticalScrollBar_: FC<VerticalScrollBar_Props> = (props) => {
+const VerticalScrollBar_: FC<React.PropsWithChildren<VerticalScrollBar_Props>> = (props) => {
   const ref = useRef<HTMLDivElement>(null)
   const size = useComponentSize(ref)
   return (
@@ -298,7 +298,7 @@ const VerticalScrollBar_: FC<VerticalScrollBar_Props> = (props) => {
   )
 }
 
-const HorizontalScrollBar_: FC<HorizontalScrollBar_Props> = (props) => {
+const HorizontalScrollBar_: FC<React.PropsWithChildren<HorizontalScrollBar_Props>> = (props) => {
   const ref = useRef<HTMLDivElement>(null)
   const size = useComponentSize(ref)
   return (

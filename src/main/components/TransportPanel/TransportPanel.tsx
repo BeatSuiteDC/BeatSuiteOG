@@ -123,7 +123,7 @@ const TempoWrapper = styled.div`
   }
 `
 
-const TempoForm: FC = observer(() => {
+const TempoForm: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const rootStore = useStores()
   const tempo = rootStore.pianoRollStore.currentTempo ?? DEFAULT_TEMPO
 
@@ -169,7 +169,7 @@ const TimestampText = styled.div`
   color: ${({ theme }) => theme.secondaryTextColor};
 `
 
-const Timestamp: FC = observer(() => {
+const Timestamp: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { pianoRollStore } = useStores()
   const mbtTime = pianoRollStore.currentMBTTime
   return <TimestampText>{mbtTime}</TimestampText>
@@ -187,7 +187,7 @@ export const Right = styled.div`
   right: 1em;
 `
 
-export const TransportPanel: FC = observer(() => {
+export const TransportPanel: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const rootStore = useStores()
   const {
     services: { player },

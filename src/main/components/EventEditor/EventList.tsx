@@ -15,7 +15,7 @@ const Container = styled.div`
   height: 100%;
 `
 
-const EventList: FC = observer(() => {
+const EventList: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const rootStore = useStores()
 
   const events = [...(rootStore.song.selectedTrack?.events ?? [])]
@@ -130,7 +130,7 @@ const DisabledInputCell: VFC<{ style?: React.CSSProperties }> = ({ style }) => (
   </Cell>
 )
 
-const InputCell: FC<InputCellProps> = ({ value, type, style, onChange }) => {
+const InputCell: FC<React.PropsWithChildren<InputCellProps>> = ({ value, type, style, onChange }) => {
   const [isFocus, setFocus] = useState(false)
   const [inputValue, setInputValue] = useState("")
 
@@ -216,7 +216,7 @@ const equalEventRowProps = (a: EventRowProps, b: EventRowProps) =>
   isEqual(a.style, b.style) &&
   a.onClick === b.onClick
 
-const EventRow: FC<EventRowProps> = React.memo(
+const EventRow: FC<React.PropsWithChildren<EventRowProps>> = React.memo(
   ({ item, isSelected, style, onClick }) => {
     const rootStore = useStores()
 

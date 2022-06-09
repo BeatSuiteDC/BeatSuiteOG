@@ -7,7 +7,7 @@ import LineGraphControl from "../LineGraph/LineGraph"
 
 export type HoldPedalGraphProps = ISize
 
-const HoldPedalGraph: FC<HoldPedalGraphProps> = observer(
+const HoldPedalGraph: FC<React.PropsWithChildren<HoldPedalGraphProps>> = observer(
   ({ width, height }) => {
     const rootStore = useStores()
     const events = rootStore.pianoRollStore.sustainEvents

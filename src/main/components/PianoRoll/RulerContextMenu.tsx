@@ -16,7 +16,7 @@ export interface RulerContextMenuProps extends ContextMenuProps {
   tick: number
 }
 
-export const RulerContextMenu: FC<RulerContextMenuProps> = React.memo(
+export const RulerContextMenu: FC<React.PropsWithChildren<RulerContextMenuProps>> = React.memo(
   ({ rulerStore, tick, ...props }) => {
     const { handleClose } = props
     const rootStore = useStores()

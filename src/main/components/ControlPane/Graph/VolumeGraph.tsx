@@ -7,7 +7,7 @@ import LineGraphControl from "../LineGraph/LineGraph"
 
 export type VolumeGraphProps = ISize
 
-const VolumeGraph: FC<VolumeGraphProps> = observer(({ width, height }) => {
+const VolumeGraph: FC<React.PropsWithChildren<VolumeGraphProps>> = observer(({ width, height }) => {
   const rootStore = useStores()
   const events = rootStore.pianoRollStore.volumeEvents
 

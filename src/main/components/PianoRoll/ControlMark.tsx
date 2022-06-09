@@ -42,7 +42,7 @@ const Container = styled.div`
   }
 `
 
-export const ControlMark: FC<ControlMarkProps> = ({
+export const ControlMark: FC<React.PropsWithChildren<ControlMarkProps>> = ({
   group,
   pixelsPerTick,
   onDoubleClick,

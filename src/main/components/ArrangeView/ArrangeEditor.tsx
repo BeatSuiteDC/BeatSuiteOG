@@ -12,7 +12,7 @@ const Container = styled.div`
   position: relative;
 `
 
-export const ArrangeEditor: FC = () => {
+export const ArrangeEditor: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Container>
       <ArrangeViewKeyboardShortcut />

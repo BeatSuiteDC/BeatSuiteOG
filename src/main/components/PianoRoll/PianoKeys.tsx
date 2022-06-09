@@ -148,7 +148,7 @@ export interface PianoKeysProps {
   keyHeight: number
 }
 
-const PianoKeys: FC<PianoKeysProps> = ({ numberOfKeys, keyHeight }) => {
+const PianoKeys: FC<React.PropsWithChildren<PianoKeysProps>> = ({ numberOfKeys, keyHeight }) => {
   const theme = useTheme()
   const rootStore = useStores()
   const width = Layout.keyWidth

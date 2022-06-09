@@ -19,7 +19,7 @@ const List = styled.div`
   min-width: 14rem;
 `
 
-export const TrackList: FC = observer(() => {
+export const TrackList: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const rootStore = useStores()
 
   const onClickAddTrack = useCallback(() => addTrack(rootStore)(), [])

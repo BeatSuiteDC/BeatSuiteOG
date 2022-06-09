@@ -10,7 +10,7 @@ const InstrumentIcon = styled(PianoIcon)`
   margin-right: 0.5rem;
 `
 
-export const InstrumentButton: FC = observer(() => {
+export const InstrumentButton: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const rootStore = useStores()
 
   const instrumentName =

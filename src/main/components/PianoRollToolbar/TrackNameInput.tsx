@@ -28,7 +28,7 @@ const Input = styled.input`
   outline: none;
 `
 
-export const TrackNameInput: FC = observer(() => {
+export const TrackNameInput: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const rootStore = useStores()
   const trackName = rootStore.song.selectedTrack?.displayName ?? ""
 

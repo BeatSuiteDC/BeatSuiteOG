@@ -29,7 +29,7 @@ export interface PanSliderProps {
 
 const PAN_CENTER = 64
 
-const _PanSlider: FC<PanSliderProps> = observer(({ trackId }) => {
+const _PanSlider: FC<React.PropsWithChildren<PanSliderProps>> = observer(({ trackId }) => {
   const rootStore = useStores()
   const onChange = useCallback(
     (value: number) => setTrackPan(rootStore)(trackId, value),

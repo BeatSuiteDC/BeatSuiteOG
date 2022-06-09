@@ -94,7 +94,7 @@ const StyledSplitPane = styled(SplitPane)`
   }
 `
 
-const PianoRollWrapper: FC = observer(() => {
+const PianoRollWrapper: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const rootStore = useStores()
 
   const s = rootStore.pianoRollStore
@@ -168,7 +168,7 @@ const PianoRollWrapper: FC = observer(() => {
           <VerticalScaleScrollBar
             scrollOffset={scrollTop}
             contentLength={contentHeight}
-            onScroll={useCallback((v) => s.setScrollTopInPixels(v), [s])}
+            onScroll={useCallback((v: any) => s.setScrollTopInPixels(v), [s])}
             onClickScaleUp={onClickScaleUpVertical}
             onClickScaleDown={onClickScaleDownVertical}
             onClickScaleReset={onClickScaleResetVertical}
@@ -181,13 +181,13 @@ const PianoRollWrapper: FC = observer(() => {
       <HorizontalScaleScrollBar
         scrollOffset={scrollLeft}
         contentLength={contentWidth}
-        onScroll={useCallback((v) => s.setScrollLeftInPixels(v), [s])}
+        onScroll={useCallback((v: any) => s.setScrollLeftInPixels(v), [s])}
         onClickScaleUp={onClickScaleUpHorizontal}
         onClickScaleDown={onClickScaleDownHorizontal}
         onClickScaleReset={onClickScaleResetHorizontal}
       />
     </Parent>
-  )
+  );
 })
 
 export default observer(() => {

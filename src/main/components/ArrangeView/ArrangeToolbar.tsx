@@ -21,7 +21,7 @@ const FlexibleSpacer = styled.div`
   flex-grow: 1;
 `
 
-export const ArrangeToolbar: FC = observer(() => {
+export const ArrangeToolbar: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { arrangeViewStore } = useStores()
   const { quantize, autoScroll } = arrangeViewStore
 

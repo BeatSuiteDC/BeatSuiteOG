@@ -5,7 +5,7 @@ import { localized } from "../../../common/localize/localizedString"
 import { useStores } from "../../hooks/useStores"
 import { ToolbarButton } from "../Toolbar/ToolbarButton"
 
-export const EventListButton: FC = () => {
+export const EventListButton: FC<React.PropsWithChildren<unknown>> = () => {
   const { pianoRollStore } = useStores()
 
   return (

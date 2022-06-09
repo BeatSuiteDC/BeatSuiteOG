@@ -29,9 +29,7 @@ const _ToolbarButton = styled.button<{ selected?: boolean }>`
   }
 `
 
-export const ToolbarButton: FC<
-  Omit<ComponentProps<typeof _ToolbarButton>, "tabIndex">
-> = ({ children, ...props }) => (
+export const ToolbarButton: FC<React.PropsWithChildren<Omit<ComponentProps<typeof _ToolbarButton>, "tabIndex">>> = ({ children, ...props }) => (
   <_ToolbarButton
     {...props}
     onMouseDown={(e) => e.preventDefault()}

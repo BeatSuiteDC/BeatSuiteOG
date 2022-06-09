@@ -15,7 +15,7 @@ import { pianoNotesKeyboardShortcutActions } from "./pianoNotesKeyboardShortcutA
 
 const SCROLL_DELTA = 24
 
-export const PianoRollKeyboardShortcut: FC = observer(() => {
+export const PianoRollKeyboardShortcut: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const rootStore = useStores()
 
   // Handle pasting here to allow pasting even when the element does not have focus, such as after clicking the ruler

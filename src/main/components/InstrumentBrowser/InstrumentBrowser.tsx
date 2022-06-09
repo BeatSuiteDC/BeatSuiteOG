@@ -93,7 +93,7 @@ const Option = styled.option`
   }
 `
 
-const InstrumentBrowser: FC<InstrumentBrowserProps> = ({
+const InstrumentBrowser: FC<React.PropsWithChildren<InstrumentBrowserProps>> = ({
   onClickCancel,
   onClickOK,
   isOpen,
@@ -192,7 +192,7 @@ const InstrumentBrowser: FC<InstrumentBrowserProps> = ({
   )
 }
 
-const InstrumentBrowserWrapper: FC = observer(() => {
+const InstrumentBrowserWrapper: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const rootStore = useStores()
 
   const track = rootStore.song.selectedTrack

@@ -11,7 +11,7 @@ const Container = styled.div`
   overflow: hidden;
 `
 
-export const TempoEditor: FC = () => {
+export const TempoEditor: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Container>
       <TempoEditorKeyboardShortcut />

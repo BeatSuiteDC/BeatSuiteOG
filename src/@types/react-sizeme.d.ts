@@ -24,5 +24,5 @@ export class SizeMe extends Component<SizeMeOptions> {}
 export const withSize: (
   options?: SizeMeOptions
 ) => <P extends SizeMeProps>(
-  component: ComponentType<P>
-) => ComponentType<Omit<P, "size">>
+  component: ComponentType<React.PropsWithChildren<P>>
+) => ComponentType<React.PropsWithChildren<Omit<P, "size">>>

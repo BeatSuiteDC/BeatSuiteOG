@@ -73,7 +73,7 @@ const Container = styled.div`
   }
 `
 
-const PianoControlEvents: FC<PianoControlEventsProps> = ({
+const PianoControlEvents: FC<React.PropsWithChildren<PianoControlEventsProps>> = ({
   width,
   events,
   scrollLeft,

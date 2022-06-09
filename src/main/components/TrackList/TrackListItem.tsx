@@ -83,7 +83,7 @@ const ChannelName = styled.div`
   }
 `
 
-export const TrackListItem: FC<TrackListItemProps> = observer(({ trackId }) => {
+export const TrackListItem: FC<React.PropsWithChildren<TrackListItemProps>> = observer(({ trackId }) => {
   const rootStore = useStores()
   const { song, pianoRollStore, rootViewStore, trackMute, router } = rootStore
   const track = song.tracks[trackId]

@@ -8,7 +8,7 @@ import {
   ContextMenuProps,
 } from "../ContextMenu/ContextMenu"
 
-export const ArrangeTrackContextMenu: FC<ContextMenuProps> = (props) => {
+export const ArrangeTrackContextMenu: FC<React.PropsWithChildren<ContextMenuProps>> = (props) => {
   const { handleClose } = props
   const rootStore = useStores()
   const {

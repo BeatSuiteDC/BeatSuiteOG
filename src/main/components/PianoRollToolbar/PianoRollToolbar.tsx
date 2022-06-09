@@ -22,7 +22,7 @@ const FlexibleSpacer = styled.div`
   flex-grow: 1;
 `
 
-export const PianoRollToolbar: FC = observer(() => {
+export const PianoRollToolbar: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { song, pianoRollStore } = useStores()
 
   const { selectedTrack, selectedTrackId } = song

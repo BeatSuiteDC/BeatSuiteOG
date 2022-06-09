@@ -17,7 +17,7 @@ import {
   ContextMenuProps,
 } from "../ContextMenu/ContextMenu"
 
-export const PianoSelectionContextMenu: FC<ContextMenuProps> = React.memo(
+export const PianoSelectionContextMenu: FC<React.PropsWithChildren<ContextMenuProps>> = React.memo(
   (props) => {
     const { handleClose } = props
     const rootStore = useStores()

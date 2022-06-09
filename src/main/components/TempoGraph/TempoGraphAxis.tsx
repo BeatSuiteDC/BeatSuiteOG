@@ -34,7 +34,7 @@ interface TempoGraphAxisProps {
   offset: number
 }
 
-export const TempoGraphAxis: FC<TempoGraphAxisProps> = ({
+export const TempoGraphAxis: FC<React.PropsWithChildren<TempoGraphAxisProps>> = ({
   width,
   transform,
   offset,

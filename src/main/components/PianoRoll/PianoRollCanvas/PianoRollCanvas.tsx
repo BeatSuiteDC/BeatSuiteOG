@@ -21,7 +21,7 @@ import { GhostNotes } from "./GhostNotes"
 import { Lines } from "./Lines"
 import { Notes } from "./Notes"
 
-export const PianoRollCanvas: FC<PianoRollStageProps> = observer(
+export const PianoRollCanvas: FC<React.PropsWithChildren<PianoRollStageProps>> = observer(
   ({ width, height }) => {
     const rootStore = useStores()
     const {

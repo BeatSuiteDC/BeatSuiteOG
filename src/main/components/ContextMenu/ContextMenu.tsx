@@ -21,7 +21,7 @@ export interface ContextMenuProps {
   handleClose: () => void
 }
 
-export const ContextMenu: FC<ContextMenuProps> = ({
+export const ContextMenu: FC<React.PropsWithChildren<ContextMenuProps>> = ({
   isOpen,
   handleClose,
   position,

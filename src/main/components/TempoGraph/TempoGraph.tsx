@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   color: ${({ theme }) => theme.secondaryTextColor};
 `
 
-export const TempoGraph: FC = observer(() => {
+export const TempoGraph: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const rootStore = useStores()
 
   const {

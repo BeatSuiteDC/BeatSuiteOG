@@ -29,7 +29,7 @@ const Column = styled.div`
   flex-direction: column;
 `
 
-const Routes: FC = observer(() => {
+const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { router } = useStores()
   const path = router.path
   return (
@@ -41,7 +41,7 @@ const Routes: FC = observer(() => {
   )
 })
 
-export const RootView: FC = () => (
+export const RootView: FC<React.PropsWithChildren<unknown>> = () => (
   <>
     <Column>
       <Navigation />

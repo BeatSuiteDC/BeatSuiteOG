@@ -33,7 +33,7 @@ const Container = styled.div`
   }
 `
 
-export const NumberPicker: FC<NumberPickerProps> = ({
+export const NumberPicker: FC<React.PropsWithChildren<NumberPickerProps>> = ({
   value,
   prevValue,
   nextValue,

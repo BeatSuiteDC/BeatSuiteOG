@@ -9,7 +9,7 @@ export type TrackListContextMenuProps = ContextMenuProps & {
   onClickProperty: () => void
 }
 
-export const TrackListContextMenu: FC<TrackListContextMenuProps> = ({
+export const TrackListContextMenu: FC<React.PropsWithChildren<TrackListContextMenuProps>> = ({
   onClickAdd,
   onClickDelete,
   onClickProperty,

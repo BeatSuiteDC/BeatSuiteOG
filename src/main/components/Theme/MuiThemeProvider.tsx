@@ -2,7 +2,7 @@ import { createTheme, ThemeProvider } from "@mui/material"
 import { FC } from "react"
 import { useTheme } from "../../hooks/useTheme"
 
-export const MuiThemeProvider: FC = ({ children }) => {
+export const MuiThemeProvider: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const theme = useTheme()
   return (
     <ThemeProvider

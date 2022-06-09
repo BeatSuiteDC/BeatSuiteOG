@@ -12,7 +12,7 @@ import clipboard from "../../services/Clipboard"
 import { isFocusable } from "./isFocusable"
 import { KeyboardShortcut } from "./KeyboardShortcut"
 
-export const TempoEditorKeyboardShortcut: FC = () => {
+export const TempoEditorKeyboardShortcut: FC<React.PropsWithChildren<unknown>> = () => {
   const rootStore = useStores()
 
   return (

@@ -16,7 +16,7 @@ export interface KeyboardShortcutProps {
   onPaste?: (e: ClipboardEvent) => void
 }
 
-export const KeyboardShortcut: FC<KeyboardShortcutProps> = ({
+export const KeyboardShortcut: FC<React.PropsWithChildren<KeyboardShortcutProps>> = ({
   actions,
   onCut,
   onCopy,

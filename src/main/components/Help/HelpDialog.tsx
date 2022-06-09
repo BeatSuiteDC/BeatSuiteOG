@@ -41,7 +41,7 @@ const HotKeyText = styled.div`
   margin-left: 1em;
 `
 
-const HotKey: FC<HotKeyProps> = ({ hotKeys, text }) => {
+const HotKey: FC<React.PropsWithChildren<HotKeyProps>> = ({ hotKeys, text }) => {
   return (
     <HotKeyContainer>
       {hotKeys
@@ -56,7 +56,7 @@ const HotKey: FC<HotKeyProps> = ({ hotKeys, text }) => {
   )
 }
 
-export const HelpDialog: FC = observer(() => {
+export const HelpDialog: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { rootViewStore } = useStores()
   const isOpen = rootViewStore.openHelp
 

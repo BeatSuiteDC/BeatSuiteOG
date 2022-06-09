@@ -30,7 +30,7 @@ type HorizontalScaleScrollBarProps = Omit<
   onClickScaleUp?: () => void
 }
 
-const HorizontalScaleScrollBar_: FC<HorizontalScaleScrollBarProps> = (
+const HorizontalScaleScrollBar_: FC<React.PropsWithChildren<HorizontalScaleScrollBarProps>> = (
   props
 ) => {
   const ref = useRef<HTMLDivElement>(null)
@@ -66,7 +66,7 @@ type VerticalScaleScrollBarProps = Omit<
   onClickScaleUp?: () => void
 }
 
-const VerticalScaleScrollBar_: FC<VerticalScaleScrollBarProps> = (props) => {
+const VerticalScaleScrollBar_: FC<React.PropsWithChildren<VerticalScaleScrollBarProps>> = (props) => {
   const ref = useRef<HTMLDivElement>(null)
   const size = useComponentSize(ref)
 

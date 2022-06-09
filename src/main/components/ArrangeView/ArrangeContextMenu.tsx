@@ -14,7 +14,7 @@ import {
   ContextMenuProps,
 } from "../ContextMenu/ContextMenu"
 
-export const ArrangeContextMenu: FC<ContextMenuProps> = (props) => {
+export const ArrangeContextMenu: FC<React.PropsWithChildren<ContextMenuProps>> = (props) => {
   const { handleClose } = props
   const rootStore = useStores()
   const isNoteSelected = Object.values(

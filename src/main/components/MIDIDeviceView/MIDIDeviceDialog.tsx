@@ -32,7 +32,7 @@ const DeviceRowWrapper = styled.div`
   align-items: center;
 `
 
-const DeviceRow: FC<ListItem> = ({ device, isSelected, onCheck }) => {
+const DeviceRow: FC<React.PropsWithChildren<ListItem>> = ({ device, isSelected, onCheck }) => {
   return (
     <DeviceRowWrapper>
       <Checkbox
@@ -52,7 +52,7 @@ const Spacer = styled.div`
   height: 2rem;
 `
 
-export const MIDIDeviceDialog: FC = observer(() => {
+export const MIDIDeviceDialog: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { midiDeviceStore, rootViewStore } = useStores()
 
   const {

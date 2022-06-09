@@ -7,7 +7,7 @@ import LineGraphControl from "../LineGraph/LineGraph"
 
 export type ModulationGraphProps = ISize
 
-const ModulationGraph: FC<ModulationGraphProps> = observer(
+const ModulationGraph: FC<React.PropsWithChildren<ModulationGraphProps>> = observer(
   ({ width, height }) => {
     const rootStore = useStores()
     const events = rootStore.pianoRollStore.modulationEvents

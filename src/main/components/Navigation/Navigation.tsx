@@ -75,7 +75,7 @@ const Separator = styled.div`
   width: 1px;
 `
 
-export const Navigation: FC = observer(() => {
+export const Navigation: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { rootViewStore, router } = useStores()
 
   return (
