@@ -162,22 +162,22 @@ const PianoRollWrapper: FC<React.PropsWithChildren<unknown>> = observer(() => {
 
   return (
     <Parent ref={ref}>
-      <StyledSplitPane split="horizontal" minSize={50} defaultSize={"60%"}>
-        <Alpha onWheel={onWheel} ref={alphaRef}>
-          <PianoRollStage width={size.width} height={alphaHeight} />
-          <VerticalScaleScrollBar
-            scrollOffset={scrollTop}
-            contentLength={contentHeight}
-            onScroll={useCallback((v: any) => s.setScrollTopInPixels(v), [s])}
-            onClickScaleUp={onClickScaleUpVertical}
-            onClickScaleDown={onClickScaleDownVertical}
-            onClickScaleReset={onClickScaleResetVertical}
-          />
-        </Alpha>
-        <Beta>
-          <ControlPane />
-        </Beta>
-      </StyledSplitPane>
+      <StyledSplitPane split="horizontal" minSize={50} defaultSize={"60%"} />
+      <Alpha onWheel={onWheel} ref={alphaRef}>
+        <PianoRollStage width={size.width} height={alphaHeight} />
+        <VerticalScaleScrollBar
+          scrollOffset={scrollTop}
+          contentLength={contentHeight}
+          onScroll={useCallback((v: any) => s.setScrollTopInPixels(v), [s])}
+          onClickScaleUp={onClickScaleUpVertical}
+          onClickScaleDown={onClickScaleDownVertical}
+          onClickScaleReset={onClickScaleResetVertical}
+        />
+      </Alpha>
+      <Beta>
+        <ControlPane />
+      </Beta>
+      {/* </StyledSplitPane> */}
       <HorizontalScaleScrollBar
         scrollOffset={scrollLeft}
         contentLength={contentWidth}
@@ -187,7 +187,7 @@ const PianoRollWrapper: FC<React.PropsWithChildren<unknown>> = observer(() => {
         onClickScaleReset={onClickScaleResetHorizontal}
       />
     </Parent>
-  );
+  )
 })
 
 export default observer(() => {
@@ -202,10 +202,10 @@ export default observer(() => {
           defaultSize={"20%"}
           style={{ display: "flex" }}
           pane2Style={{ display: "flex" }}
-        >
-          <EventList />
-          <PianoRollWrapper />
-        </StyledSplitPane>
+        />
+        <EventList />
+        <PianoRollWrapper />
+        {/* </StyledSplitPane> */}
       </div>
     )
   }
