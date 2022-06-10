@@ -5,6 +5,7 @@ import { defaultTheme } from "../../../common/theme/Theme"
 import { StoreContext } from "../../hooks/useStores"
 import { ThemeContext } from "../../hooks/useTheme"
 import RootStore from "../../stores/RootStore"
+// import Hero from "../Hero/Hero"
 import { GlobalKeyboardShortcut } from "../KeyboardShortcut/GlobalKeyboardShortcut"
 import { RootView } from "../RootView/RootView"
 import { EmotionThemeProvider } from "../Theme/EmotionThemeProvider"
@@ -28,6 +29,7 @@ export function App() {
             <EmotionThemeProvider>
               <GlobalKeyboardShortcut />
               <GlobalCSS />
+              {/* <Hero /> */}
               <RootView />
             </EmotionThemeProvider>
           </MuiThemeProvider>

@@ -8,6 +8,7 @@ import { EventEditor } from "../EventEditor/EventEditor"
 import { ExportDialog } from "../ExportDialog/ExportDialog"
 import { ExportProgressDialog } from "../ExportDialog/ExportProgressDialog"
 import { HelpDialog } from "../Help/HelpDialog"
+import { Hero } from "../Hero/Hero"
 import { MIDIDeviceDialog } from "../MIDIDeviceView/MIDIDeviceDialog"
 import { Navigation } from "../Navigation/Navigation"
 import { PianoRollEditor } from "../PianoRoll/PianoRollEditor"
@@ -34,6 +35,8 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const path = router.path
   return (
     <>
+      {path === "/" && <Hero />}
+      {/* {path === "/dojo" && <Dojo />} */}
       {path === "/track" && <PianoRollEditor />}
       {path === "/tempo" && <TempoEditor />}
       {path === "/arrange" && <ArrangeEditor />}

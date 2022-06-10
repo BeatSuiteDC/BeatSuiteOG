@@ -42,6 +42,8 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-helmet": "^6.1.0",
+    "react-player": "^2.10.1",
+    "react-router-dom": "^6.3.0",
     "react-split-pane": "^0.1.92",
     "react-window": "^1.8.7",
     "serializr": "^2.0.5",
