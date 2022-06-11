@@ -1,15 +1,15 @@
 import { configure } from "mobx"
 import ReactDOM from "react-dom"
 import { localized } from "../common/localize/localizedString"
-import { App } from "./components/App/App"
+import { Hero } from "../main/components/Hero/Hero"
 
 configure({
   enforceActions: "never",
 })
 
 function renderApp() {
-  console.log("starting render main")
-  ReactDOM.render(<App />, document.querySelector("#root"))
+  console.log("starting render")
+  ReactDOM.render(<Hero />, document.querySelector("#root"))
 }
 
 window.onbeforeunload = (e: BeforeUnloadEvent) => {

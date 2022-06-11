@@ -1,14 +1,16 @@
+// import styled from "@emotion/styled"
+import { FC } from "react"
 import ReactPlayer from "react-player"
 // import logo from "../../images/logo.jpeg";
-import { HeroCSS } from "./HeroCSS"
 
 // import { Link } from "react-router-dom"
 
-export const Hero = () => {
+export const Hero: FC<React.PropsWithChildren<unknown>> = () => {
+  console.log("we made it this far!")
   return (
     <div>
-      <HeroCSS />
-      <div className="dojoContainer">
+      {/* <HeroCSS /> */}
+      <div className="heroContainer">
         <div className="videoContainer2">
           <ReactPlayer
             className="react-player"

@@ -5,11 +5,10 @@ import { defaultTheme } from "../../../common/theme/Theme"
 import { StoreContext } from "../../hooks/useStores"
 import { ThemeContext } from "../../hooks/useTheme"
 import RootStore from "../../stores/RootStore"
-// import Hero from "../Hero/Hero"
+import { Hero } from "../Hero/Hero"
+import { HeroCSS } from "../Hero/HeroCSS"
 import { GlobalKeyboardShortcut } from "../KeyboardShortcut/GlobalKeyboardShortcut"
-import { RootView } from "../RootView/RootView"
 import { EmotionThemeProvider } from "../Theme/EmotionThemeProvider"
-import { GlobalCSS } from "../Theme/GlobalCSS"
 import { MuiThemeProvider } from "../Theme/MuiThemeProvider"
 
 Sentry.init({
@@ -28,9 +27,10 @@ export function App() {
           <MuiThemeProvider>
             <EmotionThemeProvider>
               <GlobalKeyboardShortcut />
-              <GlobalCSS />
-              {/* <Hero /> */}
-              <RootView />
+              <HeroCSS />
+              <Hero />
+              {/* <RootView /> */}
+              {/* </Hero> */}
             </EmotionThemeProvider>
           </MuiThemeProvider>
         </ThemeContext.Provider>

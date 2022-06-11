@@ -1,5 +1,4 @@
 import { css, Global } from "@emotion/react"
-import React from "react"
 import { useTheme } from "../../hooks/useTheme"
 
 export const GlobalCSS = () => {
@@ -11,6 +10,8 @@ export const GlobalCSS = () => {
         body {
           height: 100%;
           margin: 0;
+          overflow-y: hidden;
+          overflow-x: hidden;
         }
 
         body {

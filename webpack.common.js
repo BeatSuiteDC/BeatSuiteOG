@@ -5,6 +5,7 @@ const webpack = require("webpack")
 module.exports = {
   context: __dirname,
   entry: {
+    browserIntro: "./src/intro/index.tsx",
     browserMain: "./src/main/index.tsx",
     browserLanding: "./src/landing/index.ts",
   },
@@ -33,17 +34,23 @@ module.exports = {
       VERCEL_GIT_COMMIT_SHA: null,
       SENTRY_DSN: null,
     }),
-    new HtmlWebpackPlugin({
-      inject: true,
-      filename: "edit.html",
-      chunks: ["browserMain"],
-      template: path.join(__dirname, "public", "edit.html"),
-    }),
+    // new HtmlWebpackPlugin({
+    //   inject: true,
+    //   filename: "app.html",
+    //   chunks: ["browserIntro"],
+    //   template: path.join(__dirname, "public", "app.html"),
+    // }),
+    // new HtmlWebpackPlugin({
+    //   inject: true,
+    //   filename: "edit.html",
+    //   chunks: ["browserMain"],
+    //   template: path.join(__dirname, "public", "edit.html"),
+    // }),
     new HtmlWebpackPlugin({
       inject: true,
       filename: "index.html",
-      chunks: ["browserLanding"],
-      template: path.join(__dirname, "public", "index.html"),
+      chunks: ["browserLanding", "browserMain"],
+      template: path.join(__dirname, "public", "app.html"),
     }),
   ],
 }
