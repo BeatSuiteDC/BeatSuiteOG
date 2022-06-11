@@ -5,10 +5,11 @@ import { defaultTheme } from "../../../common/theme/Theme"
 import { StoreContext } from "../../hooks/useStores"
 import { ThemeContext } from "../../hooks/useTheme"
 import RootStore from "../../stores/RootStore"
-import { Hero } from "../Hero/Hero"
-import { HeroCSS } from "../Hero/HeroCSS"
+import MainRouter from "../Hero/MainRouter"
+import Web3Provider from "../Hero/Web3Provider"
 import { GlobalKeyboardShortcut } from "../KeyboardShortcut/GlobalKeyboardShortcut"
 import { EmotionThemeProvider } from "../Theme/EmotionThemeProvider"
+import { GlobalCSS } from "../Theme/GlobalCSS"
 import { MuiThemeProvider } from "../Theme/MuiThemeProvider"
 
 Sentry.init({
@@ -22,19 +23,19 @@ Sentry.init({
 export function App() {
   return (
     <React.StrictMode>
-      <StoreContext.Provider value={new RootStore()}>
-        <ThemeContext.Provider value={defaultTheme}>
-          <MuiThemeProvider>
-            <EmotionThemeProvider>
-              <GlobalKeyboardShortcut />
-              <HeroCSS />
-              <Hero />
-              {/* <RootView /> */}
-              {/* </Hero> */}
-            </EmotionThemeProvider>
-          </MuiThemeProvider>
-        </ThemeContext.Provider>
-      </StoreContext.Provider>
+      <Web3Provider>
+        <StoreContext.Provider value={new RootStore()}>
+          <ThemeContext.Provider value={defaultTheme}>
+            <MuiThemeProvider>
+              <EmotionThemeProvider>
+                <GlobalKeyboardShortcut />
+                <GlobalCSS />
+                <MainRouter />
+              </EmotionThemeProvider>
+            </MuiThemeProvider>
+          </ThemeContext.Provider>
+        </StoreContext.Provider>
+      </Web3Provider>
     </React.StrictMode>
   )
 }
