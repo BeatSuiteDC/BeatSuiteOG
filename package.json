@@ -37,6 +37,7 @@
     "color": "^4.2.3",
     "dotenv": "^16.0.1",
     "dotenv-webpack": "^7.1.0",
+    "framer-motion": "^6.3.11",
     "gl-matrix": "^3.4.3",
     "lodash": "^4.17.21",
     "mdi-react": "^8.4.0",

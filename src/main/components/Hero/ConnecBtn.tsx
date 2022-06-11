@@ -10,6 +10,7 @@ const ConnectWallet: FC = observer(() => {
     event.preventDefault()
     console.log(USER)
     user.connect()
+    console.log(USER)
   }
   return (
     <div className="wrap">
