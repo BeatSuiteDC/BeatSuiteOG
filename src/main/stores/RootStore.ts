@@ -8,6 +8,7 @@ import { MIDIInput, previewMidiInput } from "../services/MIDIInput"
 import { MIDIRecorder } from "../services/MIDIRecorder"
 import { SoundFontSynth } from "../services/SoundFontSynth"
 import ArrangeViewStore from "./ArrangeViewStore"
+import Authentication from "./Authentication"
 import { ExportStore } from "./ExportStore"
 import HistoryStore from "./HistoryStore"
 import { MIDIDeviceStore } from "./MIDIDeviceStore"
@@ -27,6 +28,7 @@ export interface Services {
 
 export default class RootStore {
   song: Song = emptySong()
+  readonly user: Authentication
   readonly router = new Router()
   readonly trackMute = new TrackMute()
   readonly historyStore = new HistoryStore<SerializedState>()
@@ -36,6 +38,8 @@ export default class RootStore {
   readonly tempoEditorStore = new TempoEditorStore(this)
   readonly midiDeviceStore = new MIDIDeviceStore()
   readonly exportStore = new ExportStore(this)
+
+  // readonly auth = new Authentication()
 
   readonly services: Services
 
@@ -78,6 +82,8 @@ export default class RootStore {
     this.pianoRollStore.setUpAutorun()
     this.arrangeViewStore.setUpAutorun()
     this.tempoEditorStore.setUpAutorun()
+
+    this.user = new Authentication()
 
     registerReactions(this)
   }

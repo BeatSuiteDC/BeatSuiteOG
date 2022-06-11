@@ -1,15 +1,15 @@
 // import styled from "@emotion/styled"
 import { FC } from "react"
 import ReactPlayer from "react-player"
-// import logo from "../../images/logo.jpeg";
-
-// import { Link } from "react-router-dom"
+import { useStores } from "../../hooks/useStores"
+import ConnectWallet from "./ConnecBtn"
+import { HeroCSS } from "./HeroCSS"
 
 export const Hero: FC<React.PropsWithChildren<unknown>> = () => {
-  console.log("we made it this far!")
+  const { user } = useStores()
   return (
     <div>
-      {/* <HeroCSS /> */}
+      <HeroCSS />
       <div className="heroContainer">
         <div className="videoContainer2">
           <ReactPlayer
@@ -29,10 +29,10 @@ export const Hero: FC<React.PropsWithChildren<unknown>> = () => {
         {/* <img className="dojoLogo" src={logo} alt="" /> */}
         <h1 className="tracking-in-expand-fwd">Beat Suite</h1>
         <h3 className="subTitle"> Lets make it happen! </h3>
-        {/* <div class="note-position-1 note-amination">&#9835;</div> */}
-        {/* <div class="note-position-2 note-amination animation-delay-2"> */}
-        {/* &#9833; */}
-        {/* </div> */}
+        <div className="note-position-1 note-amination">&#9835;</div>
+        <div className="note-position-2 note-amination animation-delay-2">
+          &#9833;
+        </div>
         <div className="bubbleContainer">
           <div className="bubble1"></div>
           <div className="bubble2"></div>
@@ -40,11 +40,11 @@ export const Hero: FC<React.PropsWithChildren<unknown>> = () => {
         </div>
         <div className="wrap">
           {/* <Link to="/music"> */}
-          <button className="button">Connect Wallet</button>
+          <ConnectWallet />
           {/* </Link> */}
         </div>
       </div>
-      <ReactPlayer
+      {/* <ReactPlayer
         className="react-player"
         url="https://www.youtube.com/embed/lf6refTxQs8?autoplay=1&mute=1&start=1"
         width="0%"
@@ -55,7 +55,7 @@ export const Hero: FC<React.PropsWithChildren<unknown>> = () => {
         overflow="hidden"
         playing={true}
         loop={true}
-      />
+      /> */}
     </div>
   )
 }
