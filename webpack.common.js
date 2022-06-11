@@ -61,6 +61,12 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       inject: true,
+      filename: "dojo.html",
+      chunks: ["browserMain"],
+      template: path.join(__dirname, "public", "dojo.html"),
+    }),
+    new HtmlWebpackPlugin({
+      inject: true,
       filename: "edit.html",
       chunks: ["browserMain"],
       template: path.join(__dirname, "public", "edit.html"),

@@ -1,12 +1,20 @@
 // import styled from "@emotion/styled"
 import { FC } from "react"
 import ReactPlayer from "react-player"
+import { Navigate } from "react-router-dom"
 import { useStores } from "../../hooks/useStores"
 import ConnectWallet from "./ConnecBtn"
 import { HeroCSS } from "./HeroCSS"
 
 export const Hero: FC<React.PropsWithChildren<unknown>> = () => {
   const { user } = useStores()
+  const USER = user.connector
+
+  if (USER?.connected) {
+    console.log("linking to dojo")
+    return <Navigate to="/dojo" />
+  }
+
   return (
     <div>
       <HeroCSS />
