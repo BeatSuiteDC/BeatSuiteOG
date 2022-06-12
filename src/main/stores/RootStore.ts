@@ -3,6 +3,7 @@ import Player from "../../common/player"
 import Song, { emptySong } from "../../common/song"
 import TrackMute from "../../common/trackMute"
 import { SerializedState } from "../actions/history"
+import Streamer from "../components/Dojo/Streamer/Streamer"
 import { GroupOutput } from "../services/GroupOutput"
 import { MIDIInput, previewMidiInput } from "../services/MIDIInput"
 import { MIDIRecorder } from "../services/MIDIRecorder"
@@ -24,6 +25,7 @@ export interface Services {
   synthGroup: GroupOutput
   midiInput: MIDIInput
   midiRecorder: MIDIRecorder
+  streamer: Streamer
 }
 
 export default class RootStore {
@@ -63,12 +65,14 @@ export default class RootStore {
     const player = new Player(synthGroup, metronomeSynth, this.trackMute, this)
     const midiInput = new MIDIInput()
     const midiRecorder = new MIDIRecorder(player, this)
+    const streamer = new Streamer(this, this.trackMute)
     this.services = {
       player,
       synth,
       synthGroup,
       midiInput,
       midiRecorder,
+      streamer,
     }
     this.pianoRollStore = new PianoRollStore(this)
 

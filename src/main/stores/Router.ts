@@ -1,6 +1,12 @@
 import { makeObservable, observable } from "mobx"
 
-export type RoutePath = "/track" | "/arrange" | "/tempo"
+export type RoutePath =
+  | "/albums"
+  | "/uploads"
+  | "/track"
+  | "/arrange"
+  | "/tempo"
+  | "/home"
 
 export default class Router {
   path: RoutePath = "/track"

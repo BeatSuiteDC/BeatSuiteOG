@@ -6,14 +6,6 @@ export const DojoCSS = () => {
   return (
     <Global
       styles={css`
-        html,
-        body {
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-          box-sizing: border-box;
-        }
-
         .vid {
           position: relative;
           overflow: hidden;
@@ -22,69 +14,6 @@ export const DojoCSS = () => {
 
         .play {
           margin-left: 40rem;
-        }
-
-        .interfaceContainer {
-          width: 98%;
-          height: 97vh;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-        }
-
-        .radioContainer {
-          display: flex;
-          flex-direction: column;
-          width: 15vw;
-          align-content: flex-end;
-        }
-
-        .radioStationsContainer {
-          width: 99%;
-          height: 70%;
-          box-shadow: 1px 0px 0 white;
-          text-align: center;
-          display: flex;
-          justify-content: end;
-          z-index: 1;
-        }
-
-        .radioControl {
-          width: 40%;
-          height: 99%;
-          border: 5px white solid;
-          text-align: center;
-          font-size: 3rem;
-          color: white;
-        }
-
-        .radioList {
-          min-width: 75%;
-          display: flex;
-          flex-direction: column;
-          align-items: start;
-          margin-right: 3px;
-        }
-
-        .socialsContainer2 {
-          color: white;
-          width: 99%;
-          height: 70%;
-          height: 5rem;
-          font-family: "Montserrat", sans-serif;
-          font-weight: 200;
-          text-transform: uppercase;
-          justify-content: end;
-          font-size: 15px;
-          letter-spacing: 0px;
-          display: flex;
-        }
-
-        .socials {
-          min-width: 75%;
-          display: flex;
-          flex-direction: column;
-          z-index: 1;
         }
 
         .githubLogo {
@@ -114,65 +43,8 @@ export const DojoCSS = () => {
           color: white;
         }
 
-        .logo {
-          width: 150%;
-          height: 10%;
-          text-align: center;
-          font-size: 32px;
-          color: white;
-          font-family: "Montserrat", sans-serif;
-          font-weight: 200;
-          text-transform: uppercase;
-          letter-spacing: 7px;
-          transform: scale(1, 0.9);
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-          z-index: 1;
-        }
-
-        .subHeading {
-          width: 99%;
-          height: 7%;
-          text-align: center;
-          font-size: 20px;
-          color: white;
-          margin-bottom: 2rem;
-          font-family: "Montserrat", sans-serif;
-          font-weight: 200;
-          text-transform: uppercase;
-          letter-spacing: 7px;
-          transform: scale(1, 0.9);
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: end;
-          text-decoration-line: underline;
-        }
-
-        .station {
-          font-size: 16px;
-          font-family: "Montserrat", sans-serif;
-          font-weight: 400;
-          color: #c0c0c0;
-          text-transform: uppercase;
-          margin-top: 20px;
-          text-shadow: 1px 1px rgb(0 0 0 / 70%);
-          cursor: pointer;
-        }
-
         .station:hover {
           color: white;
-        }
-
-        .triangle {
-          width: 12px;
-          height: 14px;
-          padding-right: 12px;
-          filter: invert(82%) sepia(0%) saturate(0%) hue-rotate(222deg)
-            brightness(97%) contrast(86%);
-          cursor: pointer;
         }
 
         .songName {
@@ -294,18 +166,6 @@ export const DojoCSS = () => {
           position: absolute;
           top: 112%;
           left: 45%;
-        }
-
-        .loading {
-          background-color: black;
-          width: 2rem;
-          height: 2rem;
-          position: absolute;
-          top: 0;
-          left: 0;
-          z-index: -200;
-          height: 100vh;
-          width: 100vw;
         }
 
         .videoContainer {

@@ -187,105 +187,107 @@ export const Right = styled.div`
   right: 1em;
 `
 
-export const TransportPanel: FC<React.PropsWithChildren<unknown>> = observer(() => {
-  const rootStore = useStores()
-  const {
-    services: { player },
-  } = rootStore
+export const TransportPanel: FC<React.PropsWithChildren<unknown>> = observer(
+  () => {
+    const rootStore = useStores()
+    const {
+      services: { player },
+    } = rootStore
 
-  const { isPlaying, isMetronomeEnabled, loop } = player
-  const isRecording = rootStore.services.midiRecorder.isRecording
-  const canRecording =
-    Object.values(rootStore.midiDeviceStore.enabledInputs).filter((e) => e)
-      .length > 0
-  const isSynthLoading = rootStore.services.synth.isLoading
+    const { isPlaying, isMetronomeEnabled, loop } = player
+    const isRecording = rootStore.services.midiRecorder.isRecording
+    const canRecording =
+      Object.values(rootStore.midiDeviceStore.enabledInputs).filter((e) => e)
+        .length > 0
+    const isSynthLoading = rootStore.services.synth.isLoading
 
-  const onClickPlay = playOrPause(rootStore)
-  const onClickStop = stop(rootStore)
-  const onClickBackward = rewindOneBar(rootStore)
-  const onClickForward = fastForwardOneBar(rootStore)
-  const onClickRecord = toggleRecording(rootStore)
-  const onClickEnableLoop = toggleEnableLoop(rootStore)
-  const onClickMetronone = useCallback(() => {
-    player.isMetronomeEnabled = !player.isMetronomeEnabled
-  }, [player])
+    const onClickPlay = playOrPause(rootStore)
+    const onClickStop = stop(rootStore)
+    const onClickBackward = rewindOneBar(rootStore)
+    const onClickForward = fastForwardOneBar(rootStore)
+    const onClickRecord = toggleRecording(rootStore)
+    const onClickEnableLoop = toggleEnableLoop(rootStore)
+    const onClickMetronone = useCallback(() => {
+      player.isMetronomeEnabled = !player.isMetronomeEnabled
+    }, [player])
 
-  return (
-    <Toolbar>
-      <Tooltip title={`${localized("rewind", "Rewind")}`} placement="top">
-        <Button onClick={onClickBackward}>
-          <FastRewind />
-        </Button>
-      </Tooltip>
-
-      <Tooltip title={`${localized("stop", "Stop")}`} placement="top">
-        <Button onClick={onClickStop}>
-          <Stop />
-        </Button>
-      </Tooltip>
-
-      <Tooltip
-        title={`${localized("play-pause", "Play/Pause")} [space]`}
-        placement="top"
-      >
-        <PlayButton
-          id="button-play"
-          onClick={onClickPlay}
-          className={isPlaying ? "active" : undefined}
-        >
-          {isPlaying ? <Pause /> : <PlayArrow />}
-        </PlayButton>
-      </Tooltip>
-
-      {canRecording && (
-        <Tooltip title={`${localized("record", "Record")}`} placement="top">
-          <RecordButton
-            onClick={onClickRecord}
-            className={isRecording ? "active" : undefined}
-          >
-            <FiberManualRecord />
-          </RecordButton>
+    return (
+      <Toolbar>
+        <Tooltip title={`${localized("rewind", "Rewind")}`} placement="top">
+          <Button onClick={onClickBackward}>
+            <FastRewind />
+          </Button>
         </Tooltip>
-      )}
 
-      <Tooltip
-        title={`${localized("fast-forward", "Fast Forward")}`}
-        placement="top"
-      >
-        <Button onClick={onClickForward}>
-          <FastForward />
-        </Button>
-      </Tooltip>
+        <Tooltip title={`${localized("stop", "Stop")}`} placement="top">
+          <Button onClick={onClickStop}>
+            <Stop />
+          </Button>
+        </Tooltip>
 
-      {loop && (
-        <LoopButton
-          onClick={onClickEnableLoop}
-          className={loop.enabled ? "active" : undefined}
+        <Tooltip
+          title={`${localized("play-pause", "Play/Pause")} [space]`}
+          placement="top"
         >
-          <Loop />
-        </LoopButton>
-      )}
+          <PlayButton
+            id="button-play"
+            onClick={onClickPlay}
+            className={isPlaying ? "active" : undefined}
+          >
+            {isPlaying ? <Pause /> : <PlayArrow />}
+          </PlayButton>
+        </Tooltip>
 
-      <ToolbarSeparator />
+        {canRecording && (
+          <Tooltip title={`${localized("record", "Record")}`} placement="top">
+            <RecordButton
+              onClick={onClickRecord}
+              className={isRecording ? "active" : undefined}
+            >
+              <FiberManualRecord />
+            </RecordButton>
+          </Tooltip>
+        )}
 
-      <MetronomeButton
-        onClick={onClickMetronone}
-        className={isMetronomeEnabled ? "active" : undefined}
-      >
-        <MetronomeIcon />
-      </MetronomeButton>
+        <Tooltip
+          title={`${localized("fast-forward", "Fast Forward")}`}
+          placement="top"
+        >
+          <Button onClick={onClickForward}>
+            <FastForward />
+          </Button>
+        </Tooltip>
 
-      <TempoForm />
+        {loop && (
+          <LoopButton
+            onClick={onClickEnableLoop}
+            className={loop.enabled ? "active" : undefined}
+          >
+            <Loop />
+          </LoopButton>
+        )}
 
-      <ToolbarSeparator />
+        <ToolbarSeparator />
 
-      <Timestamp />
+        <MetronomeButton
+          onClick={onClickMetronone}
+          className={isMetronomeEnabled ? "active" : undefined}
+        >
+          <MetronomeIcon />
+        </MetronomeButton>
 
-      {isSynthLoading && (
-        <Right>
-          <CircularProgress size="1rem" />
-        </Right>
-      )}
-    </Toolbar>
-  )
-})
+        <TempoForm />
+
+        <ToolbarSeparator />
+
+        <Timestamp />
+
+        {isSynthLoading && (
+          <Right>
+            <CircularProgress size="1rem" />
+          </Right>
+        )}
+      </Toolbar>
+    )
+  }
+)

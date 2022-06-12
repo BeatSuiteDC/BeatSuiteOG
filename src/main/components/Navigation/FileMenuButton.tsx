@@ -3,6 +3,7 @@ import { Divider, Menu, MenuItem } from "@mui/material"
 import Color from "color"
 import { observer } from "mobx-react-lite"
 import React, { ChangeEvent, FC, useCallback, useRef, VFC } from "react"
+import { Navigate } from "react-router-dom"
 import { localized } from "../../../common/localize/localizedString"
 import { createSong, openSong, saveSong } from "../../actions"
 import { hasFSAccess, openFile, saveFile, saveFileAs } from "../../actions/file"
@@ -12,9 +13,11 @@ import { Tab } from "./Navigation"
 
 const fileInputID = "OpenButtonInputFile"
 
-const FileInput: FC<React.PropsWithChildren<{
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
-}>> = ({ onChange, children }) => (
+const FileInput: FC<
+  React.PropsWithChildren<{
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  }>
+> = ({ onChange, children }) => (
   <>
     <input
       accept="audio/midi"
@@ -100,66 +103,85 @@ const StyledMenu = styled(Menu)`
   }
 `
 
-export const FileMenuButton: FC<React.PropsWithChildren<unknown>> = observer(() => {
-  const rootStore = useStores()
-  const { rootViewStore, exportStore } = rootStore
-  const theme = useTheme()
-  const isOpen = rootViewStore.openDrawer
-  const handleClose = () => (rootViewStore.openDrawer = false)
+export const FileMenuButton: FC<React.PropsWithChildren<unknown>> = observer(
+  () => {
+    const rootStore = useStores()
+    const { rootViewStore, exportStore } = rootStore
+    const theme = useTheme()
+    const isOpen = rootViewStore.openDrawer
+    const handleClose = () => (rootViewStore.openDrawer = false)
 
-  const onClickNew = () => {
-    handleClose()
-    if (
-      confirm(localized("confirm-new", "Are you sure you want to continue?"))
-    ) {
-      createSong(rootStore)()
+    const onClickNew = () => {
+      handleClose()
+      if (
+        confirm(localized("confirm-new", "Are you sure you want to continue?"))
+      ) {
+        createSong(rootStore)()
+      }
     }
+
+    const onClickDojo = () => {
+      handleClose()
+      if (
+        confirm(
+          localized("confirm-dojo", "Work of art in progress. Are you sure?")
+        )
+      ) {
+        return <Navigate to="/dojo" />
+      }
+    }
+
+    const onClickExport = () => {
+      handleClose()
+      exportStore.openExportDialog = true
+    }
+
+    const ref = useRef<HTMLDivElement>(null)
+
+    return (
+      <>
+        <Tab
+          ref={ref}
+          onClick={useCallback(() => (rootViewStore.openDrawer = true), [])}
+          id="tab-file"
+        >
+          <span>{localized("file", "File")}</span>
+        </Tab>
+
+        <StyledMenu
+          keepMounted
+          open={isOpen}
+          onClose={handleClose}
+          anchorEl={ref.current}
+          anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          transitionDuration={50}
+          disableAutoFocusItem={true}
+        >
+          <MenuItem onClick={onClickNew}>
+            {localized("new-song", "New")}
+          </MenuItem>
+
+          <Divider />
+
+          {hasFSAccess && <FileMenu close={handleClose} />}
+
+          {!hasFSAccess && <LegacyFileMenu close={handleClose} />}
+
+          <Divider />
+
+          <MenuItem onClick={onClickDojo}>{localized("dojo", "Dojo")}</MenuItem>
+
+          <Divider />
+
+          <MenuItem onClick={onClickExport}>
+            {localized("export-audio", "Export Audio")}
+          </MenuItem>
+        </StyledMenu>
+      </>
+    )
   }
-
-  const onClickExport = () => {
-    handleClose()
-    exportStore.openExportDialog = true
-  }
-
-  const ref = useRef<HTMLDivElement>(null)
-
-  return (
-    <>
-      <Tab
-        ref={ref}
-        onClick={useCallback(() => (rootViewStore.openDrawer = true), [])}
-        id="tab-file"
-      >
-        <span>{localized("file", "File")}</span>
-      </Tab>
-
-      <StyledMenu
-        keepMounted
-        open={isOpen}
-        onClose={handleClose}
-        anchorEl={ref.current}
-        anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-        transitionDuration={50}
-        disableAutoFocusItem={true}
-      >
-        <MenuItem onClick={onClickNew}>{localized("new-song", "New")}</MenuItem>
-
-        <Divider />
-
-        {hasFSAccess && <FileMenu close={handleClose} />}
-
-        {!hasFSAccess && <LegacyFileMenu close={handleClose} />}
-
-        <Divider />
-
-        <MenuItem onClick={onClickExport}>
-          {localized("export-audio", "Export Audio")}
-        </MenuItem>
-      </StyledMenu>
-    </>
-  )
-})
+)

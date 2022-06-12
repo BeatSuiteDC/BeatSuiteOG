@@ -35,8 +35,6 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
   console.log("path", path, user?.connector)
   return (
     <>
-      {/* {path === "/app" && <Hero />} */}
-      {/* {path === "/dojo" && <Dojo />} */}
       {path === "/track" && <PianoRollEditor />}
       {path === "/tempo" && <TempoEditor />}
       {path === "/arrange" && <ArrangeEditor />}
