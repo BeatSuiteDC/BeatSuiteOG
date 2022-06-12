@@ -1,20 +1,14 @@
-import { motion } from "framer-motion"
-import { ReactNode } from "react"
+import { useStores } from "../../hooks/useStores"
 import { DojoCSS } from "./DojoCSS"
-
-type Page = {
-  name: string
-  link?: () => ReactNode
-}
+import Loading from "./Loading"
+import PauseImage from "./PauseImage"
+import SideBar from "./SideBar"
+// import { SideBar } from "./SideBar/"
 
 const Dojo = () => {
-  const sidebarPages: Array<Page> = [
-    {
-      name: "page1",
-      link: () => <>{console.log("page 1 clicked")}</>,
-    },
-  ]
   console.log("Dojo opened")
+  const { router } = useStores()
+
   return (
     <div>
       <DojoCSS />
@@ -22,64 +16,17 @@ const Dojo = () => {
         <div className="radioContainer">
           <div className="logo">BeatSuite</div>
           <div className="subHeading"></div>
-          <div className="radioStationsContainer">
-            {/* side bar mapping from RadioStations */}
-            <div className="radioList">
-              {sidebarPages.map((page, i, a) => {
-                const delay = (i / sidebarPages.length) * 1.15
-                return (
-                  <div>
-                    <motion.div
-                      animate={{ opacity: [0, 1] }}
-                      transition={{ delay: delay }}
-                    >
-                      <motion.div
-                        whileHover={{ scale: 1.09 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={page.link}
-                        className="station"
-                      >
-                        {/* <img className="triangle" src={triangle} alt="" /> */}
-                        {page.name}
-                      </motion.div>
-                    </motion.div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-          <div className="socialsContainer2">
-            <div className="socials">
-              {/* <motion.div
-                whileHover={{ scale: 1.09 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => {
-                  window.open("https://github.com/adamPatrick12")
-                }}
-                className="link"
-              >
-                <img className="githubLogo" src={github} alt="" />
-                Github
-              </motion.div> */}
-            </div>
-          </div>
+          {/* side bar mapping from RadioStations */}
+          <SideBar />
+          {/* Socials */}
         </div>
-        {/* <div className="audioControlContainer">
-          <AudioControls
-            plauPause={handlePausePlaySwitch}
-            buttonClass={BtnClass}
-            playPauseImage={playPauseImg}
-            buttonClass2={BtnClass2}
-            LiveStreamAudio={currentLivestream}
-            LiveStreamPlayPause={livestream}
-          />
-        </div> */}
-        {/* <div className={pauseScreen}>
+        {/* Audio Controls */}
+        <div className="unpauseScreen">
           <PauseImage />
           <p style={{ marginTop: "0rem" }}>Music Paused</p>
-        </div> */}
+        </div>
         {/* <AdditionSettings youtube={youtubeChannal} radio={stationName} /> */}
-        {/* <div class="videoContainer">
+        {/* <div className="videoContainer">
           <ReactPlayer
             className="vid"
             width="140%"
@@ -91,7 +38,7 @@ const Dojo = () => {
           />
         </div> */}
 
-        {/* <Loading /> */}
+        <Loading />
       </div>
     </div>
   )
