@@ -6,7 +6,7 @@ const Dotenv = require("dotenv-webpack")
 module.exports = {
   context: __dirname,
   entry: {
-    // browserIntro: "./src/intro/index.tsx",
+    browserIntro: "./src/intro/index.tsx",
     browserMain: "./src/main/index.tsx",
     browserLanding: "./src/landing/index.ts",
   },

@@ -29,6 +29,7 @@
     "@rehooks/component-size": "1.0.3",
     "@ryohey/wavelet": "^0.5.3",
     "@ryohey/webgl-react": "^0.2.1",
+    "@sanity/client": "^3.3.2",
     "@sentry/react": "^6.19.7",
     "@sentry/tracing": "^6.19.7",
     "@walletconnect/qrcode-modal": "^1.7.8",

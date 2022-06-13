@@ -4,8 +4,8 @@ import { FC } from "react"
 import { useStores } from "../../hooks/useStores"
 import { useTheme } from "../../hooks/useTheme"
 import { PlayerPanel } from "./Audio/AudioControls"
-import PauseImage from "./Audio/PauseImage"
 import { DojoCSS } from "./DojoCSS"
+import LiveStreamer from "./LiveStreamer"
 import Loading from "./Loading"
 import SideBar from "./SideBar"
 import Socials from "./Socials"
@@ -25,7 +25,7 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
       {/* {path === "/dojo" && <Dojo />} */}
       {/* {path === "/home" && <PianoRollEditor />} */}
       {/* {path === "/tempo" && <TempoEditor />} */}
-      {isPlaying ? <Loading /> : <PauseImage />}
+      {!isPlaying && <Loading />}
     </>
   )
 })
@@ -99,6 +99,8 @@ const Dojo = () => {
     <>
       <DojoCSS />
       <InterfaceContainer>
+        <LiveStreamer />
+
         <SideBarContainer>
           <LogoDiv>BeatSuite</LogoDiv>
           <SubHeader></SubHeader>
@@ -106,9 +108,9 @@ const Dojo = () => {
           <Socials />
         </SideBarContainer>
         <PlayerPanel />
-        <PauseImage />
 
         <SidePanel></SidePanel>
+
         <Routes />
       </InterfaceContainer>
     </>

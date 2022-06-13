@@ -13,10 +13,10 @@ export interface LoopSetting {
   end: number
   enabled: boolean
 }
-
+;("//www.youtube.com/embed/TURbeWK2wwg?autoplay=1&mute=1&start=1")
 export const DEFAULT_TEMPO = 120
 export const DEFAULT_LIVESTREAM =
-  "https://www.youtube.com/watch?v=5qap5aO4i9A&ab_channel=LofiGirl"
+  "https://www.youtube.com/embed/MlnNZV7Jujs?autoplay=1&mute=1&start=1"
 
 export type ButtonClass = {
   class1: "PlayPause" | "PlayPause2"

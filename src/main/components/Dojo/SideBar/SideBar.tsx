@@ -75,22 +75,24 @@ export const SideBar = () => {
         {SideBarElements.map((page, i, a) => {
           const delay = (i / a.length) * 1.15
           return (
-            <Element>
-              <motion.div
-                animate={{ opacity: [0, 1] }}
-                transition={{ delay: delay }}
-              >
+            <div key={i}>
+              <Element>
                 <motion.div
-                  whileHover={{ scale: 1.09 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={useCallback(() => (router.path = page.path), [])}
-                  className="station"
+                  animate={{ opacity: [0, 1] }}
+                  transition={{ delay: delay }}
                 >
-                  {/* <Triangle><img src={triangle} alt="" /></Triangle> */}
-                  <>{page.title}</>
+                  <motion.div
+                    whileHover={{ scale: 1.09 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={useCallback(() => (router.path = page.path), [])}
+                    className="station"
+                  >
+                    {/* <Triangle><img src={triangle} alt="" /></Triangle> */}
+                    <>{page.title}</>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            </Element>
+              </Element>
+            </div>
           )
         })}
       </List>

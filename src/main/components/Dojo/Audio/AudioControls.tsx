@@ -6,7 +6,6 @@ import styled from "@emotion/styled"
 
 import { Tooltip } from "@mui/material"
 import { observer } from "mobx-react-lite"
-import ReactPlayer from "react-player"
 import { localized } from "../../../../common/localize/localizedString"
 import { fastForwardOneBar, rewindOneBar, stop } from "../../../actions"
 import { AudioControlCSS } from "./AudioControlCSS"
@@ -140,7 +139,7 @@ export const PlayerPanel: FC<React.PropsWithChildren<unknown>> = observer(
             tooltipValue={isPlaying ? "Pause" : "Play"}
             hotkey="space"
             clickHandler={onClickPlay}
-            imgSrc={isPlaying ? playBtn : pauseBtn}
+            imgSrc={isPlaying ? pauseBtn : playBtn}
           />
 
           <ButtonDiv
@@ -154,7 +153,7 @@ export const PlayerPanel: FC<React.PropsWithChildren<unknown>> = observer(
           />
 
           <Tooltip
-            title={`${localized("volume", String(volume.level))}`}
+            title={`${localized("volume", String(volume.level * 100))}`}
             placement="top"
           >
             <input
@@ -168,12 +167,12 @@ export const PlayerPanel: FC<React.PropsWithChildren<unknown>> = observer(
             />
           </Tooltip>
 
-          <ReactPlayer
+          {/* <ReactPlayer
             className="liveStreamPlayer"
             playing={isPlaying}
             volume={volume.level}
             url={liveStreamUrl}
-          />
+          /> */}
         </AudioControl>
       </>
     )
