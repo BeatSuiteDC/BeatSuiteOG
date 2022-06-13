@@ -10,9 +10,13 @@ import SideBar from "./SideBar"
 import Socials from "./Socials"
 
 const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
-  const { router, services } = useStores()
-  const path = router.path
-  const isPlaying = services.player.isPlaying
+  const {
+    router: { path },
+    services: {
+      streamer: { isPlaying },
+    },
+  } = useStores()
+
   console.log({ isPlaying, path })
   return (
     <>
@@ -81,7 +85,6 @@ const Dojo = () => {
   `
 
   const SidePanel = styled.div`
-    background: cyan;
     height: 100%;
     width: 20vw;
     display: flex;
@@ -96,7 +99,7 @@ const Dojo = () => {
       <DojoCSS />
       <InterfaceContainer>
         <SideBarContainer>
-          <LogoDiv>BEATSUITE</LogoDiv>
+          <LogoDiv>BeatSuite</LogoDiv>
           <SubHeader></SubHeader>
           <SideBar />
           <Socials />

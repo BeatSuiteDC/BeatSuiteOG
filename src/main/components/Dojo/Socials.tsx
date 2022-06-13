@@ -32,7 +32,7 @@ export const Socials = () => {
             whileHover={{ scale: 1.09 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => {
-              window.open("https://github.com/sandymandy12")
+              window.open("https://github.com/sandymandy12/BeatSuite")
             }}
             className="link"
           >
