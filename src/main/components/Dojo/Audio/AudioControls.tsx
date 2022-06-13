@@ -13,6 +13,8 @@ import { AudioControlCSS } from "./AudioControlCSS"
 
 import pauseBtn from "../../../images/pause.png"
 import playBtn from "../../../images/playBtn.png"
+import backBtn from "../../../images/skipBack.png"
+import fwdBtn from "../../../images/skipForward.png"
 
 type ButtonComponent = {
   clickHandler: MouseEventHandler
@@ -111,6 +113,26 @@ export const PlayerPanel: FC<React.PropsWithChildren<unknown>> = observer(
       <>
         <AudioControl>
           <AudioControlCSS />
+
+          <ButtonDiv
+            class1={volume.mute}
+            class2={muteCheck2}
+            tooltipKey="rewind"
+            tooltipValue={"Rewind"}
+            hotkey="cmd+b"
+            clickHandler={onClickBackward}
+            imgSrc={backBtn}
+          />
+          <ButtonDiv
+            class1={volume.mute}
+            class2={muteCheck2}
+            tooltipKey="skip"
+            tooltipValue={"Skip"}
+            hotkey="cmd+f"
+            clickHandler={onClickForward}
+            imgSrc={fwdBtn}
+          />
+
           <ButtonDiv
             class1={buttonClass.class1}
             class2={buttonClass.class2}
