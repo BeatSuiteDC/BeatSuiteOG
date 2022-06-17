@@ -1,4 +1,5 @@
 import { css, Global } from "@emotion/react"
+import styled from "@emotion/styled"
 import { useTheme } from "../../hooks/useTheme"
 
 export const DojoCSS = () => {
@@ -366,3 +367,64 @@ export const DojoCSS = () => {
     />
   )
 }
+
+export const InterfaceContainer = styled.div`
+  width: 98%;
+  height: 97vh;
+  display: flex;
+  margin-left: 30px;
+  margin-top: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+`
+export const SideBarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 15vw;
+  align-content: flex-end;
+  z-index: -1;
+`
+export const LogoDiv = styled.div`
+  width: 250%;
+  height: 10%;
+  text-align: center;
+  font-size: 32px;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: 7px;
+  transform: scale(1, 0.9);
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  z-index: 1;
+`
+export const SubHeader = styled.div`
+  width: 99%;
+  height: 7%;
+  text-align: center;
+  font-size: 20px;
+  color: white;
+  margin-bottom: 2rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: 7px;
+  transform: scale(1, 0.9);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: end;
+  text-decoration-line: underline;
+`
+export const SidePanel = styled.div`
+  height: 100%;
+  width: 20vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  margin-left: 11rem;
+  z-index: 1;
+`
