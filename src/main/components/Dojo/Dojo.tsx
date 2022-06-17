@@ -100,10 +100,9 @@ const Dojo = () => {
       <DojoCSS />
       <InterfaceContainer>
         <LiveStreamer />
-
         <SideBarContainer>
           <LogoDiv>BeatSuite</LogoDiv>
-          <SubHeader></SubHeader>
+          <SubHeader />
           <SideBar />
           <Socials />
         </SideBarContainer>

@@ -6,9 +6,9 @@ const Dotenv = require("dotenv-webpack")
 module.exports = {
   context: __dirname,
   entry: {
-    browserIntro: "./src/intro/index.tsx",
+    // browserIntro: "./src/intro/index.tsx",
     browserMain: "./src/main/index.tsx",
-    browserLanding: "./src/landing/index.ts",
+    // browserLanding: "./src/landing/index.ts",
   },
   output: {
     filename: "[name]-[chunkhash].js",
@@ -29,26 +29,18 @@ module.exports = {
     modules: ["src", "node_modules", "src/main", "src/common"],
     extensions: [".js", ".jsx", ".ts", ".tsx"],
     fallback: {
-      buffer: require.resolve("buffer/"),
-      assert: require.resolve("assert/"),
-      stream: require.resolve("stream-browserify/"),
-      crypto: require.resolve("crypto-browserify/"),
-      http: require.resolve("stream-http/"), // stream-http
-      https: require.resolve("https-browserify/"), // https-browserify
-      url: require.resolve("url/"), // url
-      os: require.resolve("os-browserify/browser"), // os-browserify
+      assert: require.resolve("assert"),
+      stream: require.resolve("stream-browserify"),
+      crypto: require.resolve("crypto-browserify"),
+      http: require.resolve("stream-http"),
+      https: require.resolve("https-browserify"),
+      url: require.resolve("url"),
+      os: require.resolve("os-browserify"),
     },
   },
   plugins: [
     new webpack.ProvidePlugin({
       Buffer: ["buffer", "Buffer"],
-      assert: ["assert"],
-      stream: ["stream"],
-      crypto: ["crypto"],
-      https: ["https"],
-      http: ["http"],
-      url: ["url"],
-      os: ["os"],
     }),
     new webpack.EnvironmentPlugin({
       VERCEL_ENV: null,
@@ -56,25 +48,22 @@ module.exports = {
       SENTRY_DSN: null,
     }),
     new Dotenv({
-      path: "./.env", // Path to .env file (this is the default)
-      safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe)
+      path: "./.env",
+      safe: false,
     }),
     new HtmlWebpackPlugin({
       inject: true,
       filename: "dojo.html",
-      chunks: ["browserMain"],
       template: path.join(__dirname, "public", "dojo.html"),
     }),
     new HtmlWebpackPlugin({
       inject: true,
       filename: "edit.html",
-      chunks: ["browserMain"],
       template: path.join(__dirname, "public", "edit.html"),
     }),
     new HtmlWebpackPlugin({
       inject: true,
       filename: "index.html",
-      chunks: ["browserLanding", "browserMain"],
       template: path.join(__dirname, "public", "app.html"),
     }),
   ],

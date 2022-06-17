@@ -32,7 +32,7 @@ const Column = styled.div`
 const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { router, user } = useStores()
   const path = router.path
-  console.log("path", path, user?.connector)
+  console.log("path", path)
   return (
     <>
       {path === "/track" && <PianoRollEditor />}

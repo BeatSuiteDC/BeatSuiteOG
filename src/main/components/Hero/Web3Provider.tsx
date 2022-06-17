@@ -1,3 +1,6 @@
+import { Config, DAppProvider, Mainnet } from "@usedapp/core"
+import { getDefaultProvider } from "ethers"
+
 import React, { FC } from "react"
 
 const Web3Provider: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
@@ -8,9 +11,17 @@ const Web3Provider: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const SERVER_URL = process.env.REACT_APP_MORALIS_SERVER_URL as string
   const APP_ID = process.env.REACT_APP_MORALIS_APP_ID as string
 
-  // console.log(">> info <<", { SERVER_URL, APP_ID })
+  const config: Config = {
+    readOnlyChainId: Mainnet.chainId,
+    readOnlyUrls: {
+      [Mainnet.chainId]: getDefaultProvider("mainnet"),
+    },
+  }
+
   return (
-    <>{children}</>
+    // <>{children}</>
+    // <Web3ReactProvider getLibrary={library}>{children}</Web3ReactProvider>
+    <DAppProvider config={config}>{children}</DAppProvider>
     // <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
     //   {children}
     // </MoralisProvider>
