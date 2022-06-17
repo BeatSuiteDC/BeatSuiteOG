@@ -45,8 +45,20 @@ export const DojoCSS = () => {
           color: white;
         }
 
-        .station:hover {
-          color: white;
+        .station:hover,
+        station:active {
+          background-image: linear-gradient(
+            to right,
+            #462523 0,
+            #cb9b51 5%,
+            #f6e27a 10%,
+            #f6f2c0 50%,
+            #f6e27a 90%,
+            #cb9b51 95%,
+            #462523 100%
+          );
+          color: transparent;
+          -webkit-background-clip: text;
         }
 
         .songName {
@@ -383,6 +395,7 @@ export const SideBarContainer = styled.div`
   flex-direction: column;
   width: 15vw;
   align-content: flex-end;
+  transition: all 0.3s cubic-bezier(0.175, 0885, 0.32, 1.275);
 `
 
 export const SearchBar = styled.div`
@@ -402,11 +415,24 @@ export const LogoDiv = styled.div`
   text-transform: uppercase;
   letter-spacing: 7px;
   transform: scale(1, 0.9);
+  text-shadow: 1px 1px rgb(0 0 0 / 50%);
   display: flex;
   flex-direction: row;
   justify-content: left;
   align-items: center;
   z-index: 1;
+  background-image: linear-gradient(
+    to right,
+    #462523 0,
+    #cb9b51 5%,
+    #f6e27a 15%,
+    #f6f2c0 30%,
+    #f6e27a 55%,
+    #cb9b51 78%,
+    #462523 100%
+  );
+  color: transparent;
+  -webkit-background-clip: text;
 `
 export const SubHeader = styled.div`
   width: 99%;

@@ -21,8 +21,9 @@ import {
 //   SubHeader,
 // } from "./DojoCSS"
 // import Featured from "./Featured/Featured"
-import LiveStreamer from "./LiveStreamer"
+// import LiveStreamer from "./LiveStreamer"
 import SideBar from "./SideBar"
+import { TrackPlayer } from "./TrackPlayer/TrackPlayer"
 // import SideBar from "./SideBar"
 // import Socials from "./Socials"
 // import Layout from "./WalletLayout/Layout"
@@ -67,19 +68,20 @@ const Dojo = () => {
   return (
     <>
       <DojoCSS />
-      <LiveStreamer />
+      {/* <LiveStreamer /> */}
       <InterfaceContainer>
         <SideBarContainer>
           <LogoDiv>
-            BeatSuite <>{path}</>
+            BeatSuite | <>{path}</>
           </LogoDiv>
+
           <SubHeader />
           <SearchBar placeholder="Search">
             <Input type="text" placeholder="Search.." />
-            {/* <Search /> */}
           </SearchBar>
 
           <SideBar />
+          <TrackPlayer trackName="Pure Heat" artistName="DCAT" />
         </SideBarContainer>
       </InterfaceContainer>
       {/* <InterfaceContainer>

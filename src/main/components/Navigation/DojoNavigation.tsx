@@ -91,8 +91,8 @@ export const Navigation: FC<React.PropsWithChildren<unknown>> = observer(() => {
         enterNextDelay={500}
       >
         <Tab
-          className={router.path === "/home" ? "active" : undefined}
-          onClick={useCallback(() => (router.path = "/home"), [])}
+          className={router.path === "home" ? "active" : undefined}
+          onClick={useCallback(() => (router.path = "home"), [])}
         >
           {/* <InstrumentIcon viewBox="0 0 24 24" /> */}
           <span>{localized("piano-roll", "Piano Roll")}</span>

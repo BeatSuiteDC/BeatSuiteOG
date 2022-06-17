@@ -5,8 +5,10 @@ import { SongStore } from "../../../stores/SongStore"
 
 import { PlayerEvent } from "../../../../common/player/PlayerEvent"
 
-import muteBtn from "../../../images/mute.png"
-import volumeOnBtn from "../../../images/volumeOn.png"
+import {
+  VolumeOffOutlined as volOff,
+  VolumeUpOutlined as volUp,
+} from "@mui/icons-material"
 
 export interface LoopSetting {
   begin: number
@@ -28,7 +30,7 @@ export type PauseScreen = "pauseScreen" | "unpauseScreen"
 export type Volume = {
   level: number
   mute: "volumeOn" | "volumeOff"
-  image?: any
+  image: any
 }
 
 export default class Streamer {
@@ -85,7 +87,7 @@ export default class Streamer {
     this._volume = {
       level: 0.35,
       mute: "volumeOn",
-      image: volumeOnBtn,
+      image: volUp,
     }
   }
 
@@ -150,11 +152,11 @@ export default class Streamer {
       this._volume = {
         level: 0,
         mute: "volumeOff",
-        image: muteBtn,
+        image: volOff,
       }
     } else {
       // will set level higher up where this was called
-      this._volume.image = volumeOnBtn
+      this._volume.image = volUp
       this._volume.mute = "volumeOn"
     }
   }
@@ -207,11 +209,12 @@ export default class Streamer {
     if (level === 0) {
       this._isMuted = true
       this._volume.mute = "volumeOff"
-      this._volume.image = muteBtn
+      this._volume.image = volOff
     } else {
+      this._isMuted = false
       this._volume.level = level
-      this._volume.image = volumeOnBtn
       this._volume.mute = "volumeOn"
+      this._volume.image = volUp
     }
   }
 
