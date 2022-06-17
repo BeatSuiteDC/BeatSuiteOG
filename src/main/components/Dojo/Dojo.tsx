@@ -4,29 +4,23 @@ import { observer } from "mobx-react-lite"
 import { FC } from "react"
 import { useStores } from "../../hooks/useStores"
 import {
+  BreadCrumb,
   DojoCSS,
   InterfaceContainer,
   LogoDiv,
   SearchBar,
   SideBarContainer,
+  SidePanel,
   SubHeader,
 } from "./DojoCSS"
-// import { PlayerPanel } from "./Audio/AudioControls"
-// import {
-//   DojoCSS,
-//   InterfaceContainer,
-//   LogoDiv,
-//   SideBarContainer,
-//   SidePanel,
-//   SubHeader,
-// } from "./DojoCSS"
-// import Featured from "./Featured/Featured"
+import Loading from "./Loading"
+import { MainContainer } from "./MainContainer"
+
 // import LiveStreamer from "./LiveStreamer"
 import SideBar from "./SideBar"
 import { TrackPlayer } from "./TrackPlayer/TrackPlayer"
-// import SideBar from "./SideBar"
+import { PTag } from "./TrackPlayer/TrackPlayerCSS"
 // import Socials from "./Socials"
-// import Layout from "./WalletLayout/Layout"
 
 const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const {
@@ -55,7 +49,7 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
       {/* {path === "/app" && <Hero />} */}
       {/* {path === "/home" && <PianoRollEditor />} */}
       {/* {path === "/tempo" && <TempoEditor />} */}
-      {/* {!isPlaying && <Loading />} */}
+      {!isPlaying && <Loading />}
     </>
   )
 })
@@ -72,7 +66,10 @@ const Dojo = () => {
       <InterfaceContainer>
         <SideBarContainer>
           <LogoDiv>
-            BeatSuite | <>{path}</>
+            | BeatSuite |{" "}
+            <BreadCrumb>
+              <PTag>{path}</PTag>
+            </BreadCrumb>
           </LogoDiv>
 
           <SubHeader />
@@ -83,14 +80,11 @@ const Dojo = () => {
           <SideBar />
           <TrackPlayer trackName="Pure Heat" artistName="DCAT" />
         </SideBarContainer>
+        <MainContainer />
+        <SidePanel></SidePanel>
       </InterfaceContainer>
       {/* <InterfaceContainer>
       //   <SideBarContainer>
-      //     <LogoDiv>
-      //       BeatSuite <>{path}</>
-      //     </LogoDiv>
-      //     <SubHeader />
-      //     <SideBar />
       //     <Socials />
       //   </SideBarContainer>
 

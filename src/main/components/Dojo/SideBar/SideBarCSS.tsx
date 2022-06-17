@@ -10,6 +10,7 @@ export const Container = styled.div`
   display: flex;
   border-radius: 0% 10% 3% 15%;
   padding-left: 15px;
+  z-index: 1;
 `
 
 export const List = styled.ul`

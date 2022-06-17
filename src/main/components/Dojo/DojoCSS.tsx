@@ -453,11 +453,14 @@ export const SubHeader = styled.div`
   text-decoration-line: underline;
 `
 export const SidePanel = styled.div`
-  height: 100%;
-  width: 20vw;
+  height: 100vh;
+  width: 100px;
+  min-width: 100px;
   display: flex;
   flex-direction: column;
-  justify-content: end;
-  margin-left: 11rem;
   z-index: 1;
+  backdrop-filter: blur(10px);
+  background: cyan;
 `
+
+export const BreadCrumb = styled.div``
