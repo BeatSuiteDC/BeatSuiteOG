@@ -5,10 +5,10 @@ import { useStores } from "../../hooks/useStores"
 import { useTheme } from "../../hooks/useTheme"
 import { PlayerPanel } from "./Audio/AudioControls"
 import { DojoCSS } from "./DojoCSS"
-import LiveStreamer from "./LiveStreamer"
-import Loading from "./Loading"
+import Featured from "./Featured/Featured"
 import SideBar from "./SideBar"
 import Socials from "./Socials"
+import Layout from "./WalletLayout/Layout"
 
 const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const {
@@ -18,19 +18,34 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
     },
   } = useStores()
 
+  const Container = styled.div`
+    position: absolute;
+    top: 18%;
+    left: 18%;
+    z-index: -199;
+    height: 60%;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  `
+
   console.log({ isPlaying, path })
   return (
     <>
+      <Container>{path === "/home" && <Featured />}</Container>
       {/* {path === "/app" && <Hero />} */}
-      {/* {path === "/dojo" && <Dojo />} */}
       {/* {path === "/home" && <PianoRollEditor />} */}
       {/* {path === "/tempo" && <TempoEditor />} */}
-      {!isPlaying && <Loading />}
+      {/* {!isPlaying && <Loading />} */}
     </>
   )
 })
 
 const Dojo = () => {
+  const {
+    router: { path },
+  } = useStores()
   const theme = useTheme()
 
   const InterfaceContainer = styled.div`
@@ -99,53 +114,26 @@ const Dojo = () => {
     <>
       <DojoCSS />
       <InterfaceContainer>
-        <LiveStreamer />
+        {/* <LiveStreamer /> */}
         <SideBarContainer>
-          <LogoDiv>BeatSuite</LogoDiv>
+          <LogoDiv>
+            BeatSuite <>{path}</>
+          </LogoDiv>
           <SubHeader />
           <SideBar />
           <Socials />
         </SideBarContainer>
+
         <PlayerPanel />
 
-        <SidePanel></SidePanel>
+        <SidePanel>
+          <Layout />
+        </SidePanel>
 
         <Routes />
       </InterfaceContainer>
     </>
   )
 }
-
-const extra = `
-{/* <div className="radioContainer">
-          <div className="logo">BeatSuite</div>
-          {/* <div className="subHeading"></div> */}
-          {/* side bar mapping from RadioStations */}
-          <SideBar />
-          <Socials />
-        {/* Audio Controls */}
-        <PlayerPanel />
-
-        {/* <div className="unpauseScreen">
-          <PauseImage />
-          <p style={{ marginTop: "0rem" }}>Music Paused</p>
-        </div> */}
-
-        {/* <AdditionSettings youtube={youtubeChannal} radio={stationName} /> */}
-        {/* <div className="videoContainer">
-          <ReactPlayer
-            className="vid"
-            width="140%"
-            height="140%"
-            loop="true"
-            playing={livestream}
-            volume="mute"
-            url={video}
-          />
-        </div> */}
-        {/* <Routes /> */}
-        {/* {loading && <Loading />} */}
-        {/* <Footer>this is the main footer</Footer> */}
-`
 
 export default Dojo

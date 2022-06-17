@@ -16,7 +16,7 @@ const LiveStreamer = () => {
         height="140%"
         loop={true}
         playing={true}
-        volume={volume.level}
+        volume={0}
         url={liveStreamUrl}
       />
     </div>

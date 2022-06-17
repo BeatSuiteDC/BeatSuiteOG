@@ -24,6 +24,7 @@ export default class Authentication {
     makeObservable<Authentication, "_connector">(this, {
       _connector: observable,
       isConnected: computed,
+      address: computed,
     })
 
     this._connector = new WalletConnect({
@@ -34,6 +35,15 @@ export default class Authentication {
 
   get isConnected() {
     return this._connector.connected
+  }
+
+  get address() {
+    const account = this._connector.accounts[0]
+    console.log({ account })
+    return `${account.slice(0, 6)}...${account.slice(
+      account.length - 4,
+      account.length
+    )}`
   }
 
   async connect() {

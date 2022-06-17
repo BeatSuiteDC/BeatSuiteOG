@@ -9,7 +9,7 @@ export type RoutePath =
   | "/home"
 
 export default class Router {
-  path: RoutePath = "/track"
+  path: RoutePath = "/home"
 
   constructor() {
     makeObservable(this, {
