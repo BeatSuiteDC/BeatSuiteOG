@@ -30,14 +30,15 @@ export const SideBar = () => {
   const { router } = useStores()
 
   const Container = styled.div`
-    border-color: blue;
-    width: 99%;
-    height: 70%;
-    box-shadow: 1px 0px 0 white;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    width: 105%;
+    height: 40%;
+    box-shadow: 1px 0px 3px #99badd;
     text-align: center;
     display: flex;
-    justify-content: end;
-    z-index: 1;
+    border-radius: 0% 10% 3% 15%;
+    padding-left: 15px;
   `
 
   const List = styled.div`
@@ -46,6 +47,7 @@ export const SideBar = () => {
     flex-direction: column;
     align-items: flex-end;
     margin-right: 3px;
+    margin-left: 3px;
   `
 
   const Element = styled.div`
@@ -58,15 +60,6 @@ export const SideBar = () => {
     text-shadow: 1px 1px rgb(0 0 0 / 70%);
     cursor: pointer;
     align-text: center;
-  `
-
-  const Triangle = styled.div`
-    width: 12px;
-    height: 14px;
-    padding-right: 1px;
-    filter: invert(82%) sepia(0%) saturate(0%) hue-rotate(222deg)
-      brightness(97%) contrast(86%);
-    cursor: pointer;
   `
 
   return (

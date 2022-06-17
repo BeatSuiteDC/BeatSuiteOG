@@ -7,6 +7,7 @@ export const DojoCSS = () => {
   return (
     <Global
       styles={css`
+        @import url("https://fonts.googleapis.com/css2?family=Indie+Flower&family=Kdam+Thmor+Pro&display=swap");
         .vid {
           position: relative;
           overflow: hidden;
@@ -382,15 +383,21 @@ export const SideBarContainer = styled.div`
   flex-direction: column;
   width: 15vw;
   align-content: flex-end;
-  z-index: -1;
 `
+
+export const SearchBar = styled.div`
+  font-size: 20px;
+  position: relative;
+  width: 100%;
+`
+
 export const LogoDiv = styled.div`
   width: 250%;
   height: 10%;
   text-align: center;
   font-size: 32px;
   color: white;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Kdam Thmor Pro", sans-serif;
   font-weight: 200;
   text-transform: uppercase;
   letter-spacing: 7px;
