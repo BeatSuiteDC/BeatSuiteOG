@@ -1,4 +1,4 @@
-import { Config, DAppProvider, Mainnet } from "@usedapp/core"
+import { Config, Mainnet } from "@usedapp/core"
 import { getDefaultProvider } from "ethers"
 
 import React, { FC } from "react"
@@ -19,9 +19,9 @@ const Web3Provider: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   }
 
   return (
-    // <>{children}</>
+    <>{children}</>
     // <Web3ReactProvider getLibrary={library}>{children}</Web3ReactProvider>
-    <DAppProvider config={config}>{children}</DAppProvider>
+    // <DAppProvider config={config}>{children}</DAppProvider>
     // <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
     //   {children}
     // </MoralisProvider>

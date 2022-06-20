@@ -1,20 +1,18 @@
-import styled from "@emotion/styled"
-import { Input } from "@mui/material"
 import { observer } from "mobx-react-lite"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { useStores } from "../../hooks/useStores"
 import {
   BreadCrumb,
   DojoCSS,
   InterfaceContainer,
   LogoDiv,
-  SearchBar,
   SideBarContainer,
   SidePanel,
   SubHeader,
 } from "./DojoCSS"
 import Loading from "./Loading"
-import { MainContainer } from "./MainContainer"
+import { MainePane } from "./MainePane"
+import { SearchBar } from "./SearchBar"
 
 // import LiveStreamer from "./LiveStreamer"
 import SideBar from "./SideBar"
@@ -29,18 +27,6 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
       streamer: { isPlaying },
     },
   } = useStores()
-
-  const PathContainer = styled.div`
-    position: absolute;
-    top: 18%;
-    left: 18%;
-    z-index: -199;
-    height: 60%;
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  `
 
   console.log({ isPlaying, path })
   return (
@@ -57,7 +43,12 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
 const Dojo = () => {
   const {
     router: { path },
+    services: {
+      streamer: { isPlaying },
+    },
   } = useStores()
+
+  useEffect(() => {}, [path, isPlaying])
 
   return (
     <>
@@ -73,14 +64,14 @@ const Dojo = () => {
           </LogoDiv>
 
           <SubHeader />
-          <SearchBar placeholder="Search">
-            <Input type="text" placeholder="Search.." />
-          </SearchBar>
+
+          <SearchBar />
 
           <SideBar />
+
           <TrackPlayer trackName="Pure Heat" artistName="DCAT" />
         </SideBarContainer>
-        <MainContainer />
+        <MainePane />
         <SidePanel></SidePanel>
       </InterfaceContainer>
       {/* <InterfaceContainer>

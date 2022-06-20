@@ -1,17 +1,15 @@
-import { motion } from "framer-motion"
-import { useCallback } from "react"
-import { Link } from "react-router-dom"
-import { useStores } from "../../../hooks/useStores"
+import { Tabs } from "@mui/material"
 import { RoutePath } from "../../../stores/Router"
-import { Container, Element, List } from "./SideBarCSS"
+import SideBarElement from "./Element"
+import { Container } from "./SideBarCSS"
 
-type Page = {
+export type Page = {
   title?: string
   path: RoutePath
   icon?: any
 }
 
-const SideBarElements: Array<Page> = [
+export const SideBarElements: Array<Page> = [
   {
     title: "Dojo",
     path: "home",
@@ -30,38 +28,17 @@ const SideBarElements: Array<Page> = [
   },
 ]
 
-export const SideBar = () => {
-  const { router } = useStores()
-
+const SideBar = () => {
   return (
     <Container>
-      <List>
+      <Tabs orientation="vertical">
+        {/* <List> */}
         {SideBarElements.map((page, i, a) => {
-          const delay = (i / a.length) * 1.1
-          return (
-            <div key={i}>
-              <Element>
-                <motion.div
-                  animate={{ opacity: [0, 1] }}
-                  transition={{ delay: delay }}
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.09 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={useCallback(() => (router.path = page.path), [])}
-                    className="station"
-                  >
-                    <Link to={`#${page.path}`}>
-                      {page.icon && <i>{page.icon}</i>}
-                      <span>{page.title}</span>
-                    </Link>
-                  </motion.div>
-                </motion.div>
-              </Element>
-            </div>
-          )
+          const delay = (i / a.length) * 1.15
+          return <SideBarElement key={i} delay={delay} page={page} />
         })}
-      </List>
+        {/* </List> */}
+      </Tabs>
     </Container>
   )
 }

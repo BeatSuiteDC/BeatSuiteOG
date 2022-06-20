@@ -38,7 +38,7 @@ export const TrackPlayer: FC<React.PropsWithChildren<Tracklist>> = observer(
           <Top>
             <TopImg
               style={{
-                animation: `spin ${isPlaying ? 3 : 0}s linear infinite`,
+                animation: `${isPlaying ? "spin 3s linear infinite" : ""}`,
               }}
               src={Track}
             />

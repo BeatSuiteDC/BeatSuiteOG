@@ -1,17 +1,14 @@
 // import { Carousel } from "@sefailyasoz/react-carousel"
 import styled from "@emotion/styled"
-import { Tabs } from "antd"
-import AntdCSS from "./AntdCSS"
-const { TabPane } = Tabs
 
-type Album = {
+export type AlbumProps = {
   src: string
   cover: string
   album: string
   song: string
   duration: string
 }
-const bears = [
+export const bears: Array<AlbumProps> = [
   {
     src: "https://ipfs.moralis.io:2053/ipfs/Qmf8xEYZdMtQXYv56VxxmzbtUtEVjmaFaXGCgcBqGXDAA6/music/JTwinkle.mp3",
     cover:
@@ -101,10 +98,8 @@ const AlbumSelection = styled.div`
 const Featured = () => {
   return (
     <>
-      <AntdCSS />
-
       <AlbumsDiv>
-        {bears.map((e: Album) => (
+        {bears.map((e: AlbumProps) => (
           <AlbumSelection>
             <Img
               src={e.cover}
@@ -114,11 +109,6 @@ const Featured = () => {
           </AlbumSelection>
         ))}
       </AlbumsDiv>
-      {/* <Tabs defaultActiveKey="1">
-        <TabPane tab="FEATURED" key="1">
-          
-        </TabPane>
-      </Tabs> */}
     </>
   )
 }

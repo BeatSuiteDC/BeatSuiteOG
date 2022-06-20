@@ -3,7 +3,7 @@ import styled from "@emotion/styled"
 export const Container = styled.div`
   overflow: hidden;
   backdrop-filter: blur(10px);
-  width: 105%;
+  width: 90%;
   height: 60%;
   box-shadow: 1px 0px 3px #99badd;
   text-align: center;
@@ -22,7 +22,7 @@ export const List = styled.ul`
   margin-left: 3px;
 `
 
-export const Element = styled.div`
+export const ElementDiv = styled.div`
   font-size: 26px;
   font-family: "Montserrat", sans-serif;
   font-weight: 200;

@@ -1,13 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { useStores } from "../../hooks/useStores"
 import Dojo from "../Dojo/Dojo"
 import { RootView } from "../RootView/RootView"
-
 import { Hero } from "./Hero"
 
 const MainRouter = () => {
-  const { router, user } = useStores()
-
   return (
     <BrowserRouter>
       <Routes>

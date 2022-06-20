@@ -1,4 +1,5 @@
-import { BannerContainer } from "../MainContainer/MainCSS"
+import { MaineCSS } from "../MainePane"
+const { BannerContainer } = MaineCSS
 const Banner = () => {
   return <BannerContainer>{/* <BannerImg src={nirvana} /> */}</BannerContainer>
 }

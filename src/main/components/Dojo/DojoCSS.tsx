@@ -398,12 +398,6 @@ export const SideBarContainer = styled.div`
   transition: all 0.3s cubic-bezier(0.175, 0885, 0.32, 1.275);
 `
 
-export const SearchBar = styled.div`
-  font-size: 20px;
-  position: relative;
-  width: 100%;
-`
-
 export const LogoDiv = styled.div`
   width: 250%;
   height: 10%;
@@ -464,3 +458,15 @@ export const SidePanel = styled.div`
 `
 
 export const BreadCrumb = styled.div``
+
+export const PathContainer = styled.div`
+  position: absolute;
+  top: 18%;
+  left: 18%;
+  z-index: -199;
+  height: 60%;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`

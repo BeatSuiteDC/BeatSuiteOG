@@ -1,11 +1,12 @@
 // import styled from "@emotion/styled"
+import { observer } from "mobx-react-lite"
 import { FC } from "react"
 import { Navigate } from "react-router-dom"
 import { useStores } from "../../hooks/useStores"
 import logo from "../../images/logo.png"
 import ConnectWallet from "./ConnecBtn"
 
-export const Hero: FC<React.PropsWithChildren<unknown>> = () => {
+export const Hero: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { user } = useStores()
   if (user.isConnected) {
     return <Navigate to="/dojo" />
@@ -42,9 +43,9 @@ export const Hero: FC<React.PropsWithChildren<unknown>> = () => {
           <div className="bubble3"></div>
         </div>
         <div className="wrap">
-          <ConnectWallet />
+          <ConnectWallet user={user} />
         </div>
       </div>
     </div>
   )
-}
+})
