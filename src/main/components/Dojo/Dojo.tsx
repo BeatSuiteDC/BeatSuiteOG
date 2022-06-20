@@ -74,19 +74,6 @@ const Dojo = () => {
         <MainePane />
         <SidePanel></SidePanel>
       </InterfaceContainer>
-      {/* <InterfaceContainer>
-      //   <SideBarContainer>
-      //     <Socials />
-      //   </SideBarContainer>
-
-      //   <PlayerPanel />
-
-      //   <SidePanel>
-      //     <Layout />
-      //   </SidePanel>
-
-      //   <Routes />
-      // </InterfaceContainer>  */}
     </>
   )
 }

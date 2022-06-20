@@ -125,28 +125,46 @@ const Button = styled.button`
     right: -50%;
   }
 `
-export const SlidesDiv = styled.div`
-  display: grid;
-  height: 100%;
-  > .slide {
-    grid-area: 1 / -1;
-  }
+
+export const CardDiv = styled.div`
+  margin: 20px;
+  background: #99badd;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.75);
+  display: flex;
+  background-size: cover;
+  justify-content: center;
+  background-position: center center;
+  position: relative;
+  align-items: center;
+  width: 20vw;
+  height: 30vh;
+  grid-column: 1 / -1;
 `
 
 export const SlideDiv = styled.div`
-  width: 30vw;
-  height: 40vw;
+  height: 10;
   outline: 1px solid;
+  background-size: cover;
+  background-position: center center;
+  flex-flow: row-wrap;
+`
+
+export const List = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  overflow: scroll;
 `
 
 export const Container = styled.div`
-  background: grey;
-  height: 40%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  height: 35%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  position: absolute;
+  grid-template-columns: auto auto;
 `

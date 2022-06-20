@@ -1,4 +1,3 @@
-// import { Carousel } from "@sefailyasoz/react-carousel"
 import styled from "@emotion/styled"
 
 export type AlbumProps = {
@@ -8,6 +7,7 @@ export type AlbumProps = {
   song: string
   duration: string
 }
+
 export const bears: Array<AlbumProps> = [
   {
     src: "https://ipfs.moralis.io:2053/ipfs/Qmf8xEYZdMtQXYv56VxxmzbtUtEVjmaFaXGCgcBqGXDAA6/music/JTwinkle.mp3",

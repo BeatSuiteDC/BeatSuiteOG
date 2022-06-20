@@ -18,17 +18,15 @@ export const MainCSS = () => {
 }
 
 export const Container = styled.div`
-  background: black;
   height: 100vh;
   flex-grow: 1;
-  overflow: hidden;
+  overflow: scroll;
   backdrop-filter: blur(10px);
 `
 export const BannerContainer = styled.div`
   position: relative;
-  height: 100px;
+  height: 60px;
   opacity: 0.5;
-  background: grey;
 `
 export const BannerImg = styled.img`
   position: absolute;

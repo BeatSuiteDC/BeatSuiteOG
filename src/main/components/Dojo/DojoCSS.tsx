@@ -385,11 +385,12 @@ export const InterfaceContainer = styled.div`
   width: 98%;
   height: 97vh;
   display: flex;
-  margin-left: 30px;
+  margin-left: 20px;
   margin-top: 20px;
   flex-direction: row;
   justify-content: space-between;
 `
+
 export const SideBarContainer = styled.div`
   display: flex;
   flex-direction: column;

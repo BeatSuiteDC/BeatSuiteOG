@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom"
 import { useStores } from "../../hooks/useStores"
 import logo from "../../images/logo.png"
 import ConnectWallet from "./ConnecBtn"
+import { HeroCSS } from "./HeroCSS"
 
 export const Hero: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { user } = useStores()
@@ -13,7 +14,7 @@ export const Hero: FC<React.PropsWithChildren<unknown>> = observer(() => {
   }
   return (
     <div>
-      {/* <HeroCSS /> */}
+      <HeroCSS />
       <div className="heroContainer">
         <div className="videoContainer2">
           {/* <ReactPlayer
