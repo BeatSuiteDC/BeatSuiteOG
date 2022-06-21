@@ -103,6 +103,7 @@ const Slide: FC<PosterProps> = ({ album, offset, key }) => {
         <h3 className="slideSubtitle">{album.song}</h3>
         <p className="slideDescription">{album.duration}</p>
       </div>
+      <button>Play</button>
     </CardDiv>
     // <SlideDiv key={key} className="slide" data-active={active}>
     //   <div

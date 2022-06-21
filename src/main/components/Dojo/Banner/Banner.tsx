@@ -1,7 +1,7 @@
 import { MaineCSS } from "../MainePane"
 const { BannerContainer } = MaineCSS
 const Banner = () => {
-  return <BannerContainer>{/* */}</BannerContainer>
+  return <BannerContainer>{/* __ */}</BannerContainer>
 }
 
 export default Banner

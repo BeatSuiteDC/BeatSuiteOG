@@ -20,6 +20,8 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
   console.log({ isPlaying, path })
   return (
     <>
+      <Poster />
+
       {/* <PathContainer>{path === "/home" && <Featured />}</PathContainer> */}
       {/* {path === "a" && <Hero />} */}
       {/* {path === "/home" && <PianoRollEditor />} */}
@@ -44,7 +46,7 @@ const Pane: FC<React.PropsWithChildren<unknown>> = observer(() => {
       <MainCSS />
       <Container>
         <Banner />
-        <Poster />
+        <Routes />
       </Container>
     </>
   )

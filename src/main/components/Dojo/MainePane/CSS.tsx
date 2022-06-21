@@ -25,7 +25,7 @@ export const Container = styled.div`
 `
 export const BannerContainer = styled.div`
   position: relative;
-  height: 60px;
+  height: 70px;
   opacity: 0.5;
 `
 export const BannerImg = styled.img`

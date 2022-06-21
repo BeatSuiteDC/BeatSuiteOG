@@ -98,11 +98,10 @@ export const PosterCSS = () => {
   )
 }
 
-const Button = styled.button`
+export const Button = styled.button`
   border: none;
   color: white;
   position: absolute;
-  font-size: 5rem;
   width: 5rem;
   height: 5rem;
   top: 30%;
@@ -127,7 +126,7 @@ const Button = styled.button`
 `
 
 export const CardDiv = styled.div`
-  margin: 20px;
+  margin: 10px;
   background: #99badd;
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.75);
@@ -139,7 +138,12 @@ export const CardDiv = styled.div`
   align-items: center;
   width: 20vw;
   height: 30vh;
+
   grid-column: 1 / -1;
+  :hover {
+    transform: scale(1.1);
+    animation
+  }
 `
 
 export const SlideDiv = styled.div`
@@ -154,9 +158,10 @@ export const List = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: row;
-  overflow: scroll;
+  overflow-y: scroll;
+  position: relative;
 `
 
 export const Container = styled.div`
@@ -166,5 +171,6 @@ export const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   position: absolute;
+  overflow: auto;
   grid-template-columns: auto auto;
 `
