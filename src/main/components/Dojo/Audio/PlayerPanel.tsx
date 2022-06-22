@@ -55,9 +55,9 @@ const Button = styled.div`
   padding: 0.4rem;
   color: ${({ theme }) => theme.textColor};
   display: flex;
-  cursor: pointer;
+  cursor: poinpter;
 
-  &:hover {
+  :hover {
     background: #ffffff0d;
   }
 

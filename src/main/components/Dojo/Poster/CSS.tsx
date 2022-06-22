@@ -6,91 +6,15 @@ export const PosterCSS = () => {
     <>
       <Global
         styles={css`
-          .slideContent {
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            transition: transform 0.5s ease-in-out;
-            opacity: 0.7;
-
-            display: grid;
-            align-content: center;
-
-            transform-style: preserve-3d;
-            transform: perspective(1000px)
-              translateX(calc(100% * var(--offset)))
-              rotateY(calc(-45deg * var(--dir)));
-          }
-
-          .slideContentInner {
-            transform-style: preserve-3d;
-            transform: translateZ(2rem);
-            transition: opacity 0.3s linear;
-            text-shadow: 0 0.1rem 1rem #000;
-            opacity: 0;
-
-            .slideSubtitle,
-            .slideTitle {
-              font-size: 2rem;
-              font-weight: normal;
-              letter-spacing: 0.2ch;
-              text-transform: uppercase;
-              margin: 0;
-            }
-
-            .slideSubtitle::before {
-              content: "— ";
-            }
-
-            .slideDescription {
-              margin: 0;
-              font-size: 0.8rem;
-              letter-spacing: 0.2ch;
-            }
-          }
-
-          .slideBackground {
-            position: fixed;
-            top: 0;
-            left: -10%;
-            right: -10%;
-            bottom: 0;
-            background-size: cover;
-            background-position: center center;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s linear, transform 0.3s ease-in-out;
-            pointer-events: none;
-
-            transform: translateX(calc(10% * var(--dir)));
-          }
-
-          .slide[data-active] {
-            z-index: 2;
-            pointer-events: auto;
-
-            .slideBackground {
-              opacity: 0.2;
-              transform: none;
-            }
-
-            .slideContentInner {
-              opacity: 1;
-            }
-
-            .slideContent {
-              --x: calc(var(--px) - 0.5);
-              --y: calc(var(--py) - 0.5);
-              opacity: 1;
-
-              transform: perspective(1000px);
-
-              &:hover {
-                transition: none;
-                transform: perspective(1000px) rotateY(calc(var(--x) * 45deg))
-                  rotateX(calc(var(--y) * -45deg));
-              }
-            }
+          .slideCard {
+            height: 35%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            grid-template-columns: auto auto;
           }
         `}
       />
@@ -98,6 +22,94 @@ export const PosterCSS = () => {
   )
 }
 
+const backupCss = `
+.slideContent {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: transform 0.5s ease-in-out;
+  opacity: 0.7;
+
+  display: grid;
+  align-content: center;
+
+  transform-style: preserve-3d;
+  transform: perspective(1000px)
+    translateX(calc(100% * var(--offset)))
+    rotateY(calc(-45deg * var(--dir)));
+}
+
+.slideContentInner {
+  transform-style: preserve-3d;
+  transform: translateZ(2rem);
+  transition: opacity 0.3s linear;
+  text-shadow: 0 0.1rem 1rem #000;
+  opacity: 0;
+
+  .slideSubtitle,
+  .slideTitle {
+    font-size: 2rem;
+    font-weight: normal;
+    letter-spacing: 0.2ch;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .slideSubtitle::before {
+    content: "— ";
+  }
+
+  .slideDescription {
+    margin: 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.2ch;
+  }
+}
+
+.slideBackground {
+  position: fixed;
+  top: 0;
+  left: -10%;
+  right: -10%;
+  bottom: 0;
+  background-size: cover;
+  background-position: center center;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s linear, transform 0.3s ease-in-out;
+  pointer-events: none;
+
+  transform: translateX(calc(10% * var(--dir)));
+}
+
+.slide[data-active] {
+  z-index: 2;
+  pointer-events: auto;
+
+  .slideBackground {
+    opacity: 0.2;
+    transform: none;
+  }
+
+  .slideContentInner {
+    opacity: 1;
+  }
+
+  .slideContent {
+    --x: calc(var(--px) - 0.5);
+    --y: calc(var(--py) - 0.5);
+    opacity: 1;
+
+    transform: perspective(1000px);
+
+    &:hover {
+      transition: none;
+      transform: perspective(1000px) rotateY(calc(var(--x) * 45deg))
+        rotateX(calc(var(--y) * -45deg));
+    }
+  }
+}
+`
 export const Button = styled.button`
   border: none;
   color: white;
@@ -139,7 +151,8 @@ export const CardDiv = styled.div`
   min-width: 15vw;
   height: 25vh;
   :hover {
-    transform: scale(1.1);
+    border-color: #99badd;
+    border-width: 2px;
   }
 `
 

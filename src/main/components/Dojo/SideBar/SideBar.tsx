@@ -1,7 +1,6 @@
-import { Tabs } from "@mui/material"
 import { RoutePath } from "../../../stores/Router"
 import SideBarElement from "./Element"
-import { Container } from "./SideBarCSS"
+import { Container, List } from "./SideBarCSS"
 
 export type Page = {
   title?: string
@@ -31,14 +30,12 @@ export const SideBarElements: Array<Page> = [
 const SideBar = () => {
   return (
     <Container>
-      <Tabs orientation="vertical">
-        {/* <List> */}
+      <List>
         {SideBarElements.map((page, i, a) => {
           const delay = (i / a.length) * 1.15
           return <SideBarElement key={i} delay={delay} page={page} />
         })}
-        {/* </List> */}
-      </Tabs>
+      </List>
     </Container>
   )
 }

@@ -50,11 +50,7 @@ const slidesReducer = (state: any, event: any) => {
 
 const Slide: FC<PosterProps> = ({ album, active, key }) => {
   return (
-    <CardDiv
-      key={key}
-      data-active={active}
-      style={{ backgroundImage: `url('${album.cover}')` }}
-    >
+    <CardDiv key={key} style={{ backgroundImage: `url('${album.cover}')` }}>
       <div className="slideContentInner">
         <h2 className="slideTitle">{album.album}</h2>
         <h3 className="slideSubtitle">{album.song}</h3>

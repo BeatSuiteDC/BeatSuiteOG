@@ -27,18 +27,17 @@ const Effect: FC<EffectProps> = ({ label }) => {
   return <Effectdiv>{label}</Effectdiv>
 }
 
+const effects = ["Wicked", "tough", "wild", "ultra"]
+
 const Body: FC = () => {
   return (
     <BodyContainer>
       <EffectsContainer>
         <EffectsH2>Effects</EffectsH2>
         <EffectsWrapper>
-          <Effect label="House" />
-          <Effect label="Minimal" />
-          <Effect label="Country" />
-          <Effect label="Trap" />
-          <Effect label="Techno" />
-          <Effect label="Blues" />
+          {effects.map((e, i) => {
+            return <Effect label={e}></Effect>
+          })}
         </EffectsWrapper>
       </EffectsContainer>
       <div
