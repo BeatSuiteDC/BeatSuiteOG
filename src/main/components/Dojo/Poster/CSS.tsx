@@ -136,13 +136,10 @@ export const CardDiv = styled.div`
   background-position: center center;
   position: relative;
   align-items: center;
-  width: 20vw;
-  height: 30vh;
-
-  grid-column: 1 / -1;
+  min-width: 15vw;
+  height: 25vh;
   :hover {
     transform: scale(1.1);
-    animation
   }
 `
 
@@ -156,11 +153,11 @@ export const SlideDiv = styled.div`
 
 export const List = styled.div`
   height: 100%;
-  width: 100%;
+  width: 60rem;
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
-  overflow-y: scroll;
+  overflow-x: scroll;
   position: relative;
 `
 
@@ -170,7 +167,7 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  position: absolute;
-  overflow: auto;
+  position: relative;
+  overflow: hidden;
   grid-template-columns: auto auto;
 `

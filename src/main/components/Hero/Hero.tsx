@@ -44,7 +44,7 @@ export const Hero: FC<React.PropsWithChildren<unknown>> = observer(() => {
           <div className="bubble3"></div>
         </div>
         <div className="wrap">
-          <ConnectWallet user={user} />
+          <ConnectWallet />
         </div>
       </div>
     </div>

@@ -2,11 +2,60 @@ import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
 import { useStores } from "../../../hooks/useStores"
 import Banner from "../Banner/Banner"
+import { bears } from "../Featured/Featured"
 import Poster from "../Poster"
-import { Container, MainCSS } from "./CSS"
+import { Track } from "../Track"
+import {
+  BodyContainer,
+  Container,
+  Effectdiv,
+  EffectsContainer,
+  EffectsH2,
+  EffectsWrapper,
+  MainCSS,
+} from "./CSS"
 
 type BannerTab = {
   title: string
+}
+
+type EffectProps = {
+  label: string
+}
+
+const Effect: FC<EffectProps> = ({ label }) => {
+  return <Effectdiv>{label}</Effectdiv>
+}
+
+const Body: FC = () => {
+  return (
+    <BodyContainer>
+      <EffectsContainer>
+        <EffectsH2>Effects</EffectsH2>
+        <EffectsWrapper>
+          <Effect label="House" />
+          <Effect label="Minimal" />
+          <Effect label="Country" />
+          <Effect label="Trap" />
+          <Effect label="Techno" />
+          <Effect label="Blues" />
+        </EffectsWrapper>
+      </EffectsContainer>
+      <div
+        className="tracks"
+        style={{
+          font: "bold",
+          paddingRight: "2.75rem",
+          width: "100%",
+          position: "relative",
+        }}
+      >
+        {bears.map((track, i) => {
+          return <Track track={track} key={i} />
+        })}
+      </div>
+    </BodyContainer>
+  )
 }
 
 const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
@@ -20,8 +69,6 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
   console.log({ isPlaying, path })
   return (
     <>
-      <Poster />
-
       {/* <PathContainer>{path === "/home" && <Featured />}</PathContainer> */}
       {/* {path === "a" && <Hero />} */}
       {/* {path === "/home" && <PianoRollEditor />} */}
@@ -46,7 +93,8 @@ const Pane: FC<React.PropsWithChildren<unknown>> = observer(() => {
       <MainCSS />
       <Container>
         <Banner />
-        <Routes />
+        <Poster />
+        <Body />
       </Container>
     </>
   )

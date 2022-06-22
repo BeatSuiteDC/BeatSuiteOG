@@ -395,6 +395,7 @@ export const SideBarContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 15vw;
+  position: relative;
   align-content: flex-end;
   transition: all 0.3s cubic-bezier(0.175, 0885, 0.32, 1.275);
 `
@@ -453,6 +454,7 @@ export const SidePanel = styled.div`
   min-width: 100px;
   display: flex;
   flex-direction: column;
+  background: cyan;
   z-index: 1;
   backdrop-filter: blur(10px);
   background: cyan;

@@ -20,7 +20,6 @@ export const MainCSS = () => {
 export const Container = styled.div`
   height: 100vh;
   flex-grow: 1;
-  overflow: scroll;
   backdrop-filter: blur(10px);
 `
 export const BannerContainer = styled.div`
@@ -48,4 +47,46 @@ export const TabList = styled.div`
   text-align: center;
   border-radius: 15px;
   border: red 5px solid;
+`
+
+export const BodyContainer = styled.div`
+  position: absolute;
+  column-gap: 2rem;
+  min-width: 100%;
+  display: flex;
+  margin-left: 1.5rem;
+`
+export const TrackContainer = styled.div`
+  font-weight: bold;
+  margin-bottom: 3px;
+`
+export const EffectsContainer = styled.div`
+  max-width: 270px;
+`
+
+export const EffectsH2 = styled.h2`
+  color: #99badd;
+  font-weight: bold;
+  margin-bottom: 0.875rem;
+`
+
+export const EffectsWrapper = styled.div`
+  display: flex;
+  column-gap: 0.25rem;
+  row-gap; 0.25rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+`
+
+export const Effectdiv = styled.div`
+  color: #cecece;
+  border-radius: 20px;
+  border-color: cyan;
+  border-width: 1px;  
+  padding: 0.625rem 0.875rem 0.625rem 0.875rem;
+  margin: 5px;
+  font-size; 11px;
+  font-weight: bold;
+  cursor: default;
+
 `

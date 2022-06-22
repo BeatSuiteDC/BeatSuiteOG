@@ -3,8 +3,6 @@
 import WalletConnect from "@walletconnect/client"
 import QRCodeModal from "@walletconnect/qrcode-modal"
 
-import { Wallet } from "ethers"
-
 import { computed, makeObservable, observable } from "mobx"
 
 const clientId =
@@ -15,22 +13,27 @@ const INFURA_ID = process.env.REACT_APP_INFURA_ID as string
 export default class Authentication {
   _userName = ""
   _email = ""
-  walletAddress = ""
-  _wallet: Wallet | undefined
-  _auth: any
-  _connector: WalletConnect
+  private _connector: WalletConnect
+  // private _auth: Web3Auth
 
   constructor() {
     makeObservable<Authentication, "_connector">(this, {
       _connector: observable,
-      isConnected: computed,
       address: computed,
+      isConnected: computed,
     })
 
     this._connector = new WalletConnect({
       bridge: "https://bridge.walletconnect.org", // Required
       qrcodeModal: QRCodeModal,
     })
+
+    // this._auth = new Web3Auth({
+    //   clientId,
+    //   chainConfig: {
+    //     chainNamespace: CHAIN_NAMESPACES.EIP155,
+    //   },
+    // })
   }
 
   get isConnected() {
@@ -38,6 +41,7 @@ export default class Authentication {
   }
 
   get address() {
+    if (!this.isConnected) return ""
     const account = this._connector.accounts[0]
     console.log({ account })
     return `${account.slice(0, 6)}...${account.slice(

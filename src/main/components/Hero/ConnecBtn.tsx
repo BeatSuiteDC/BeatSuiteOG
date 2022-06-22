@@ -2,19 +2,17 @@ import { Box, Button, Text } from "@chakra-ui/react"
 import { observer } from "mobx-react-lite"
 import { FC } from "react"
 import { Navigate } from "react-router-dom"
-import Authentication from "../../stores/Authentication"
+import { useStores } from "../../hooks/useStores"
 
-export type Wallet = {
-  user: Authentication
-}
-const ConnectWallet: FC<Wallet> = observer(({ user }) => {
-  const { isConnected, connect } = user
+const ConnectWallet: FC = observer(() => {
+  const { user } = useStores()
+
   const login = (event: any) => {
-    if (isConnected) {
+    if (user.isConnected) {
       return <Navigate to="/dojo" />
     }
 
-    connect().then(() => console.log("User connected", user.isConnected))
+    user.connect().then(() => console.log("User connected", user.isConnected))
   }
 
   return user.isConnected ? (
@@ -45,7 +43,7 @@ const ConnectWallet: FC<Wallet> = observer(({ user }) => {
         height="38px"
       >
         <Text color="white" fontSize="md" fontWeight="medium" mr="2">
-          {user.isConnected && user.address}
+          {/* {isConnected() && address()} */}
         </Text>
       </Button>
     </Box>
