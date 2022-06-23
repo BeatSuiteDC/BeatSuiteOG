@@ -176,6 +176,7 @@ export const List = styled.div`
 
 export const Container = styled.div`
   height: 35%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

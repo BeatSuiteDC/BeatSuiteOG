@@ -10,6 +10,7 @@ import {
   SidePanel,
   SubHeader,
 } from "./DojoCSS"
+import LiveStreamer from "./LiveStreamer"
 import Loading from "./Loading"
 import { MainePane } from "./MainePane"
 import { SearchBar } from "./SearchBar"
@@ -40,7 +41,7 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
   )
 })
 
-const Dojo = () => {
+const Dojo = observer(() => {
   const {
     router: { path },
     services: {
@@ -53,7 +54,7 @@ const Dojo = () => {
   return (
     <>
       <DojoCSS />
-      {/* <LiveStreamer /> */}
+      <LiveStreamer />
       <InterfaceContainer>
         <SideBarContainer>
           <LogoDiv>
@@ -76,6 +77,6 @@ const Dojo = () => {
       </InterfaceContainer>
     </>
   )
-}
+})
 
 export default Dojo

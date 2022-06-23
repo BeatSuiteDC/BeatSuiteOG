@@ -41,3 +41,4 @@ esdoc
 pkg
 build
 dist
+.vercel

@@ -8,7 +8,7 @@ export type AlbumProps = {
   duration: string
 }
 
-export const bears: Array<AlbumProps> = [
+const bears: Array<AlbumProps> = [
   {
     src: "https://ipfs.moralis.io:2053/ipfs/Qmf8xEYZdMtQXYv56VxxmzbtUtEVjmaFaXGCgcBqGXDAA6/music/JTwinkle.mp3",
     cover:

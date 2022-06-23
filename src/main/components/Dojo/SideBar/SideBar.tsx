@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite"
 import { RoutePath } from "../../../stores/Router"
 import SideBarElement from "./Element"
 import { Container, List } from "./SideBarCSS"
@@ -10,24 +11,24 @@ export type Page = {
 
 export const SideBarElements: Array<Page> = [
   {
+    title: "Streamer",
+    path: "albums",
+  },
+  {
     title: "Dojo",
     path: "home",
-  },
-  {
-    title: "Feed",
-    path: "feed",
-  },
-  {
-    title: "Albums",
-    path: "albums",
   },
   {
     title: "Uploads",
     path: "uploads",
   },
+  {
+    title: "Feed",
+    path: "feed",
+  },
 ]
 
-const SideBar = () => {
+const SideBar = observer(() => {
   return (
     <Container>
       <List>
@@ -38,6 +39,6 @@ const SideBar = () => {
       </List>
     </Container>
   )
-}
+})
 
 export default SideBar

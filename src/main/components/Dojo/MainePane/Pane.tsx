@@ -1,10 +1,8 @@
 import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
 import { useStores } from "../../../hooks/useStores"
+import Album from "../Album/Album"
 import Banner from "../Banner/Banner"
-import { bears } from "../Featured/Featured"
-import Poster from "../Poster"
-import { Track } from "../Track"
 import {
   BodyContainer,
   Container,
@@ -29,33 +27,32 @@ const Effect: FC<EffectProps> = ({ label }) => {
 
 const effects = ["Wicked", "tough", "wild", "ultra"]
 
-const Body: FC = () => {
+const Body: FC = observer(() => {
+  const { router } = useStores()
+  const path = router.path
+
+  console.log({ path })
   return (
     <BodyContainer>
-      <EffectsContainer>
-        <EffectsH2>Effects</EffectsH2>
-        <EffectsWrapper>
-          {effects.map((e, i) => {
-            return <Effect label={e}></Effect>
-          })}
-        </EffectsWrapper>
-      </EffectsContainer>
-      <div
-        className="tracks"
-        style={{
-          font: "bold",
-          paddingRight: "2.75rem",
-          width: "100%",
-          position: "relative",
-        }}
-      >
+      {path === "uploads" && (
+        <EffectsContainer>
+          <EffectsH2>Effects</EffectsH2>
+          <EffectsWrapper>
+            {effects.map((e, i) => {
+              return <Effect label={e}></Effect>
+            })}
+          </EffectsWrapper>
+        </EffectsContainer>
+      )}
+      {path === "albums" && <Album />}
+      {/* <TrackContainer>
         {bears.map((track, i) => {
           return <Track track={track} key={i} />
         })}
-      </div>
+      </TrackContainer> */}
     </BodyContainer>
   )
-}
+})
 
 const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const {
@@ -78,25 +75,24 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
 })
 
 const TabComponent: FC<BannerTab> = ({ title }) => {
-  const href = title.toLowerCase()
   return (
     <li>
-      <a href={`#${href}`}>{title}</a>
+      <a href={`#${title.toLowerCase()}`}>{title}</a>
     </li>
   )
 }
 
-const Pane: FC<React.PropsWithChildren<unknown>> = observer(() => {
+const Pane: FC = () => {
   return (
     <>
       <MainCSS />
       <Container>
         <Banner />
-        <Poster />
+        {/* <Poster /> */}
         <Body />
       </Container>
     </>
   )
-})
+}
 
 export default Pane

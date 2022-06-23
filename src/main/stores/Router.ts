@@ -10,7 +10,7 @@ export type RoutePath =
   | "feed"
 
 export default class Router {
-  path: RoutePath = "home"
+  path: RoutePath = "/track"
 
   constructor() {
     makeObservable(this, {
@@ -23,6 +23,6 @@ export default class Router {
   }
 
   pushTrack() {
-    this.path = `/track`
+    this.path = "/track"
   }
 }

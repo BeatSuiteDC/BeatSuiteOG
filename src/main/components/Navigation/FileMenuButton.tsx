@@ -127,7 +127,7 @@ export const FileMenuButton: FC<React.PropsWithChildren<unknown>> = observer(
           localized("confirm-dojo", "Work of art in progress. Are you sure?")
         )
       ) {
-        return <Navigate to="dojo" />
+        return <Navigate to="/dojo" />
       }
     }
 

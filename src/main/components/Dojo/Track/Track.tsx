@@ -15,7 +15,14 @@ const Track: FC<TrackProps> = ({ track, key }) => {
       >
         <Image src={track.cover} />
         <div>
-          <h4 className="text-white text-sm font-semibold truncate w-[450px]">
+          <h4
+            style={{
+              fontWeight: "bold",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
             {track.song}
           </h4>
           <p className="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white">

@@ -454,10 +454,8 @@ export const SidePanel = styled.div`
   min-width: 100px;
   display: flex;
   flex-direction: column;
-  background: cyan;
   z-index: 1;
   backdrop-filter: blur(10px);
-  background: cyan;
 `
 
 export const BreadCrumb = styled.div``

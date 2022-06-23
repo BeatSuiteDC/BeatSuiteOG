@@ -23,7 +23,7 @@ export const List = styled.ul`
 `
 
 export const ElementDiv = styled.div`
-  font-size: 26px;
+  font-size: 15px;
   font-family: "Montserrat", sans-serif;
   font-weight: 200;
   color: #c0c0c0;

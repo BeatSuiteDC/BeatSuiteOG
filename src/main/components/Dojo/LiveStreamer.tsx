@@ -8,6 +8,7 @@ const LiveStreamer = () => {
   } = rootStore
 
   const { liveStreamUrl, isPlaying, volume } = streamer
+  const url = "Video-Background.mp4"
   return (
     <div className="videoContainer">
       <ReactPlayer
@@ -17,7 +18,7 @@ const LiveStreamer = () => {
         loop={true}
         playing={true}
         volume={0}
-        url={liveStreamUrl}
+        url={url}
       />
     </div>
   )

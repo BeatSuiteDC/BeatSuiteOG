@@ -9,13 +9,22 @@ import {
   VolumeOffOutlined as volOff,
   VolumeUpOutlined as volUp,
 } from "@mui/icons-material"
+import { AlbumProps } from "../Album/Album"
 
 export interface LoopSetting {
   begin: number
   end: number
   enabled: boolean
 }
-;("//www.youtube.com/embed/TURbeWK2wwg?autoplay=1&mute=1&start=1")
+
+export const DEFAULT_ALBUM: AlbumProps = {
+  songs: [],
+  cover:
+    "https://upload.wikimedia.org/wikipedia/en/6/69/B.o.B_-_Strange_Clouds_-_LP_Cover.jpg",
+  title: "Strange Clouds",
+  year: 2022,
+  artist: "B.O.B",
+}
 export const DEFAULT_TEMPO = 120
 export const DEFAULT_LIVESTREAM =
   "https://www.youtube.com/embed/MlnNZV7Jujs?autoplay=1&mute=1&start=1"
@@ -52,6 +61,8 @@ export default class Streamer {
   private _playPauseImg: any
   private _volume: Volume
 
+  private _album: AlbumProps
+
   disableSeek: boolean = false
   isMetronomeEnabled: boolean = false
 
@@ -60,8 +71,9 @@ export default class Streamer {
   constructor(songStore: SongStore, trackMute: TrackMute) {
     makeObservable<
       Streamer,
-      "_currentTick" | "_isPlaying" | "_volume" | "_isMuted"
+      "_currentTick" | "_isPlaying" | "_volume" | "_isMuted" | "_album"
     >(this, {
+      _album: observable,
       _currentTick: observable,
       _isPlaying: observable,
       _volume: observable,
@@ -74,6 +86,7 @@ export default class Streamer {
       buttonClass: computed,
       liveStreamUrl: computed,
       isLiveStreaming: computed,
+      currentAlbum: computed,
     })
 
     this._trackMute = trackMute
@@ -89,6 +102,8 @@ export default class Streamer {
       mute: "volumeOn",
       image: volUp,
     }
+
+    this._album = DEFAULT_ALBUM
   }
 
   private get song() {
@@ -216,6 +231,14 @@ export default class Streamer {
       this._volume.mute = "volumeOn"
       this._volume.image = volUp
     }
+  }
+
+  get currentAlbum() {
+    return this._album
+  }
+
+  setAlbum(album: AlbumProps) {
+    this._album = album
   }
 
   get isLiveStreaming() {

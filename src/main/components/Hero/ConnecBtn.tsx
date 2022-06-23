@@ -1,6 +1,6 @@
 import { Box, Button, Text } from "@chakra-ui/react"
 import { observer } from "mobx-react-lite"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { Navigate } from "react-router-dom"
 import { useStores } from "../../hooks/useStores"
 
@@ -8,12 +8,17 @@ const ConnectWallet: FC = observer(() => {
   const { user } = useStores()
 
   const login = (event: any) => {
-    if (user.isConnected) {
-      return <Navigate to="/dojo" />
-    }
-
     user.connect().then(() => console.log("User connected", user.isConnected))
   }
+
+  useEffect(() => {
+    const checkAuth = () => {
+      if (user.isConnected) {
+        return <Navigate to="/dojo" />
+      }
+    }
+    checkAuth()
+  }, [user])
 
   return user.isConnected ? (
     <Box

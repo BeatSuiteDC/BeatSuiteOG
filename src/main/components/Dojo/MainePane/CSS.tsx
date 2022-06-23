@@ -11,6 +11,8 @@ export const MainCSS = () => {
           ::-webkit-scrollbar {
             display: none;
           }
+          
+          }
         `}
       />
     </>
@@ -20,7 +22,6 @@ export const MainCSS = () => {
 export const Container = styled.div`
   height: 100vh;
   flex-grow: 1;
-  backdrop-filter: blur(10px);
 `
 export const BannerContainer = styled.div`
   position: relative;
@@ -55,10 +56,18 @@ export const BodyContainer = styled.div`
   min-width: 100%;
   display: flex;
   margin-left: 1.5rem;
+  backdrop-filter: blur(10px);
 `
 export const TrackContainer = styled.div`
   font-weight: bold;
   margin-bottom: 3px;
+  padding-right: 2.75rem;
+  width: 60rem;
+  position: relative;
+  font-weight: bold;
+  border-width: 1px;
+  border-radius: 10px;
+  border-color: #99badd;
 `
 export const EffectsContainer = styled.div`
   max-width: 270px;
@@ -88,5 +97,7 @@ export const Effectdiv = styled.div`
   font-size; 11px;
   font-weight: bold;
   cursor: default;
-
+  : hover {
+    background: grey;
+  }
 `

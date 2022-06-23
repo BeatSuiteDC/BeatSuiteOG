@@ -15,23 +15,21 @@ const SideBarElement: FC<ElementProps> = ({ key, page, delay }) => {
   const { router } = useStores()
 
   return (
-    <div key={key}>
-      <ElementDiv>
-        <motion.div animate={{ opacity: [0, 1] }} transition={{ delay: delay }}>
-          <motion.div
-            whileHover={{ scale: 1.09 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={useCallback(() => (router.path = page.path), [])}
-            className="station"
-          >
-            <Link to={`#${page.path}`} state={page}>
-              {page.icon && <i>{page.icon}</i>}
-              <span>{page.title}</span>
-            </Link>
-          </motion.div>
+    <ElementDiv key={key}>
+      <motion.div animate={{ opacity: [0, 1] }} transition={{ delay: delay }}>
+        <motion.div
+          whileHover={{ scale: 1.09 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={useCallback(() => (router.path = page.path), [])}
+          className="station"
+        >
+          <Link to={`#${page.path}`} state={page}>
+            {page.icon && <i>{page.icon}</i>}
+            <span>{page.title}</span>
+          </Link>
         </motion.div>
-      </ElementDiv>
-    </div>
+      </motion.div>
+    </ElementDiv>
   )
 }
 
