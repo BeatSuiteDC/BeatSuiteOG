@@ -3,6 +3,9 @@ import { RoutePath } from "../../../stores/Router"
 import SideBarElement from "./Element"
 import { Container, List } from "./SideBarCSS"
 
+// import ExploreIcon from "@mui/icons-material/Explore"
+// import HeadsetIcon from "@mui/icons-material/Headset"
+
 export type Page = {
   title?: string
   path: RoutePath
@@ -11,16 +14,16 @@ export type Page = {
 
 export const SideBarElements: Array<Page> = [
   {
-    title: "Streamer",
-    path: "albums",
+    title: "Bangers",
+    path: "bangers",
   },
   {
     title: "Dojo",
-    path: "home",
+    path: "dojo",
   },
   {
-    title: "Uploads",
-    path: "uploads",
+    title: "Upload",
+    path: "upload",
   },
   {
     title: "Feed",

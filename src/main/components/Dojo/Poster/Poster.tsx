@@ -1,66 +1,36 @@
-import React, { FC, useState } from "react"
-import { AlbumProps, bears } from "../Album/Album"
-import { Container, List } from "./CSS"
+import { FC } from "react"
+import { AlbumProps, demoAlbum } from "../Album/Album"
+import { AlbumImg, CardDiv, Container } from "./CSS"
 
 export type PosterProps = {
   album: AlbumProps
   key: number
-  active: boolean
 }
 
-const Poster: FC = () => {
-  const [state, dispatch] = React.useReducer(slidesReducer, initialState)
-  const [active, setActive] = useState(false)
+const albums: Array<AlbumProps> = [demoAlbum]
 
+const Poster: FC = () => {
   return (
     <Container>
       {/* <PosterCSS /> */}
-      <List>
-        {/* <button onClick={() => dispatch({ type: "PREV" })}>{"<<"}</button>
-
-        <button on Click={() => dispatch({ type: "NEXT" })}>{">>"}</button> */}
-      </List>
+      {albums.map((album, index) => {
+        return (
+          <>
+            <PosterCard album={album} key={index} />
+          </>
+        )
+      })}
     </Container>
   )
 }
 export default Poster
 
-const initialState = {
-  slideIndex: 0,
-}
+const PosterCard: FC<PosterProps> = ({ album, key }) => {
+  const handlePlay = (e: any) => {}
 
-const slidesReducer = (state: any, event: any) => {
-  if (event.type === "NEXT") {
-    return {
-      ...state,
-      slideIndex: (state.slideIndex + 1) % bears.songs.length,
-    }
-  }
-  if (event.type === "PREV") {
-    return {
-      ...state,
-      slideIndex:
-        state.slideIndex === 0 ? bears.songs.length - 1 : state.slideIndex - 1,
-    }
-  }
+  return (
+    <CardDiv key={key} onClick={handlePlay}>
+      <AlbumImg src={album.cover} />
+    </CardDiv>
+  )
 }
-
-// const Slide: FC<PosterProps> = ({ album, active, key }) => {
-//   return (
-//     <CardDiv
-//       className="slideCard"
-//       key={key}
-//       style={{ backgroundImage: `url('${album.cover}')` }}
-//     >
-//       <div className="slideContentInner">
-//         <h2 className="slideTitle">{album.album}</h2>
-//         <h3 className="slideSubtitle">{album.song}</h3>
-//         <p className="slideDescription">{album.duration}</p>
-//         <p>
-//           {active} | {key}
-//         </p>
-//       </div>
-//       <button>Play</button>
-//     </CardDiv>
-//   )
-// }

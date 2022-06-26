@@ -22,6 +22,7 @@ export const MainCSS = () => {
 export const Container = styled.div`
   height: 100vh;
   flex-grow: 1;
+  overflow: scroll;
 `
 export const BannerContainer = styled.div`
   position: relative;
@@ -56,7 +57,6 @@ export const BodyContainer = styled.div`
   min-width: 100%;
   display: flex;
   margin-left: 1.5rem;
-  backdrop-filter: blur(10px);
 `
 export const TrackContainer = styled.div`
   font-weight: bold;

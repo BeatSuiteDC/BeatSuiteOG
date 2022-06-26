@@ -33,3 +33,23 @@ export const ElementDiv = styled.div`
   cursor: pointer;
   align-text: center;
 `
+
+export const PageIcon = styled.div`
+  display: flex;
+  flex-direction: row;
+  :hover,
+  :active {
+    background-image: linear-gradient(
+      to right,
+      #462523 0,
+      #cb9b51 5%,
+      #f6e27a 10%,
+      #f6f2c0 50%,
+      #f6e27a 90%,
+      #cb9b51 95%,
+      #462523 100%
+    );
+    color: transparent;
+    -webkit-background-clip: text;
+  }
+`

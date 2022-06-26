@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 
-export type AlbumProps = {
+type AlbumProps = {
   src: string
   cover: string
   album: string

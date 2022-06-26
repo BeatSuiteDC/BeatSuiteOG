@@ -30,7 +30,8 @@ export type AlbumProps = {
   songs: Array<Track>
   contract?: string
 }
-export const bears: AlbumProps = {
+
+export const demoAlbum: AlbumProps = {
   cover:
     "https://upload.wikimedia.org/wikipedia/en/6/69/B.o.B_-_Strange_Clouds_-_LP_Cover.jpg",
   title: "Strange Clouds",

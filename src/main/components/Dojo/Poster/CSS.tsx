@@ -138,6 +138,35 @@ export const Button = styled.button`
 `
 
 export const CardDiv = styled.div`
+  width: 200px;
+  height: 260px;
+  border-radius: 50px;
+  position: relative;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: ease-out 200ms;
+  margin-left: auto;
+  margin-right: auto;
+  :hover {
+    scale: 1.05;
+    color: rgba(255, 255, 255, 1);
+  }
+`
+
+export const AlbumImg = styled.img`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  border-radius: 50px;
+  opacity: 0.8;
+  :hover {
+    opacity: 1;
+  }
+`
+
+const _CardDiv = styled.div`
   margin: 10px;
   background: #99badd;
   border-radius: 20px;
@@ -175,6 +204,24 @@ export const List = styled.div`
 `
 
 export const Container = styled.div`
+  height: 35%;
+  width: 100%;
+  display: grid;
+  justify-content: flex-start;
+  position: relative;
+  overflow-y: scroll;
+  padding: 1rem;
+  column-gap: 1rem;
+  row-gap: 2rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+`
+const _Container = styled.div`
   height: 35%;
   width: 100%;
   display: flex;

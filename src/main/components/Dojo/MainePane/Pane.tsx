@@ -3,6 +3,7 @@ import React, { FC } from "react"
 import { useStores } from "../../../hooks/useStores"
 import Album from "../Album/Album"
 import Banner from "../Banner/Banner"
+import Poster from "../Poster"
 import {
   BodyContainer,
   Container,
@@ -34,7 +35,7 @@ const Body: FC = observer(() => {
   console.log({ path })
   return (
     <BodyContainer>
-      {path === "uploads" && (
+      {path === "home" && (
         <EffectsContainer>
           <EffectsH2>Effects</EffectsH2>
           <EffectsWrapper>
@@ -45,11 +46,7 @@ const Body: FC = observer(() => {
         </EffectsContainer>
       )}
       {path === "albums" && <Album />}
-      {/* <TrackContainer>
-        {bears.map((track, i) => {
-          return <Track track={track} key={i} />
-        })}
-      </TrackContainer> */}
+      {path == "bangers" && <Poster />}
     </BodyContainer>
   )
 })
@@ -90,6 +87,7 @@ const Pane: FC = () => {
         <Banner />
         {/* <Poster /> */}
         <Body />
+        {/* <TransportPlayer /> */}
       </Container>
     </>
   )

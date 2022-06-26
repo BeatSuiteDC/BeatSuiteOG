@@ -1,4 +1,5 @@
 import { css, Global } from "@emotion/react"
+import styled from "@emotion/styled"
 import { useTheme } from "../../../hooks/useTheme"
 
 export const AudioControlCSS = () => {
@@ -144,3 +145,13 @@ export const AudioControlCSS = () => {
     />
   )
 }
+
+export const Container = styled.div`
+  height: 30px;
+  display: flex;
+  bottom: 10px;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+  background: cyan;
+`

@@ -17,6 +17,7 @@ export default AlbumCSS
 
 export const AlbumContent = styled.div`
   padding: 10px 40px;
+  position: relative;
 `
 
 export const TopBan = styled.div`

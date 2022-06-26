@@ -8,7 +8,7 @@ import { Tooltip } from "@mui/material"
 import { observer } from "mobx-react-lite"
 import { localized } from "../../../../common/localize/localizedString"
 import { fastForwardOneBar, rewindOneBar, stop } from "../../../actions"
-import { AudioControlCSS } from "./AudioControlCSS"
+import { AudioControlCSS, Container } from "./AudioControlCSS"
 
 import pauseBtn from "../../../images/pause.png"
 import playBtn from "../../../images/playBtn.png"
@@ -176,5 +176,11 @@ export const PlayerPanel: FC<React.PropsWithChildren<unknown>> = observer(
         </AudioControl>
       </>
     )
+  }
+)
+
+export const TransportPlayer: FC<React.PropsWithChildren<unknown>> = observer(
+  () => {
+    return <Container></Container>
   }
 )
