@@ -165,6 +165,36 @@ export const AlbumImg = styled.img`
     opacity: 1;
   }
 `
+export const IconDiv = styled.div`
+  position: absolute;
+  bottom: 2.5rem;
+  inset-x: 0;
+  display: flex;
+  align-items: center;
+  margin-left: 0.875rem;
+`
+
+export const PlayPauseIcon = styled.div`
+  height: 2.5rem;
+  width: 2.5rem;
+  background: #99badd;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-shrink: 0;
+  :hover {
+    background: white;
+  }
+`
+
+export const Title = styled.h4`
+  font-weight: 800px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 11rem;
+`
 
 const _CardDiv = styled.div`
   margin: 10px;
