@@ -1,10 +1,10 @@
 {
   "root": true,
   "project": {
-    "name": "music-player"
+    "name": "beatsuite"
   },
   "api": {
-    "projectId": "w46c0r92",
+    "projectId": "lukktv5y",
     "dataset": "production"
   },
   "plugins": [

@@ -27,7 +27,7 @@ export type AlbumProps = {
   title: string
   year: number
   artist: string
-  songs: Array<Track>
+  songs: Track[]
   contract?: string
 }
 
