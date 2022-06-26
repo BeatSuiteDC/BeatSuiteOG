@@ -9,6 +9,7 @@ import {
   VolumeOffOutlined as volOff,
   VolumeUpOutlined as volUp,
 } from "@mui/icons-material"
+import Playlist from "../../../../common/playlist/Playlist"
 import { AlbumProps } from "../Album/Album"
 
 export interface LoopSetting {
@@ -111,13 +112,14 @@ export default class Streamer {
   private _volume: Volume
 
   private _album: AlbumProps
+  private _playlist: Playlist
 
   disableSeek: boolean = false
   isMetronomeEnabled: boolean = false
 
   loop: LoopSetting | null = null
 
-  constructor(songStore: SongStore, trackMute: TrackMute) {
+  constructor(songStore: SongStore, playlist: Playlist, trackMute: TrackMute) {
     makeObservable<
       Streamer,
       "_currentTick" | "_isPlaying" | "_volume" | "_isMuted" | "_album"
@@ -138,6 +140,7 @@ export default class Streamer {
       currentAlbum: computed,
     })
 
+    this._playlist = playlist
     this._trackMute = trackMute
     this._songStore = songStore
     this._liveStreamUrl = DEFAULT_LIVESTREAM

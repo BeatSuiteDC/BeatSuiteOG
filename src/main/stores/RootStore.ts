@@ -1,5 +1,6 @@
 import { makeObservable, observable } from "mobx"
 import Player from "../../common/player"
+import Playlist from "../../common/playlist/Playlist"
 import Song, { emptySong } from "../../common/song"
 import TrackMute from "../../common/trackMute"
 import { SerializedState } from "../actions/history"
@@ -40,6 +41,7 @@ export default class RootStore {
   readonly tempoEditorStore = new TempoEditorStore(this)
   readonly midiDeviceStore = new MIDIDeviceStore()
   readonly exportStore = new ExportStore(this)
+  readonly playlist = new Playlist()
 
   // readonly auth = new Authentication()
 
@@ -65,7 +67,7 @@ export default class RootStore {
     const player = new Player(synthGroup, metronomeSynth, this.trackMute, this)
     const midiInput = new MIDIInput()
     const midiRecorder = new MIDIRecorder(player, this)
-    const streamer = new Streamer(this, this.trackMute)
+    const streamer = new Streamer(this, this.playlist, this.trackMute)
     this.services = {
       player,
       synth,

@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite"
 import { FC } from "react"
 import { AlbumProps, demoAlbum } from "../Album/Album"
 import { AlbumImg, CardDiv, Container } from "./CSS"
@@ -25,7 +26,7 @@ const Poster: FC = () => {
 }
 export default Poster
 
-const PosterCard: FC<PosterProps> = ({ album, key }) => {
+const PosterCard: FC<PosterProps> = observer(({ album, key }) => {
   const handlePlay = (e: any) => {}
 
   return (
@@ -33,4 +34,4 @@ const PosterCard: FC<PosterProps> = ({ album, key }) => {
       <AlbumImg src={album.cover} />
     </CardDiv>
   )
-}
+})
