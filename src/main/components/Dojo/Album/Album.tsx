@@ -146,7 +146,7 @@ export default () => {
 }
 const DEFAULT_ALBUM_COVER =
   "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.youredm.com%2Fwp-content%2Fuploads%2F2018%2F09%2FYANDHI.jpg&f=1&nofb=1"
-export class EmptyAlbum {
+class EmptyAlbum {
   _cover = DEFAULT_ALBUM_COVER
   _title = "untitled"
   _year = new Date().getFullYear().toString()

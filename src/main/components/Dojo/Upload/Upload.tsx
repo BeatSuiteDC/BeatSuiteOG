@@ -19,19 +19,18 @@ import CSS, {
 import AddIcon from "@mui/icons-material/Add"
 import UploadIcon from "@mui/icons-material/Upload"
 
-import { Tooltip } from "@mui/material"
 import { observer } from "mobx-react-lite"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Opensea from "../../../images/opensea.png"
-import { Track } from "../Album/Album"
+import { demoAlbum, Track } from "../Album/Album"
 
-export default observer(() => {
+const Upload = observer(() => {
   const {
     services: { streamer },
     user,
-    album,
   } = useStores()
 
+  const [album, setAlbum] = useState(demoAlbum)
   useEffect(() => {
     const info = user.info
     console.log({ info })
@@ -75,11 +74,7 @@ export default observer(() => {
           </OpenButton>
         </TopBan>
         <TableHeader>
-          <AddButton
-            onClick={(e) => {
-              album.addTrack()
-            }}
-          >
+          <AddButton onClick={(e) => {}}>
             <AddIcon style={{ position: "absolute", top: "0" }} />
           </AddButton>
           <TitleHeader>TRACKS</TitleHeader>
@@ -88,20 +83,7 @@ export default observer(() => {
           return (
             <div key={i}>
               <TableContent>
-                <Tooltip
-                  title={"Delete track?"}
-                  placement="bottom"
-                  enterDelay={100}
-                  enterNextDelay={400}
-                >
-                  <RemoveButton
-                    onClick={(e) => {
-                      album.remove(i)
-                    }}
-                  >
-                    {"-"}
-                  </RemoveButton>
-                </Tooltip>
+                <RemoveButton onClick={(e) => {}}>{"-"}</RemoveButton>
                 <TrackInput
                   type="text"
                   onChange={(e) => {
@@ -119,3 +101,5 @@ export default observer(() => {
     </>
   )
 })
+
+export default Upload
