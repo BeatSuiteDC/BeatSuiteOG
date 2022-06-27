@@ -20,17 +20,17 @@ import AddIcon from "@mui/icons-material/Add"
 import UploadIcon from "@mui/icons-material/Upload"
 
 import { observer } from "mobx-react-lite"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Opensea from "../../../images/opensea.png"
-import { demoAlbum, Track } from "../Album/Album"
+import { Track } from "../Album/Album"
 
 const Upload = observer(() => {
   const {
     services: { streamer },
     user,
+    album,
   } = useStores()
 
-  const [album, setAlbum] = useState(demoAlbum)
   useEffect(() => {
     const info = user.info
     console.log({ info })
