@@ -29,7 +29,7 @@ export default () => {
           margin: 0px;
           inset: 110px 130px;
           opacity: 0;
-          transition: 200ms ease-in;
+          transition: 400ms ease;
           font-size: 30px;
         }
 

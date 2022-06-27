@@ -13,7 +13,9 @@ export interface Theme {
   pianoBlackKeyLaneColor: string
   ghostNoteColor: string
   recordColor: string
-  fontColor: string
+  headerColor: string
+  secondaryColor: string
+  fontFamily: string
 }
 
 export const defaultTheme: Theme = {
@@ -31,5 +33,7 @@ export const defaultTheme: Theme = {
   pianoBlackKeyLaneColor: "hsl(228, 16%, 14%)",
   ghostNoteColor: "#444444",
   recordColor: "#dd3c3c",
-  fontColor: "#f6f2c0",
+  headerColor: "#f6f2c0",
+  secondaryColor: "#99badd",
+  fontFamily: '"Kdam Thmor Pro", sans-serif',
 }
