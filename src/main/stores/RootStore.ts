@@ -4,6 +4,7 @@ import Playlist from "../../common/playlist/Playlist"
 import Song, { emptySong } from "../../common/song"
 import TrackMute from "../../common/trackMute"
 import { SerializedState } from "../actions/history"
+import { EmptyAlbum } from "../components/Dojo/Album/Album"
 import Streamer from "../components/Dojo/Streamer/Streamer"
 import { GroupOutput } from "../services/GroupOutput"
 import { MIDIInput, previewMidiInput } from "../services/MIDIInput"
@@ -31,6 +32,7 @@ export interface Services {
 
 export default class RootStore {
   song: Song = emptySong()
+  readonly album: EmptyAlbum
   readonly user: Authentication
   readonly router = new Router()
   readonly trackMute = new TrackMute()
@@ -90,6 +92,7 @@ export default class RootStore {
     this.tempoEditorStore.setUpAutorun()
 
     this.user = new Authentication()
+    this.album = new EmptyAlbum()
 
     registerReactions(this)
   }

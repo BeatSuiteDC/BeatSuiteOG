@@ -15,9 +15,8 @@ export default {
     },
     {
       name: "address",
-      title: "Addresses",
-      type: "array",
-      of: [{ type: "string" }],
+      title: "Wallet Address",
+      type: "string",
     },
     {
       name: "bangers",

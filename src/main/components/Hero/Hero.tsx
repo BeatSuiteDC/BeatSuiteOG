@@ -1,7 +1,6 @@
 // import styled from "@emotion/styled"
 import { observer } from "mobx-react-lite"
 import { FC } from "react"
-import ReactPlayer from "react-player"
 import { Navigate } from "react-router-dom"
 import { useStores } from "../../hooks/useStores"
 import logo from "../../images/logo.png"
@@ -10,15 +9,14 @@ import { HeroCSS } from "./HeroCSS"
 
 export const Hero: FC<React.PropsWithChildren<unknown>> = observer(() => {
   const { user } = useStores()
-  if (user.isConnected) {
-    return <Navigate to="/dojo" />
-  }
+
   return (
     <div>
+      {user.isConnected && <Navigate to="/dojo" />}
       <HeroCSS />
       <div className="heroContainer">
         <div className="videoContainer2">
-          <ReactPlayer
+          {/* <ReactPlayer
             className="react-player"
             url="https://www.youtube.com/watch?v=1h0toNIaYRI"
             width="100%"
@@ -28,7 +26,7 @@ export const Hero: FC<React.PropsWithChildren<unknown>> = observer(() => {
             playing={true}
             loop={true}
             muted={true}
-          />
+          /> */}
         </div>
       </div>
       <div className="titleContainer">

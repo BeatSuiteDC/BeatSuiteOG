@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+// import { motion } from "framer-motion"
 import React, { FC, MouseEventHandler, useState } from "react"
 import { useStores } from "../../../hooks/useStores"
 
@@ -38,16 +38,17 @@ const ButtonDiv: FC<ButtonComponent> = ({
   const value = tooltipValue ? tooltipValue : ""
   const _hotkey = hotkey ? hotkey : ""
   return (
-    <motion.div
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.9 }}
-      onClick={clickHandler}
-      className={class1}
-    >
-      <Tooltip title={`${localized(key, value)} [${_hotkey}]`} placement="top">
-        <img className={class2} src={imgSrc} />
-      </Tooltip>
-    </motion.div>
+    // <motion.div
+    //   whileHover={{ scale: 1.03 }}
+    //   whileTap={{ scale: 0.9 }}
+    //   onClick={clickHandler}
+    //   className={class1}
+    // >
+    //   <Tooltip title={`${localized(key, value)} [${_hotkey}]`} placement="top">
+    //     <img className={class2} src={imgSrc} />
+    //   </Tooltip>
+    // </motion.div>
+    <></>
   )
 }
 

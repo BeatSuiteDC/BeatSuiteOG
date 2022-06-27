@@ -1,3 +1,4 @@
+import { computed, makeObservable, observable } from "mobx"
 import { useStores } from "../../../hooks/useStores"
 import Opensea from "../../../images/opensea.png"
 import {
@@ -89,7 +90,7 @@ export const demoAlbum: AlbumProps = {
   ],
 }
 
-const Album = () => {
+export default () => {
   const {
     services: { streamer },
   } = useStores()
@@ -143,5 +144,75 @@ const Album = () => {
     </>
   )
 }
+const DEFAULT_ALBUM_COVER =
+  "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.youredm.com%2Fwp-content%2Fuploads%2F2018%2F09%2FYANDHI.jpg&f=1&nofb=1"
+export class EmptyAlbum {
+  _cover = DEFAULT_ALBUM_COVER
+  _title = "untitled"
+  _year = new Date().getFullYear().toString()
+  _artist = "rando jenkins"
+  _songs: Track[] = []
+  _tracks = 0
 
-export default Album
+  constructor() {
+    makeObservable<
+      EmptyAlbum,
+      "_cover" | "_title" | "_year" | "_artist" | "_songs" | "_tracks"
+    >(this, {
+      _cover: observable,
+      _title: observable,
+      _year: observable,
+      _artist: observable,
+      _songs: observable,
+      _tracks: observable,
+      artist: computed,
+      songs: computed,
+      title: computed,
+    })
+  }
+
+  get artist() {
+    return this._artist
+  }
+
+  set artist(_artist: string) {
+    this._artist = _artist
+  }
+
+  get cover() {
+    return this._cover
+  }
+
+  get year() {
+    return this._year
+  }
+
+  get title() {
+    return this._title
+  }
+
+  set title(_title: string) {
+    this._title = _title
+  }
+
+  get songs() {
+    return this._songs
+  }
+
+  addTrack() {
+    this._tracks++
+    this._songs.push({
+      src: "",
+      album: this._title,
+      cover: this._cover,
+      title: `Banger ${this._tracks}`,
+      duration: "0:00",
+    })
+  }
+
+  remove(index: number) {
+    if (confirm("Are you sure?")) {
+      this._songs.splice(index, 1)
+    }
+  }
+}

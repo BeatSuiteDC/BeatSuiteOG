@@ -1,3 +1,3 @@
-import Album from "./Album";
+import Album from "./Album"
 
-export default Album;
+export default Album

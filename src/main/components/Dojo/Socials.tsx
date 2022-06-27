@@ -1,6 +1,4 @@
 import styled from "@emotion/styled"
-import { motion } from "framer-motion"
-import github from "../../images/github.png"
 
 export const Socials = () => {
   const Container = styled.div`
@@ -28,7 +26,7 @@ export const Socials = () => {
     <Container className="socialsContainer2">
       <SocialsCont className="socials">
         <>
-          <motion.div
+          {/* <motion.div
             whileHover={{ scale: 1.09 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => {
@@ -37,7 +35,7 @@ export const Socials = () => {
             className="link"
           >
             <img className="githubLogo" src={github} alt="" />
-          </motion.div>
+          </motion.div> */}
         </>
       </SocialsCont>
     </Container>

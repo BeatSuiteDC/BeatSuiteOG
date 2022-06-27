@@ -18,7 +18,7 @@ export default class Playlist {
   }
 
   get queue() {
-    return this._queue
+    return [...this._queue]
   }
 
   get active() {

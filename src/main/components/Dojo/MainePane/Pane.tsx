@@ -4,6 +4,7 @@ import { useStores } from "../../../hooks/useStores"
 import Album from "../Album/Album"
 import Banner from "../Banner/Banner"
 import Poster from "../Poster"
+import { Upload } from "../Upload"
 import {
   BodyContainer,
   Container,
@@ -18,35 +19,32 @@ type BannerTab = {
   title: string
 }
 
-type EffectProps = {
-  label: string
-}
-
-const Effect: FC<EffectProps> = ({ label }) => {
-  return <Effectdiv>{label}</Effectdiv>
+const Effect: FC = () => {
+  return (
+    <EffectsContainer>
+      <EffectsH2>Effects</EffectsH2>
+      <EffectsWrapper>
+        {effects.map((e, i) => {
+          return <Effectdiv>{e}</Effectdiv>
+        })}
+      </EffectsWrapper>
+    </EffectsContainer>
+  )
 }
 
 const effects = ["Wicked", "tough", "wild", "ultra"]
 
 const Body: FC = observer(() => {
-  const { router } = useStores()
+  const { router, user } = useStores()
   const path = router.path
 
   console.log({ path })
   return (
     <BodyContainer>
-      {path === "home" && (
-        <EffectsContainer>
-          <EffectsH2>Effects</EffectsH2>
-          <EffectsWrapper>
-            {effects.map((e, i) => {
-              return <Effect label={e}></Effect>
-            })}
-          </EffectsWrapper>
-        </EffectsContainer>
-      )}
+      {path === "home" && <Effect />}
       {path === "albums" && <Album />}
-      {path == "bangers" && <Poster />}
+      {path === "bangers" && <Poster />}
+      {path === "upload" && <Upload />}
     </BodyContainer>
   )
 })
