@@ -9,8 +9,35 @@ export default () => {
           height: 20px;
         }
 
+        .addIcon {
+          margin: 5px;
+          margin-left: 10px;
+          transition: transform 0.2s;
+          font-size: 20px;
+          :hover {
+            cursor: pointer;
+            color: #99badd;
+          }
+        }
+
+        .removeIcon {
+          margin: 5px;
+          margin-left: 10px;
+          font-size: 20px;
+
+          :hover {
+            color: red;
+          }
+        }
+
         .uploadIcon {
-          display: block;
+          margin: 5px;
+          position: relative;
+          font-size: 20px;
+          left: 42%;
+          :hover {
+            color: #99badd;
+          }
         }
       `}
     />
@@ -19,13 +46,17 @@ export default () => {
 
 export const AlbumContent = styled.div`
   padding: 10px 40px;
-  position: relative;
+  position: absolute;
   overflow-y: scroll;
+  font-weight: 800px;
 `
 
 export const TopBan = styled.div`
   display: flex;
   gap: 30px;
+  :hover {
+    background: red;
+  }
 `
 export const Cover = styled.img`
   width: 200px;
@@ -98,15 +129,17 @@ export const NumberHeader = styled.span`
   width: 10%;
   transition: transform 0.2s;
   font-size: 20px;
+  background: orange;
   :hover {
     cursor: pointer;
     color: #99badd;
   }
 `
-export const AddButton = styled.div`
+const AddButton = styled.div`
   width: 10%;
   transition: transform 0.2s;
   font-size: 20px;
+  background: green;
   :hover {
     cursor: pointer;
     color: #99badd;
@@ -117,6 +150,7 @@ export const RemoveButton = styled.div`
   transition: transform 0.2s;
   display: flex;
   font-size: 20px;
+  background: yellow;
   :hover {
     cursor: pointer;
     color: red;
@@ -129,8 +163,20 @@ export const TitleHeader = styled.div`
   display: flex;
   justify-content: start;
   color: #99badd;
+  :hover {
+    background: red;
+  }
 `
 export const TrackInput = styled.input`
+  color: #99badd;
+  background: none;
+  margin-left: 4rem;
+  font-size: 20px;
+  border-radius: 5px;
+  padding-left: 10px;
+  overflow-x: scroll;
+`
+export const _TrackInput = styled.input`
   width: 25%;
   padding-left: 5%;
   display: flex;
@@ -138,11 +184,18 @@ export const TrackInput = styled.input`
   color: #99badd;
   background: none;
   overflow: hidden;
+  background: red;
 `
 
 export const TableContent = styled.div`
   border-bottom: 1px solid rgb(67, 67, 67);
-  display: grid;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+`
+const _TableContent = styled.div`
+  border-bottom: 1px solid rgb(67, 67, 67);
+  display: flex;
   align-items: center;
   flex-wrap: wrap;
   color: rgb(125, 125, 125);

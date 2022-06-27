@@ -1,13 +1,10 @@
 import { useStores } from "../../../hooks/useStores"
 import CSS, {
-  AddButton,
   AlbumContent,
   Artist,
   Cover,
   Details,
-  NumberHeader,
   OpenButton,
-  RemoveButton,
   TableContent,
   TableHeader,
   Title,
@@ -17,14 +14,15 @@ import CSS, {
 } from "./CSS"
 
 import AddIcon from "@mui/icons-material/Add"
-import UploadIcon from "@mui/icons-material/Upload"
+import CloudUploadIcon from "@mui/icons-material/CloudUpload"
+import RemoveIcon from "@mui/icons-material/Remove"
 
 import { observer } from "mobx-react-lite"
 import { useEffect } from "react"
 import Opensea from "../../../images/opensea.png"
 import { Track } from "../Album/Album"
 
-const Upload = observer(() => {
+export default observer(() => {
   const {
     services: { streamer },
     user,
@@ -38,10 +36,13 @@ const Upload = observer(() => {
       album.artist = info.name
     }
   }, [])
-
+  const uploadTrack = (e: any) => {}
   const handleMint = (e: any) => {}
   const handleSave = (e: any) => {}
   const handleImg = (e: any) => {}
+  const handleTitle = (e: any) => {
+    album.title = e.target.value
+  }
 
   return (
     <>
@@ -51,17 +52,9 @@ const Upload = observer(() => {
           <Cover src={album.cover} alt="albumCover"></Cover>
           <Details>
             <div>ALBUM</div>
-            <Title
-              type="text"
-              onChange={(e) => {
-                album.title = e.target.value
-              }}
-              value={album.title}
-            />
+            <Title type="text" onChange={handleTitle} value={album.title} />
             <Artist>{album.artist}</Artist>
-            <div>
-              {album.year} • {album.songs.length} Songs
-            </div>
+            {album.year} • {album.songs.length} Songs
           </Details>
         </TopBan>
         <TopBan>
@@ -74,16 +67,24 @@ const Upload = observer(() => {
           </OpenButton>
         </TopBan>
         <TableHeader>
-          <AddButton onClick={(e) => {}}>
-            <AddIcon style={{ position: "absolute", top: "0" }} />
-          </AddButton>
+          <AddIcon
+            className="addIcon"
+            onClick={(e) => {
+              album.addTrack()
+            }}
+          />
           <TitleHeader>TRACKS</TitleHeader>
         </TableHeader>
         {album.songs.map((song: Track, i) => {
           return (
             <div key={i}>
               <TableContent>
-                <RemoveButton onClick={(e) => {}}>{"-"}</RemoveButton>
+                <RemoveIcon
+                  className="removeIcon"
+                  onClick={(e) => {
+                    album.remove(i)
+                  }}
+                />
                 <TrackInput
                   type="text"
                   onChange={(e) => {
@@ -91,8 +92,7 @@ const Upload = observer(() => {
                   }}
                   value={song.title}
                 />
-                <NumberHeader>{song.duration}</NumberHeader>
-                <UploadIcon className="uploadIcon" />
+                <CloudUploadIcon className="uploadIcon" onClick={uploadTrack} />
               </TableContent>
             </div>
           )
@@ -101,5 +101,3 @@ const Upload = observer(() => {
     </>
   )
 })
-
-export default Upload

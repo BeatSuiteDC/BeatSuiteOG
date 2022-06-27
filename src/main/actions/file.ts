@@ -36,6 +36,40 @@ export const openFile = async (rootStore: RootStore) => {
   setSong(rootStore)(song)
 }
 
+export const openFileAudio = async (rootStore: RootStore) => {
+  let fileHandle: FileSystemFileHandle
+  try {
+    fileHandle = (
+      await window.showOpenFilePicker({
+        types: [
+          {
+            description: "MIDI file",
+            accept: {
+              "audio/midi": [".mid"],
+              "audio/mp3": [".mp3"],
+              "audio/wav": [".wav"],
+            },
+          },
+        ],
+      })
+    )[0]
+  } catch (ex) {
+    if ((ex as Error).name === "AbortError") {
+      return
+    }
+    const msg = "An error occured trying to open the file."
+    console.error(msg, ex)
+    alert(msg)
+    return
+  }
+  const file = await fileHandle.getFile()
+  const buf = await file.arrayBuffer()
+  const song = songFromMidi(new Uint8Array(buf))
+  song.filepath = file.name
+  song.fileHandle = fileHandle
+  setSong(rootStore)(song)
+}
+
 export const saveFile = async (rootStore: RootStore) => {
   const fileHandle = rootStore.song.fileHandle
   if (fileHandle === null) {
