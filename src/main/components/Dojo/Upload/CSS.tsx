@@ -1,12 +1,36 @@
-import { css, Global } from "@emotion/react"
+import { css, Global, useTheme } from "@emotion/react"
 import styled from "@emotion/styled"
 
 export default () => {
+  const theme = useTheme()
   return (
     <Global
       styles={css`
         .openLogo {
           height: 20px;
+        }
+
+        .albumContainer {
+          width: 200px;
+          height: 200px;
+          cursor: pointer;
+          :hover > #cover {
+            scale: 1.05;
+            opacity: 0.5;
+            border: 15px solid ${theme.secondaryTextColor};
+          }
+          :hover > #icon {
+            opacity: 1;
+          }
+        }
+
+        .albumUploadIcon {
+          position: absolute;
+          margin: 0px;
+          inset: 110px 130px;
+          opacity: 0;
+          transition: 200ms ease-in;
+          font-size: 30px;
         }
 
         .addIcon {
@@ -54,14 +78,13 @@ export const AlbumContent = styled.div`
 export const TopBan = styled.div`
   display: flex;
   gap: 30px;
-  :hover {
-    background: red;
-  }
 `
 export const Cover = styled.img`
   width: 200px;
   height: 200px;
+  transition: 100ms ease;
 `
+
 export const Details = styled.div`
   display: flex;
   flex-direction: column;
@@ -73,29 +96,20 @@ export const Title = styled.input`
   color: white;
   font-size: 40px;
   font-weight: bold;
-  background: none;
-`
-export const Artist = styled.div`
-  font-size: 20px;
-  color: white;
-`
-export const PlayButton = styled.button`
-  padding: 10px;
-  background-color: #99badd;
-  width: 120px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  margin-top: 35px;
-  margin-bottom: 35px;
-  border-radius: 25px;
-  letter-spacing: 1.5px;
-  transition: transform 0.1s;
+  background: transparent;
   :hover {
-    cursor: pointer;
-    transform: scale(1.05);
+    opacity: 0.5;
   }
 `
+export const Artist = styled.input`
+  font-size: 20px;
+  color: white;
+  background: transparent;
+  :hover {
+    opacity: 0.5;
+  }
+`
+
 export const OpenButton = styled.button`
   padding: 10px;
   background-color: transparent;
@@ -135,16 +149,6 @@ export const NumberHeader = styled.span`
     color: #99badd;
   }
 `
-const AddButton = styled.div`
-  width: 10%;
-  transition: transform 0.2s;
-  font-size: 20px;
-  background: green;
-  :hover {
-    cursor: pointer;
-    color: #99badd;
-  }
-`
 export const RemoveButton = styled.div`
   width: 10%;
   transition: transform 0.2s;
@@ -175,6 +179,9 @@ export const TrackInput = styled.input`
   border-radius: 5px;
   padding-left: 10px;
   overflow-x: scroll;
+  :hover {
+    opacity: 0.5;
+  }
 `
 export const _TrackInput = styled.input`
   width: 25%;

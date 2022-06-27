@@ -18,7 +18,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload"
 import RemoveIcon from "@mui/icons-material/Remove"
 
 import { observer } from "mobx-react-lite"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Opensea from "../../../images/opensea.png"
 import { Track } from "../Album/Album"
 
@@ -36,10 +36,14 @@ export default observer(() => {
       album.artist = info.name
     }
   }, [])
+
+  const [hover, setHover] = useState(false)
+
   const uploadTrack = (e: any) => {}
   const handleMint = (e: any) => {}
   const handleSave = (e: any) => {}
   const handleImg = (e: any) => {}
+
   const handleTitle = (e: any) => {
     album.title = e.target.value
   }
@@ -49,11 +53,14 @@ export default observer(() => {
       <CSS />
       <AlbumContent>
         <TopBan>
-          <Cover src={album.cover} alt="albumCover"></Cover>
+          <div className="albumContainer">
+            <Cover id="cover" src={album.cover} alt="albumCover" />
+            <CloudUploadIcon id="icon" className="albumUploadIcon" />
+          </div>
           <Details>
             <div>ALBUM</div>
             <Title type="text" onChange={handleTitle} value={album.title} />
-            <Artist>{album.artist}</Artist>
+            <Artist value={album.artist} />
             {album.year} • {album.songs.length} Songs
           </Details>
         </TopBan>
