@@ -61,7 +61,7 @@ export default observer(() => {
             <div>ALBUM</div>
             <Title type="text" onChange={handleTitle} value={album.title} />
             <Artist value={album.artist} />
-            {album.year} • {album.songs.length} Songs
+            {album.year} • {album.songs.length} tracks
           </Details>
         </TopBan>
         <TopBan>

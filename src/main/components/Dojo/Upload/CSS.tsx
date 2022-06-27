@@ -40,7 +40,7 @@ export default () => {
           font-size: 20px;
           :hover {
             cursor: pointer;
-            color: #99badd;
+            color: ${theme.headerColor};
           }
         }
 
@@ -73,6 +73,7 @@ export const AlbumContent = styled.div`
   position: absolute;
   overflow-y: scroll;
   font-weight: 800px;
+  font-family: ${({ theme }) => theme.fontFamily};
 `
 
 export const TopBan = styled.div`
@@ -162,11 +163,10 @@ export const RemoveButton = styled.div`
 `
 
 export const TitleHeader = styled.div`
-  width: 80%;
   padding-left: 5%;
   display: flex;
-  justify-content: start;
-  color: #99badd;
+  font-family: ${({ theme }) => theme.fontFamily};
+  color: ${({ theme }) => theme.headerColor};
   :hover {
     background: red;
   }

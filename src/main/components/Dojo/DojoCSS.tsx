@@ -389,6 +389,7 @@ export const InterfaceContainer = styled.div`
   margin-top: 20px;
   flex-direction: row;
   justify-content: space-between;
+  font-family: ${({ theme }) => theme.fontFamily};
 `
 
 export const SideBarContainer = styled.div`
