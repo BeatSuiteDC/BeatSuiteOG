@@ -3,10 +3,10 @@
 // import { CHAIN_NAMESPACES } from "@web3auth/base"
 // import { Web3Auth } from "@web3auth/web3auth"
 
-import WalletConnectProvider from "@walletconnect/web3-provider"
-import { providers } from "ethers"
+// import WalletConnectProvider from "@walletconnect/web3-provider"
+// import { providers } from "ethers"
 
-const { Web3Provider } = providers
+// const { Web3Provider } = providers
 
 import { computed, makeObservable, observable } from "mobx"
 import { User } from "../../common/sanity/Sanity"
@@ -15,7 +15,7 @@ const INFURA_ID = process.env.REACT_APP_INFURA_ID as string
 
 export default class Authentication {
   private _user: User
-  private _provider: WalletConnectProvider
+  private _provider: any
   private _isConnected: boolean
 
   constructor() {
@@ -31,9 +31,9 @@ export default class Authentication {
       }
     )
 
-    this._provider = new WalletConnectProvider({
-      infuraId: INFURA_ID,
-    })
+    // this._provider = new WalletConnectProvider({
+    //   infuraId: INFURA_ID,
+    // })
 
     this._isConnected = false
     this._user = {}
@@ -54,23 +54,23 @@ export default class Authentication {
   }
 
   get address() {
-    if (!this.isConnected) return ""
-    const account = this._provider.accounts[0]
-    console.log({ account })
-    return `${account.slice(0, 6)}...${account.slice(
-      account.length - 4,
-      account.length
-    )}`
+    // if (!this.isConnected) return ""
+    // const account = this._provider.accounts[0]
+    // console.log({ account })
+    // return `${account.slice(0, 6)}...${account.slice(
+    //   account.length - 4,
+    //   account.length
+    // )}`
+    return false
   }
 
   async connect() {
-    if (!this.isConnected) {
-      await this._provider.enable()
-
-      this._provider.connector.on("connect", (error, payload) => {
-        console.log("payload", payload)
-      })
-    }
+    // if (!this.isConnected) {
+    //   await this._provider.enable()
+    // this._provider.connector.on("connect", (error, payload) => {
+    //   console.log("payload", payload)
+    // })
+    // }
     // if (!this.isConnected) {
     //   this._connector.createSession()
     //   this._connector.on("connect", (err, payload) => {
