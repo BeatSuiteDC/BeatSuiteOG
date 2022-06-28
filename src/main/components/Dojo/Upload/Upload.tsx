@@ -19,7 +19,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload"
 import RemoveIcon from "@mui/icons-material/Remove"
 
 import { observer } from "mobx-react-lite"
-import { ChangeEvent, useEffect, useRef } from "react"
+import { ChangeEvent, useEffect, useRef, useState } from "react"
 import Opensea from "../../../images/opensea.png"
 import { Track } from "../Album/Album"
 
@@ -29,28 +29,48 @@ export default observer(() => {
 
   useEffect(() => {
     const info = user.info
-    console.log("info", info)
     if (info?.name) {
       album.artist = info.name
     }
+    console.log("album", album)
   }, [])
 
+  const [trackIdx, setTrackIdx] = useState<number>()
   const audioRef = useRef<HTMLInputElement>(null)
   const imgRef = useRef<HTMLInputElement>(null)
 
-  const triggerInput = (type: "image" | "audio") => {
-    console.log(type)
-    type === "audio" ? audioRef.current?.click() : imgRef.current?.click()
+  const triggerInput = (type: "image" | "audio", idx?: number) => {
+    console.log(type, album, idx)
+
+    if (type === "audio") {
+      setTrackIdx(idx)
+      audioRef.current?.click()
+    } else if (type === "image") {
+      imgRef.current?.click()
+    }
   }
 
   const uploadTrack = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    console.log("files", files)
-    // openAudio(rootStore)
+    const file = e.target.files?.item(0)
+    if (file && trackIdx) {
+      console.log("files", file)
+      album.updateTrack(trackIdx, file)
+      console.log(album)
+    }
+  }
+  const uploadImg = (e: ChangeEvent<HTMLInputElement>) => {
+    const img = e.target.files?.item(0)
+    if (img) {
+      console.log("img", img)
+      album.cover = URL.createObjectURL(img)
+    }
   }
   const handleMint = (e: any) => {}
   const handleSave = (e: any) => {}
   const handleImg = (e: any) => {}
+  const handleArtist = (e: any) => {
+    album.artist = e.target.value
+  }
 
   const handleTitle = (e: any) => {
     album.title = e.target.value
@@ -61,14 +81,17 @@ export default observer(() => {
       <CSS />
       <AlbumContent>
         <TopBan>
-          <div className="albumContainer">
+          <div
+            className="albumContainer"
+            onClick={(e) => triggerInput("image")}
+          >
             <Cover id="cover" src={album.cover} alt="albumCover" />
             <AddPhotoAlternateIcon id="icon" className="albumUploadIcon" />
           </div>
           <Details>
             <div>ALBUM</div>
             <Title type="text" onChange={handleTitle} value={album.title} />
-            <Artist value={album.artist} />
+            <Artist type="text" onChange={handleArtist} value={album.artist} />
             {album.year} • {album.songs.length} tracks
           </Details>
         </TopBan>
@@ -103,7 +126,7 @@ export default observer(() => {
                 />
                 <CloudUploadIcon
                   className="uploadIcon"
-                  onClick={(e) => triggerInput("audio")}
+                  onClick={(e) => triggerInput("audio", i)}
                 />
               </TableContent>
             </div>
@@ -111,10 +134,16 @@ export default observer(() => {
         })}
         <div style={{ display: "none" }}>
           <input
-            accept="audio/mp3"
+            accept="audio/*"
             type="file"
             ref={audioRef}
             onChange={uploadTrack}
+          />
+          <input
+            accept="image/*"
+            type="file"
+            ref={imgRef}
+            onChange={uploadImg}
           />
         </div>
       </AlbumContent>

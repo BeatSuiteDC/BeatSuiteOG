@@ -22,7 +22,7 @@ export type Track = {
   title: string
   duration: string
   cover: string
-  data?: AudioBuffer
+  data?: File
 }
 export type AlbumProps = {
   cover: string
@@ -145,8 +145,8 @@ export default () => {
     </>
   )
 }
-const DEFAULT_ALBUM_COVER =
-  "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.youredm.com%2Fwp-content%2Fuploads%2F2018%2F09%2FYANDHI.jpg&f=1&nofb=1"
+const DEFAULT_ALBUM_COVER = "https://thisartworkdoesnotexist.com/"
+// "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.youredm.com%2Fwp-content%2Fuploads%2F2018%2F09%2FYANDHI.jpg&f=1&nofb=1"
 export class EmptyAlbum {
   _cover = DEFAULT_ALBUM_COVER
   _title = "untitled"
@@ -184,6 +184,10 @@ export class EmptyAlbum {
     return this._cover
   }
 
+  set cover(url: string) {
+    this._cover = url
+  }
+
   get year() {
     return this._year
   }
@@ -197,23 +201,42 @@ export class EmptyAlbum {
   }
 
   get songs() {
-    return this._songs
+    return [...this._songs]
+  }
+
+  set songs(_songs: Track[]) {
+    this._songs = _songs
   }
 
   addTrack() {
     this._tracks++
-    this._songs.push({
-      src: "",
-      album: this._title,
-      cover: this._cover,
-      title: `untitled banger ${this._tracks}`,
-      duration: "",
-    })
+    this._songs = [
+      ...this._songs,
+      {
+        src: "",
+        album: this._title,
+        cover: this._cover,
+        title: `untitled banger ${this._tracks}`,
+        duration: "",
+      },
+    ]
   }
 
   remove(index: number) {
     if (confirm("Are you sure?")) {
       this._songs.splice(index, 1)
     }
+  }
+
+  updateTrack(idx: number, file: File) {
+    const song = this._songs[idx]
+    this.songs = [
+      ...this.songs.splice(idx, 1, {
+        ...song,
+        title: file.name,
+        src: URL.createObjectURL(file),
+        data: file,
+      }),
+    ]
   }
 }
