@@ -147,11 +147,12 @@ export const AudioControlCSS = () => {
 }
 
 export const Container = styled.div`
-  height: 30px;
-  display: flex;
-  bottom: 10px;
-  flex-direction: column;
-  flex-grow: 1;
-  overflow: hidden;
-  background: cyan;
+  height: 6rem;
+  width: 70%;
+  background: transparent;
+  border: 2px solid black;
+  position: absolute;
+  bottom: 0rem;
+  margin: 0.5rem;
+  backdrop-filter: blur(10px);
 `

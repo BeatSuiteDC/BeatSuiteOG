@@ -7,7 +7,7 @@ const LiveStreamer = () => {
     services: { streamer },
   } = rootStore
 
-  const { liveStreamUrl, isPlaying, volume } = streamer
+  const { isPlaying, volume } = streamer
   const url = "Video-Background.mp4"
   return (
     <div className="videoContainer">

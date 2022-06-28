@@ -80,10 +80,10 @@ export default () => {
 
 export const AlbumContent = styled.div`
   padding: 10px 40px;
-  position: absolute;
+  position: relative;
   overflow-y: scroll;
   font-weight: 800px;
-  height: 40rem;
+  height: 41rem;
 `
 
 export const TopBan = styled.div`
@@ -197,4 +197,5 @@ export const TableContent = styled.div`
   display: flex;
   align-items: center;
   overflow: auto;
+  margin
 `

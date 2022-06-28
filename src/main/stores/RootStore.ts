@@ -68,7 +68,7 @@ export default class RootStore {
     const player = new Player(synthGroup, metronomeSynth, this.trackMute, this)
     const midiInput = new MIDIInput()
     const midiRecorder = new MIDIRecorder(player, this)
-    const streamer = new Streamer(this, this.playlist, this.trackMute)
+    const streamer = new Streamer(this.playlist)
     this.services = {
       player,
       synth,

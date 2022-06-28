@@ -1,20 +1,4 @@
 import { computed, makeObservable, observable } from "mobx"
-import { useStores } from "../../../hooks/useStores"
-import Opensea from "../../../images/opensea.png"
-import {
-  AlbumContent,
-  Artist,
-  Cover,
-  Details,
-  NumberHeader,
-  OpenButton,
-  PlayButton,
-  TableContent,
-  TableHeader,
-  Title,
-  TitleHeader,
-  TopBan,
-} from "./CSS"
 
 export type Track = {
   src: string
@@ -91,60 +75,60 @@ export const demoAlbum: AlbumProps = {
   ],
 }
 
-export default () => {
-  const {
-    services: { streamer },
-  } = useStores()
+// export default () => {
+//   const {
+//     services: { streamer },
+//   } = useStores()
 
-  const { currentAlbum: album } = streamer
+//   // const { currentAlbum: album } = streamer
 
-  const loadOpenSea = (e: any) => {
-    const url = `https://testnets.opensea.io/assets/mumbai/${album.contract}/1`
-    album.contract ? window.open(url) : alert("Album hasn't been minted yet")
-  }
+//   const loadOpenSea = (e: any) => {
+//     const url = `https://testnets.opensea.io/assets/mumbai/${album.contract}/1`
+//     album.contract ? window.open(url) : alert("Album hasn't been minted yet")
+//   }
 
-  return (
-    <>
-      <AlbumContent>
-        <TopBan>
-          <Cover src={album.cover} alt="albumcover" />
-          <Details>
-            <div>ALBUM</div>
-            <Title>{album.title}</Title>
-            <Artist>{album.artist}</Artist>
-            <div>
-              {album.year} • {album.songs.length} Songs
-            </div>
-          </Details>
-        </TopBan>
-        <TopBan>
-          <PlayButton onClick={() => streamer.setAlbum(album)}>PLAY</PlayButton>
-          <OpenButton onClick={loadOpenSea}>
-            OpenSea
-            <img src={Opensea} style={{ height: "20px" }} />
-          </OpenButton>
-        </TopBan>
-        <TableHeader>
-          <NumberHeader>#</NumberHeader>
-          <TitleHeader>TITLE</TitleHeader>
-          <div className="numberHeader"></div>
-        </TableHeader>
-        {album.songs &&
-          album.songs.map((song, i) => {
-            return (
-              <>
-                <TableContent>
-                  <NumberHeader>{i + 1}</NumberHeader>
-                  <TitleHeader>{song.title}</TitleHeader>
-                  <NumberHeader>{song.duration}</NumberHeader>
-                </TableContent>
-              </>
-            )
-          })}
-      </AlbumContent>
-    </>
-  )
-}
+//   return (
+//     <>
+//       <AlbumContent>
+//         <TopBan>
+//           <Cover src={album.cover} alt="albumcover" />
+//           <Details>
+//             <div>ALBUM</div>
+//             <Title>{album.title}</Title>
+//             <Artist>{album.artist}</Artist>
+//             <div>
+//               {album.year} • {album.songs.length} Songs
+//             </div>
+//           </Details>
+//         </TopBan>
+//         <TopBan>
+//           <PlayButton onClick={() => streamer.setAlbum(album)}>PLAY</PlayButton>
+//           <OpenButton onClick={loadOpenSea}>
+//             OpenSea
+//             <img src={Opensea} style={{ height: "20px" }} />
+//           </OpenButton>
+//         </TopBan>
+//         <TableHeader>
+//           <NumberHeader>#</NumberHeader>
+//           <TitleHeader>TITLE</TitleHeader>
+//           <div className="numberHeader"></div>
+//         </TableHeader>
+//         {album.songs &&
+//           album.songs.map((song, i) => {
+//             return (
+//               <>
+//                 <TableContent>
+//                   <NumberHeader>{i + 1}</NumberHeader>
+//                   <TitleHeader>{song.title}</TitleHeader>
+//                   <NumberHeader>{song.duration}</NumberHeader>
+//                 </TableContent>
+//               </>
+//             )
+//           })}
+//       </AlbumContent>
+//     </>
+//   )
+// }
 const DEFAULT_ALBUM_COVER = "https://thisartworkdoesnotexist.com/"
 // "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.youredm.com%2Fwp-content%2Fuploads%2F2018%2F09%2FYANDHI.jpg&f=1&nofb=1"
 export class EmptyAlbum {

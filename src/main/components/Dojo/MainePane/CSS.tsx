@@ -23,6 +23,8 @@ export const Container = styled.div`
   height: 100vh;
   flex-grow: 1;
   overflow: scroll;
+  display: flex;
+  flex-direction: column;
 `
 export const BannerContainer = styled.div`
   position: relative;
@@ -52,7 +54,7 @@ export const TabList = styled.div`
 `
 
 export const BodyContainer = styled.div`
-  position: absolute;
+  position: relative;
   column-gap: 2rem;
   min-width: 100%;
   display: flex;
