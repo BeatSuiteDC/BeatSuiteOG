@@ -5,6 +5,7 @@ import {
   VolumeUpOutlined as volUp,
 } from "@mui/icons-material"
 import Playlist from "../../../../common/playlist/Playlist"
+import { Track } from "../Album/Album"
 import { defaultOptions, Player } from "../Audio/JankePlayer"
 
 export interface LoopSetting {
@@ -49,6 +50,8 @@ export default class Streamer {
       isMuted: computed,
       volume: computed,
       options: computed,
+      playlist: computed,
+      active: computed,
     })
 
     this._playlist = playlist
@@ -56,6 +59,18 @@ export default class Streamer {
       level: 0.35,
       image: volUp,
     }
+  }
+
+  get active() {
+    return this._playlist.active
+  }
+
+  set active(track: Track) {
+    this._playlist.active = track
+  }
+
+  get playlist() {
+    return [...this._playlist.queue]
   }
 
   get options() {
@@ -72,7 +87,14 @@ export default class Streamer {
   }
 
   play() {
-    if (!this._playlist.active) return
+    if (!this.playlist) {
+      console.warn("No tracks in queue.")
+      this._isPlaying = false
+      return
+    }
+    if (!this.active) {
+      this.active = this.playlist[0]
+    }
     this._isPlaying = true
   }
 

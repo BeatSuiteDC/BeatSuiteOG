@@ -152,8 +152,9 @@ export default () => {
           border-radius: 20px;
           backdrop-filter: blur(10px);
           box-shadow: 0px 0px 5px cyan;
+          transition: transform 0.2s;
           :hover {
-            scale: 1.05;
+            transform: scale(1.1);
           }
         }
 
@@ -168,26 +169,28 @@ export default () => {
         }
 
         .playlistContainer {
-          display: flex;
-          background: black;
-          justify-content: center;
-          border: 1px solid ${theme.secondaryColor};
-          border-radius: 10px;
-          position: relative;
           width: 20rem;
           height: 30rem;
-          left: 4rem;
-          transform: "translate(-50%, -50%)";
+          position: relative;
+          left: 4.6rem;
+          border: 1px solid ${theme.secondaryColor};
+          border-radius: 10px;
+          backdrop-filter: blur(15px);
         }
 
         .playlistTitle {
           margin: 5px;
           font-weight: 500px;
           border-bottom: 1px solid ${theme.secondaryColor};
+          position: absolute;
+          height: 100%;
+          align-text: center;
         }
 
         .playlistItem {
           overflow: scroll;
+          height: 100%;
+          margin: 2px;
         }
       `}
     />

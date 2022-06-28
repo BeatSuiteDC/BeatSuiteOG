@@ -196,5 +196,5 @@ export const TableContent = styled.div`
   display: flex;
   align-items: center;
   overflow: auto;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(15px);
 `

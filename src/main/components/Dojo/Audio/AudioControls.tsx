@@ -12,7 +12,9 @@ import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline"
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
 import SkipNextIcon from "@mui/icons-material/SkipNext"
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious"
-import { Fade, Popper } from "@mui/material"
+import { Fade, List, ListItemButton, Popper } from "@mui/material"
+import { Box } from "@mui/system"
+import { Track } from "../Album/Album"
 
 export const TransportPlayer: FC = observer(() => {
   const rootStore = useStores()
@@ -22,6 +24,7 @@ export const TransportPlayer: FC = observer(() => {
   } = rootStore
 
   const [unmount, setUnmount] = useState<null | SVGSVGElement>(null)
+  const queue = playlist.queue
 
   const handlePlay = (e: React.MouseEvent) => {
     streamer.isPlaying ? streamer.pause() : streamer.play()
@@ -36,6 +39,7 @@ export const TransportPlayer: FC = observer(() => {
     console.log(unmount)
   }
   const handleLoop = (e: React.MouseEvent) => {}
+  const handleQueue = (e: React.MouseEvent, track: Track) => {}
 
   const open = Boolean(unmount)
   const id = open ? "playlist-popper" : undefined
@@ -89,18 +93,25 @@ export const TransportPlayer: FC = observer(() => {
           onClick={handlePlaylistPopper}
         />
         <Popper placement="right-start" id={id} open={open} anchorEl={unmount}>
-          <Fade in={open}>
-            <div className="playlistContainer">
-              <h2 className="playlistTitle">{"Playlist container"}</h2>
-              {playlist.queue.map((track, i) => {
-                const active = playlist.active === track
-                return (
-                  <div className="playlistItem" key={"playlist-item-" + i}>
-                    <span className="trackTitle">{track.title}</span>
-                  </div>
-                )
-              })}
-            </div>
+          <Fade in={open} exit={true}>
+            <Box className="playlistContainer">
+              <List component="nav" aria-label="main playlist content">
+                {queue &&
+                  queue.map((track, i) => {
+                    const active = streamer.active === track
+                    return (
+                      <ListItemButton
+                        className="_playlistItem"
+                        key={"playlist-item-" + i}
+                        selected={active}
+                        onClick={(e) => handleQueue(e, track)}
+                      >
+                        <div className="_trackTitle">{track.title}</div>
+                      </ListItemButton>
+                    )
+                  })}
+              </List>
+            </Box>
           </Fade>
         </Popper>
       </div>

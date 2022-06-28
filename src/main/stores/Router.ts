@@ -12,7 +12,7 @@ export type RoutePath =
   | "dojo"
   | "bangers"
 export default class Router {
-  path: RoutePath = "bangers"
+  path: RoutePath = "upload"
 
   constructor() {
     makeObservable(this, {
