@@ -1,9 +1,11 @@
 import { css, Global } from "@emotion/react"
 import styled from "@emotion/styled"
 import { useTheme } from "../../hooks/useTheme"
+import dashboard from "../../images/dashboard.png"
 
 export const DojoCSS = () => {
   const theme = useTheme()
+
   return (
     <Global
       styles={css`
@@ -12,6 +14,12 @@ export const DojoCSS = () => {
           position: relative;
           overflow: hidden;
           z-index: -1;
+        }
+
+        .dojoInterface {
+          background-image: url(${dashboard});
+          background-size: cover;
+          background-position: center center;
         }
 
         .play {

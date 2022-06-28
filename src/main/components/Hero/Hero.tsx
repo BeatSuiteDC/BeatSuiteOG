@@ -1,5 +1,4 @@
 // import styled from "@emotion/styled"
-import { observer } from "mobx-react-lite"
 import { FC } from "react"
 import ReactPlayer from "react-player"
 import { Navigate } from "react-router-dom"
@@ -8,7 +7,7 @@ import logo from "../../images/logo.png"
 import ConnectWallet from "./ConnecBtn"
 import { HeroCSS } from "./HeroCSS"
 
-export const Hero: FC<React.PropsWithChildren<unknown>> = observer(() => {
+const Hero: FC<React.PropsWithChildren<unknown>> = () => {
   const { user } = useStores()
 
   return (
@@ -49,4 +48,6 @@ export const Hero: FC<React.PropsWithChildren<unknown>> = observer(() => {
       </div>
     </div>
   )
-})
+}
+
+export default Hero

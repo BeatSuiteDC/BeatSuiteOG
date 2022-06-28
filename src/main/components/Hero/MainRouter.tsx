@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Dojo from "../Dojo/Dojo"
-import { RootView } from "../RootView/RootView"
-import { Hero } from "./Hero"
+import RootView from "../RootView/RootView"
+import Hero from "./Hero"
 
 const MainRouter = () => {
   return (

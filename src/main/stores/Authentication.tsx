@@ -91,6 +91,7 @@ export default class Authentication {
     //   })
     // }
     // console.log("user", this.info)
+    return "it worked"
   }
 
   async logout() {

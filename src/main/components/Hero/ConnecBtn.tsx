@@ -1,13 +1,13 @@
-import { observer } from "mobx-react-lite"
 import { FC } from "react"
 import { Navigate } from "react-router-dom"
 import { useStores } from "../../hooks/useStores"
 
-const ConnectWallet: FC = observer(() => {
+const ConnectWallet: FC = () => {
   const { user } = useStores()
 
-  const login = (event: any) => {
-    user.connect().then(() => console.log("User connected", user.isConnected))
+  const login = async (event: any) => {
+    const result = await user.connect()
+    console.log("result", result)
   }
 
   return (
@@ -19,6 +19,6 @@ const ConnectWallet: FC = observer(() => {
       </button>
     </div>
   )
-})
+}
 
 export default ConnectWallet

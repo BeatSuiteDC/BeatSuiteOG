@@ -42,7 +42,7 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
   )
 })
 
-export const RootView: FC<React.PropsWithChildren<unknown>> = () => (
+const RootView: FC<React.PropsWithChildren<unknown>> = () => (
   <>
     <Column>
       <Navigation />
@@ -59,3 +59,5 @@ export const RootView: FC<React.PropsWithChildren<unknown>> = () => (
     <ExportProgressDialog />
   </>
 )
+
+export default RootView
