@@ -13,10 +13,12 @@ import CSS, {
   TrackInput,
 } from "./CSS"
 
-import AddIcon from "@mui/icons-material/Add"
+import AddCircleIcon from "@mui/icons-material/AddCircle"
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate"
+import AirplayIcon from "@mui/icons-material/Airplay"
 import CloudUploadIcon from "@mui/icons-material/CloudUpload"
-import RemoveIcon from "@mui/icons-material/Remove"
+import PlayDisabledIcon from "@mui/icons-material/PlayDisabled"
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline"
 
 import { observer } from "mobx-react-lite"
 import { ChangeEvent, useEffect, useRef, useState } from "react"
@@ -25,23 +27,20 @@ import { Track } from "../Album/Album"
 
 export default observer(() => {
   const rootStore = useStores()
-  const { user, album } = rootStore
+  const { user, album, playlist } = rootStore
 
   useEffect(() => {
     const info = user.info
     if (info?.name) {
       album.artist = info.name
     }
-    console.log("album", album)
   }, [])
 
-  const [trackIdx, setTrackIdx] = useState<number>()
+  const [trackIdx, setTrackIdx] = useState<number>(-1)
   const audioRef = useRef<HTMLInputElement>(null)
   const imgRef = useRef<HTMLInputElement>(null)
 
-  const triggerInput = (type: "image" | "audio", idx?: number) => {
-    console.log(type, album, idx)
-
+  const triggerInput = (type: "image" | "audio", idx = -1) => {
     if (type === "audio") {
       setTrackIdx(idx)
       audioRef.current?.click()
@@ -52,22 +51,32 @@ export default observer(() => {
 
   const uploadTrack = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.item(0)
-    if (file && trackIdx) {
-      console.log("files", file)
-      album.updateTrack(trackIdx, file)
-      console.log(album)
+    if (file) {
+      try {
+        album.updateTrack(trackIdx, file)
+        console.log(album.songs[trackIdx])
+      } catch (ex) {
+        console.error(ex)
+      }
     }
   }
   const uploadImg = (e: ChangeEvent<HTMLInputElement>) => {
     const img = e.target.files?.item(0)
     if (img) {
-      console.log("img", img)
       album.cover = URL.createObjectURL(img)
+      console.log("Album cover", album.cover)
     }
   }
   const handleMint = (e: any) => {}
   const handleSave = (e: any) => {}
-  const handleImg = (e: any) => {}
+
+  const handlePlay = (song: Track) => {
+    if (!playlist.inQueue(song)) {
+      playlist.addNext(song)
+    }
+
+    playlist.active = song
+  }
   const handleArtist = (e: any) => {
     album.artist = e.target.value
   }
@@ -107,7 +116,10 @@ export default observer(() => {
         </TopBan>
 
         <TableHeader>
-          <AddIcon className="addIcon" onClick={(e) => album.addTrack()} />
+          <AddCircleIcon
+            className="addIcon"
+            onClick={(e) => album.addTrack()}
+          />
           <TitleHeader>BANGERS</TitleHeader>
         </TableHeader>
 
@@ -115,7 +127,7 @@ export default observer(() => {
           return (
             <div key={i}>
               <TableContent>
-                <RemoveIcon
+                <RemoveCircleOutlineIcon
                   className="removeIcon"
                   onClick={(e) => album.remove(i)}
                 />
@@ -128,6 +140,15 @@ export default observer(() => {
                   className="uploadIcon"
                   onClick={(e) => triggerInput("audio", i)}
                 />
+
+                {song.src ? (
+                  <AirplayIcon
+                    className="playIcon"
+                    onClick={(e) => handlePlay(song)}
+                  />
+                ) : (
+                  <PlayDisabledIcon className="playIcon" />
+                )}
               </TableContent>
             </div>
           )

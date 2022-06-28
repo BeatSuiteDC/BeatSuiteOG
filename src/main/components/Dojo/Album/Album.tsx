@@ -151,7 +151,7 @@ export class EmptyAlbum {
   _cover = DEFAULT_ALBUM_COVER
   _title = "untitled"
   _year = new Date().getFullYear().toString()
-  _artist = "rando jenkins"
+  _artist = "jose rando"
   _songs: Track[] = []
   _tracks = 0
 
@@ -230,13 +230,14 @@ export class EmptyAlbum {
 
   updateTrack(idx: number, file: File) {
     const song = this._songs[idx]
-    this.songs = [
-      ...this.songs.splice(idx, 1, {
-        ...song,
-        title: file.name,
-        src: URL.createObjectURL(file),
-        data: file,
-      }),
-    ]
+    const songs = this.songs
+    songs.splice(idx, 1, {
+      ...song,
+      album: this.title,
+      title: file.name,
+      src: URL.createObjectURL(file),
+      data: file,
+    })
+    this.songs = songs
   }
 }

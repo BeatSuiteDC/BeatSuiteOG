@@ -49,7 +49,6 @@ export default () => {
           margin: 5px;
           margin-left: 10px;
           font-size: 20px;
-
           :hover {
             color: red;
           }
@@ -59,11 +58,21 @@ export default () => {
           margin: 5px;
           position: relative;
           font-size: 20px;
-          left: 42%;
+          left: 2rem;
           :hover {
             color: #99badd;
           }
+
         }
+        .playIcon {
+          margin: 5px;
+          position: relative;
+          font-size: 20px;
+          left: 2rem;
+          color: ${theme.tertiaryTextColor};
+          :hover {
+            color: #99badd;
+          }
       `}
     />
   )
@@ -136,7 +145,6 @@ export const OpenButton = styled.button`
 export const TableHeader = styled.div`
   border-bottom: 1px solid rgb(67, 67, 67);
   display: flex;
-  color: rgb(125, 125, 125);
   letter-spacing: 1.4px;
   font-size: 16px;
   font-weight: 500;
@@ -177,6 +185,7 @@ export const TrackInput = styled.input`
   border-radius: 5px;
   padding-left: 10px;
   overflow-x: scroll;
+  width: 20rem;
   :hover {
     opacity: 0.5;
   }
