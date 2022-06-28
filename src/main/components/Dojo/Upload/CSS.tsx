@@ -84,6 +84,7 @@ export const AlbumContent = styled.div`
   overflow-y: scroll;
   font-weight: 800px;
   height: 41rem;
+  transition: ease-out 5s;
 `
 
 export const TopBan = styled.div`

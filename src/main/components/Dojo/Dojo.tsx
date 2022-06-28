@@ -10,6 +10,7 @@ import {
   SidePanel,
   SubHeader,
 } from "./DojoCSS"
+import LiveStreamer from "./LiveStreamer"
 import Loading from "./Loading"
 import { MainePane } from "./MainePane"
 import { SearchBar } from "./SearchBar"
@@ -53,7 +54,7 @@ const Dojo = observer(() => {
   return (
     <>
       <DojoCSS />
-      {/* <LiveStreamer /> */}
+      <LiveStreamer />
       <InterfaceContainer>
         <SideBarContainer>
           <LogoDiv>

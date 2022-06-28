@@ -6,6 +6,7 @@ import styled from "@emotion/styled"
 
 import { Tooltip } from "@mui/material"
 import { observer } from "mobx-react-lite"
+import ReactJkMusicPlayer from "react-jinke-music-player"
 import { localized } from "../../../../common/localize/localizedString"
 import { fastForwardOneBar, rewindOneBar, stop } from "../../../actions"
 import { AudioControlCSS, Container } from "./AudioControlCSS"
@@ -131,6 +132,38 @@ export const TransportPlayer: FC<React.PropsWithChildren<unknown>> = observer(
       playlist,
     } = rootStore
 
-    return <Container></Container>
+    const [unmount, setUnmount] = useState(false)
+
+    const handlePlay = (e: React.MouseEvent) => {}
+    const handlePause = (e: React.MouseEvent) => {}
+    const handleVolume = (e: React.MouseEvent) => {}
+    const handleStop = (e: React.MouseEvent) => {}
+
+    return (
+      <Container>
+        {streamer.isPlaying ? null : (
+          <ReactJkMusicPlayer
+            {...streamer.options}
+            audioLists={playlist.audioList()}
+            onThemeChange={(theme) => {
+              console.log("onThemeChange: ", theme)
+              streamer.options = { theme }
+            }}
+            onModeChange={(mode) => {
+              console.log("onModeChange: ", mode)
+              streamer.options = { mode }
+            }}
+            onPlayModeChange={(playMode) => {
+              console.log("onPlayModeChange: ", playMode)
+              streamer.options = { playMode }
+            }}
+            onPlayIndexChange={(playIndex) => {
+              console.log("onPlayIndexChange: ", playIndex)
+              streamer.options = { playIndex }
+            }}
+          />
+        )}
+      </Container>
+    )
   }
 )

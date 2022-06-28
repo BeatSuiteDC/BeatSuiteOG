@@ -38,12 +38,22 @@ export const HeroCSS = () => {
           bottom: -200px;
           width: 100%;
           color: ${theme.textColor};
-          font-family: "Nunito", sans-serif;
+          font-family: "Kdam Thmor Pro", sans-serif;
           font-weight: 200;
           text-transform: uppercase;
           letter-spacing: 7px;
           font-size: 37px;
           transform: scale(1, 0.9);
+          background-image: linear-gradient(
+            to right,
+            #462523 0,
+            #cb9b51 5%,
+            #f6e27a 15%,
+            #f6f2c0 30%,
+            #f6e27a 55%,
+            #cb9b51 78%,
+            #462523 100%
+          );
         }
 
         /**
