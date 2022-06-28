@@ -83,7 +83,7 @@ export const AlbumContent = styled.div`
   position: relative;
   overflow-y: scroll;
   font-weight: 800px;
-  height: 41rem;
+  height: 37rem;
 `
 
 export const TopBan = styled.div`
@@ -123,7 +123,7 @@ export const Artist = styled.input`
 `
 
 export const OpenButton = styled.button`
-  padding: 10px;
+  padding: 5px;
   background-color: transparent;
   width: 200px;
   color: white;
@@ -131,8 +131,8 @@ export const OpenButton = styled.button`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 35px;
-  margin-bottom: 35px;
+  margin-top: 25px;
+  margin-bottom: 25px;
   border: 2px solid white;
   border-radius: 25px;
   letter-spacing: 1.5px;
@@ -193,7 +193,6 @@ export const TrackInput = styled.input`
 
 export const TableContent = styled.div`
   border-bottom: 1px solid rgb(67, 67, 67);
-  height: 3rem;
   display: flex;
   align-items: center;
   overflow: auto;

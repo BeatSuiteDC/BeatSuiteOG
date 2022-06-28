@@ -69,7 +69,7 @@ const Dojo = observer(() => {
 
           <SideBar />
 
-          <TrackPlayer trackName="Pure Heat" artistName="DCAT" />
+          <TrackPlayer />
         </SideBarContainer>
 
         <MainePane />

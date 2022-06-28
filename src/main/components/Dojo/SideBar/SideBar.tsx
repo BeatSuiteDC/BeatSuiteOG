@@ -13,14 +13,14 @@ export type Page = {
 }
 
 export const SideBarElements: Array<Page> = [
-  {
-    title: "Bangers",
-    path: "bangers",
-  },
-  {
-    title: "Dojo",
-    path: "dojo",
-  },
+  // {
+  //   title: "Bangers",
+  //   path: "bangers",
+  // },
+  // {
+  //   title: "Dojo",
+  //   path: "dojo",
+  // },
   {
     title: "Upload",
     path: "upload",

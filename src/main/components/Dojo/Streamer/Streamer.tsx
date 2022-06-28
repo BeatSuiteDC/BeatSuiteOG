@@ -14,8 +14,6 @@ export interface LoopSetting {
 }
 
 export const DEFAULT_TEMPO = 120
-export const DEFAULT_LIVESTREAM =
-  "https://www.youtube.com/embed/MlnNZV7Jujs?autoplay=1&mute=1&start=1"
 
 export type Volume = {
   level: number
@@ -74,6 +72,7 @@ export default class Streamer {
   }
 
   play() {
+    if (!this._playlist.active) return
     this._isPlaying = true
   }
 

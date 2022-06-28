@@ -4,124 +4,15 @@ import React, { FC, useState } from "react"
 import { useStores } from "../../../hooks/useStores"
 import CSS, { Container } from "./AudioControlCSS"
 
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive"
 import FastForwardIcon from "@mui/icons-material/FastForward"
 import FastRewindIcon from "@mui/icons-material/FastRewind"
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline"
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline"
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
 import SkipNextIcon from "@mui/icons-material/SkipNext"
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious"
-// type ButtonComponent = {
-//   clickHandler: MouseEventHandler
-//   class1: string
-//   class2: string
-//   tooltipKey?: string
-//   tooltipValue?: string
-//   hotkey?: string
-//   imgSrc: any
-// }
-
-// const ButtonDiv: FC<ButtonComponent> = ({
-//   clickHandler,
-//   class1,
-//   class2,
-//   tooltipKey,
-//   tooltipValue,
-//   hotkey,
-//   imgSrc,
-// }) => {
-//   const key = tooltipKey ? tooltipKey : ""
-//   const value = tooltipValue ? tooltipValue : ""
-//   const _hotkey = hotkey ? hotkey : ""
-//   return (
-//     // <motion.div
-//     //   whileHover={{ scale: 1.03 }}
-//     //   whileTap={{ scale: 0.9 }}
-//     //   onClick={clickHandler}
-//     //   className={class1}
-//     // >
-//     //   <Tooltip title={`${localized(key, value)} [${_hotkey}]`} placement="top">
-//     //     <img className={class2} src={imgSrc} />
-//     //   </Tooltip>
-//     // </motion.div>
-//     <></>
-//   )
-// }
-
-// const PlayerPanel: FC<React.PropsWithChildren<unknown>> = observer(() => {
-//   const rootStore = useStores()
-//   const {
-//     services: { streamer },
-//   } = rootStore
-
-//   const { isPlaying, volume } = streamer
-
-//   const [muteCheck2, setUnmute2] = useState("audioOnImg")
-
-//   const [lastPlayedVolume, setLastPlayedVolume] = useState(volume.level)
-
-//   const onClickPlay = (e: any) => {
-//     if (!isPlaying) {
-//       streamer.play()
-//     } else {
-//       streamer.pause()
-//     }
-//   }
-
-//   const handleVolume = (e: any) => {
-//     streamer.setVolume(e.target.valueAsNumber)
-//   }
-
-//   const handleMute = (e: any) => {
-//     // Someone else did this but ef it imma let it rock
-//     let classNameVol = e.target.className
-//     if (classNameVol === "volumeOn" || classNameVol === "audioOnImg") {
-//       setLastPlayedVolume(volume.level)
-//       streamer.mute(true)
-//     } else if (classNameVol === "volumeOff" || classNameVol === "audioOffImg") {
-//       streamer.mute(false)
-//       streamer.setVolume(lastPlayedVolume)
-//     }
-//   }
-
-//   const onClickStop = stop(rootStore)
-//   const onClickBackward = rewindOneBar(rootStore)
-//   const onClickForward = fastForwardOneBar(rootStore)
-
-//   const AudioControl = styled.div`
-//     width: 99%;
-//     height: 18vh;
-//     text-align: center;
-//     font-size: 3rem;
-//     color: white;
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: center;
-//     box-sizing: border-box;
-//     margin-top: auto;
-//     z-index: 1;
-//   `
-//   return (
-//     <>
-//       <AudioControl>
-//         <CSS />
-//         <Tooltip
-//           title={`${localized("volume", String(volume.level * 100))}`}
-//           placement="top"
-//         >
-//           <input
-//             className="volumeDial"
-//             type="range"
-//             min={0}
-//             max={1}
-//             value={volume.level}
-//             step={0.01}
-//             onChange={handleVolume}
-//           />
-//         </Tooltip>
-//       </AudioControl>
-//     </>
-//   )
-// })
+import { Fade, Popper } from "@mui/material"
 
 export const TransportPlayer: FC = observer(() => {
   const rootStore = useStores()
@@ -130,7 +21,7 @@ export const TransportPlayer: FC = observer(() => {
     playlist,
   } = rootStore
 
-  const [unmount, setUnmount] = useState(false)
+  const [unmount, setUnmount] = useState<null | SVGSVGElement>(null)
 
   const handlePlay = (e: React.MouseEvent) => {
     streamer.isPlaying ? streamer.pause() : streamer.play()
@@ -140,11 +31,24 @@ export const TransportPlayer: FC = observer(() => {
   const handleNext = (e: React.MouseEvent) => {}
   const handleRewind = (e: React.MouseEvent) => {}
   const handleSeek = (e: React.MouseEvent) => {}
+  const handlePlaylistPopper = (e: React.MouseEvent<SVGSVGElement>) => {
+    setUnmount(unmount ? null : e.currentTarget)
+    console.log(unmount)
+  }
+  const handleLoop = (e: React.MouseEvent) => {}
+
+  const open = Boolean(unmount)
+  const id = open ? "playlist-popper" : undefined
 
   return (
     <Container>
       <CSS />
       <div className="centralControls">
+        <AllInclusiveIcon
+          className="seekIcon"
+          fontSize="medium"
+          onClick={handleLoop}
+        />
         <SkipPreviousIcon
           className="seekIcon"
           fontSize="medium"
@@ -178,6 +82,27 @@ export const TransportPlayer: FC = observer(() => {
           fontSize="medium"
           onClick={handleNext}
         />
+        <PlaylistAddIcon
+          aria-describedby={id}
+          className="seekIcon"
+          fontSize="medium"
+          onClick={handlePlaylistPopper}
+        />
+        <Popper placement="right-start" id={id} open={open} anchorEl={unmount}>
+          <Fade in={open}>
+            <div className="playlistContainer">
+              <h2 className="playlistTitle">{"Playlist container"}</h2>
+              {playlist.queue.map((track, i) => {
+                const active = playlist.active === track
+                return (
+                  <div className="playlistItem" key={"playlist-item-" + i}>
+                    <span className="trackTitle">{track.title}</span>
+                  </div>
+                )
+              })}
+            </div>
+          </Fade>
+        </Popper>
       </div>
     </Container>
   )

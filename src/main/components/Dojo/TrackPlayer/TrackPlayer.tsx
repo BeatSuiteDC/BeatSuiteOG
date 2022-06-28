@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import React, { FC } from "react"
+import { FC } from "react"
 import { useStores } from "../../../hooks/useStores"
 import Track from "../../../images/track.png"
 import {
@@ -20,50 +20,50 @@ type Tracklist = {
   children?: any
 }
 
-export const TrackPlayer: FC<React.PropsWithChildren<Tracklist>> = observer(
-  ({ trackName, artistName }) => {
-    const {
-      services: { streamer },
-    } = useStores()
+export const TrackPlayer: FC = observer(() => {
+  const {
+    services: { streamer },
+    playlist,
+  } = useStores()
 
-    const { volume, isPlaying, isMuted } = streamer
+  const { volume, isPlaying, isMuted } = streamer
 
-    const handleVolume = (e: any) => {
-      streamer.setVolume(e.target.valueAsNumber)
-    }
-    return (
-      <>
-        <TrackPlayerCSS />
-        <Container>
-          <Top>
-            <TopImg
-              style={{
-                animation: `${isPlaying ? "spin 3s linear infinite" : ""}`,
-              }}
-              src={Track}
-            />
-            <PTag>
-              {trackName} <Artist>{artistName}</Artist>
-            </PTag>
-          </Top>
-
-          <Bottom>
-            <Icon></Icon>
-            <VolumeDial
-              min={0}
-              max={1}
-              value={volume.level}
-              step={0.01}
-              onChange={handleVolume}
-              type="range"
-            />
-            <Icon></Icon>
-            <Icon></Icon>
-          </Bottom>
-        </Container>
-      </>
-    )
+  const handleVolume = (e: any) => {
+    streamer.setVolume(e.target.valueAsNumber)
   }
-)
+  return (
+    <>
+      <TrackPlayerCSS />
+      <Container>
+        <Top>
+          <TopImg
+            style={{
+              animation: `${isPlaying ? "spin 3s linear infinite" : ""}`,
+            }}
+            src={Track}
+          />
+          <PTag>
+            {playlist.active?.title || "no track"}
+            <Artist>{playlist.active?.album || "--"}</Artist>
+          </PTag>
+        </Top>
+
+        <Bottom>
+          <Icon></Icon>
+          <VolumeDial
+            min={0}
+            max={1}
+            value={volume.level}
+            step={0.01}
+            onChange={handleVolume}
+            type="range"
+          />
+          <Icon></Icon>
+          <Icon></Icon>
+        </Bottom>
+      </Container>
+    </>
+  )
+})
 
 export default TrackPlayer

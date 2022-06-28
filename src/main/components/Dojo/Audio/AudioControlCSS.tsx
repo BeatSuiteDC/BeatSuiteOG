@@ -166,6 +166,29 @@ export default () => {
             color: ${theme.secondaryColor};
           }
         }
+
+        .playlistContainer {
+          display: flex;
+          background: black;
+          justify-content: center;
+          border: 1px solid ${theme.secondaryColor};
+          border-radius: 10px;
+          position: relative;
+          width: 20rem;
+          height: 30rem;
+          left: 4rem;
+          transform: "translate(-50%, -50%)";
+        }
+
+        .playlistTitle {
+          margin: 5px;
+          font-weight: 500px;
+          border-bottom: 1px solid ${theme.secondaryColor};
+        }
+
+        .playlistItem {
+          overflow: scroll;
+        }
       `}
     />
   )
