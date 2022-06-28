@@ -14,6 +14,7 @@ export default () => {
           width: 200px;
           height: 200px;
           cursor: pointer;
+          border-radius: 20px;
           :hover > #cover {
             scale: 1.05;
             opacity: 0.5;
@@ -73,11 +74,12 @@ export const AlbumContent = styled.div`
   position: absolute;
   overflow-y: scroll;
   font-weight: 800px;
-  font-family: ${({ theme }) => theme.fontFamily};
+  height: 40rem;
 `
 
 export const TopBan = styled.div`
   display: flex;
+  align-items: center;
   gap: 30px;
 `
 export const Cover = styled.img`
@@ -163,19 +165,15 @@ export const RemoveButton = styled.div`
 `
 
 export const TitleHeader = styled.div`
-  padding-left: 5%;
+  padding-left: 4.5rem;
   display: flex;
-  font-family: ${({ theme }) => theme.fontFamily};
   color: ${({ theme }) => theme.headerColor};
-  :hover {
-    background: red;
-  }
+  padding-top: 5px;
 `
 export const TrackInput = styled.input`
   color: #99badd;
   background: none;
   margin-left: 4rem;
-  font-size: 20px;
   border-radius: 5px;
   padding-left: 10px;
   overflow-x: scroll;
@@ -183,33 +181,11 @@ export const TrackInput = styled.input`
     opacity: 0.5;
   }
 `
-export const _TrackInput = styled.input`
-  width: 25%;
-  padding-left: 5%;
-  display: flex;
-  justify-content: start;
-  color: #99badd;
-  background: none;
-  overflow: hidden;
-  background: red;
-`
 
 export const TableContent = styled.div`
   border-bottom: 1px solid rgb(67, 67, 67);
-  height: 4rem;
+  height: 3rem;
   display: flex;
   align-items: center;
-`
-const _TableContent = styled.div`
-  border-bottom: 1px solid rgb(67, 67, 67);
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  color: rgb(125, 125, 125);
-  padding-bottom: 13px;
-  font-size: 16px;
-  font-weight: 500;
-  padding-top: 13px;
-  overflow: scroll;
-  height: 4rem;
+  overflow: auto;
 `

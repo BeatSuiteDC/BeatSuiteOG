@@ -22,6 +22,7 @@ export type Track = {
   title: string
   duration: string
   cover: string
+  data?: AudioBuffer
 }
 export type AlbumProps = {
   cover: string
@@ -175,7 +176,6 @@ export class EmptyAlbum {
   get artist() {
     return this._artist
   }
-
   set artist(_artist: string) {
     this._artist = _artist
   }
@@ -206,8 +206,8 @@ export class EmptyAlbum {
       src: "",
       album: this._title,
       cover: this._cover,
-      title: `Banger ${this._tracks}`,
-      duration: "0:00",
+      title: `untitled banger ${this._tracks}`,
+      duration: "",
     })
   }
 

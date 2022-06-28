@@ -3,7 +3,7 @@ import { Divider, Menu, MenuItem } from "@mui/material"
 import Color from "color"
 import { observer } from "mobx-react-lite"
 import React, { ChangeEvent, FC, useCallback, useRef, VFC } from "react"
-import { Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { localized } from "../../../common/localize/localizedString"
 import { createSong, openSong, saveSong } from "../../actions"
 import { hasFSAccess, openFile, saveFile, saveFileAs } from "../../actions/file"
@@ -127,7 +127,8 @@ export const FileMenuButton: FC<React.PropsWithChildren<unknown>> = observer(
           localized("confirm-dojo", "Work of art in progress. Are you sure?")
         )
       ) {
-        return <Navigate to="/dojo" />
+        const navigate = useNavigate()
+        navigate("/dojo")
       }
     }
 
