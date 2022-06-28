@@ -5,6 +5,7 @@ import {
   VolumeUpOutlined as volUp,
 } from "@mui/icons-material"
 import Playlist from "../../../../common/playlist/Playlist"
+import { defaultOptions, Player } from "../Audio/JankePlayer"
 
 export interface LoopSetting {
   begin: number
@@ -28,6 +29,7 @@ export default class Streamer {
   private _isMuted = false
   private _volume: Volume
   private _playlist: Playlist
+  private _options: Player = defaultOptions
 
   disableSeek: boolean = false
 
@@ -36,8 +38,9 @@ export default class Streamer {
   constructor(playlist: Playlist) {
     makeObservable<
       Streamer,
-      "_currentTick" | "_isPlaying" | "_volume" | "_isMuted"
+      "_options" | "_currentTick" | "_isPlaying" | "_volume" | "_isMuted"
     >(this, {
+      _options: observable,
       _currentTick: observable,
       _isPlaying: observable,
       _volume: observable,
@@ -47,12 +50,26 @@ export default class Streamer {
       isPlaying: computed,
       isMuted: computed,
       volume: computed,
+      options: computed,
     })
 
     this._playlist = playlist
     this._volume = {
       level: 0.35,
       image: volUp,
+    }
+  }
+
+  get options() {
+    return {
+      ...this._options,
+    }
+  }
+
+  set options(_options: object) {
+    this.options = {
+      ...this.options,
+      ..._options,
     }
   }
 
