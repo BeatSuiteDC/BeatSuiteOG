@@ -54,7 +54,8 @@ export default observer(() => {
     if (file) {
       try {
         album.updateTrack(trackIdx, file)
-        console.log(album.songs[trackIdx])
+        let songs = album.songs
+        console.log(songs[trackIdx])
       } catch (ex) {
         console.error(ex)
       }

@@ -10,9 +10,11 @@ import FastRewindIcon from "@mui/icons-material/FastRewind"
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline"
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline"
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
+import PlaylistRemoveIcon from "@mui/icons-material/PlaylistRemove"
 import SkipNextIcon from "@mui/icons-material/SkipNext"
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious"
-import { Fade, List, ListItemButton, Popper } from "@mui/material"
+
+import { Fade, List, ListItemButton, ListItemIcon, Popper } from "@mui/material"
 import { Box } from "@mui/system"
 import { Track } from "../Album/Album"
 
@@ -98,16 +100,24 @@ export const TransportPlayer: FC = observer(() => {
               <List component="nav" aria-label="main playlist content">
                 {queue &&
                   queue.map((track, i) => {
-                    const active = streamer.active === track
+                    const active = playlist.active === track
                     return (
-                      <ListItemButton
-                        className="_playlistItem"
-                        key={"playlist-item-" + i}
-                        selected={active}
-                        onClick={(e) => handleQueue(e, track)}
-                      >
-                        <div className="_trackTitle">{track.title}</div>
-                      </ListItemButton>
+                      <>
+                        <ListItemButton
+                          className="playlistItem"
+                          key={"playlist-item-" + i}
+                          selected={active}
+                          onClick={(e) => handleQueue(e, track)}
+                        >
+                          <div className="_trackTitle">{track.title}</div>
+                          <ListItemIcon>
+                            <PlaylistRemoveIcon
+                              className="playlistIcon"
+                              onClick={(e) => playlist.remove(track)}
+                            />
+                          </ListItemIcon>
+                        </ListItemButton>
+                      </>
                     )
                   })}
               </List>

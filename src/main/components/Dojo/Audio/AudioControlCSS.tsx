@@ -190,7 +190,13 @@ export default () => {
         .playlistItem {
           overflow: scroll;
           height: 100%;
-          margin: 2px;
+        }
+
+        .playlistIcon {
+          margin: 1px;
+          :hover {
+            color: red;
+          }
         }
       `}
     />

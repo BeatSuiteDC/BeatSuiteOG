@@ -36,11 +36,35 @@ export default class Playlist {
   }
 
   inQueue(item: Track) {
-    return this._queue.find((x) => x == item)
+    return this.queue.includes(item)
   }
 
   addNext(item: Track) {
-    this._queue.splice(1, 0, item)
+    const queue = this.queue
+
+    if (this.inQueue(item)) {
+      console.warn("Track already in queue")
+      return
+    }
+    queue.splice(1, 0, item)
+    this._queue = [...queue]
+  }
+
+  remove(item: Track) {
+    const q = this.queue
+    console.log("length", this._queue.length)
+    const idx = q.indexOf(item)
+    if (!this.inQueue(item) || idx === -1) {
+      console.warn("track not in queue")
+      return
+    }
+    if (this.active === item) {
+      console.log("skipping to next track")
+      this.active = q[idx + 1]
+    }
+    q.splice(idx, 1)
+    this._queue = q
+    console.log("length", this._queue.length)
   }
 
   audioList(): Array<ReactJkMusicPlayerAudioListProps> {

@@ -23,7 +23,6 @@ type Tracklist = {
 export const TrackPlayer: FC = observer(() => {
   const {
     services: { streamer },
-    playlist,
   } = useStores()
 
   const { volume, isPlaying, isMuted } = streamer
@@ -43,8 +42,8 @@ export const TrackPlayer: FC = observer(() => {
             src={Track}
           />
           <PTag>
-            {playlist.active?.title || "no track"}
-            <Artist>{playlist.active?.album || "--"}</Artist>
+            {streamer.active?.title || "no track"}
+            <Artist>{streamer.active?.album || "--"}</Artist>
           </PTag>
         </Top>
 
