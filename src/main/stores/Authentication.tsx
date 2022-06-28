@@ -50,7 +50,10 @@ export default class Authentication {
   }
 
   set info(_user: User) {
-    Object.assign(this._user, { ..._user })
+    this._user = {
+      ...this.info,
+      ..._user,
+    }
   }
 
   get address() {

@@ -2,7 +2,7 @@ import { css, Global } from "@emotion/react"
 import styled from "@emotion/styled"
 import { useTheme } from "../../../hooks/useTheme"
 
-export const AudioControlCSS = () => {
+export default () => {
   const theme = useTheme()
   return (
     <Global
@@ -141,18 +141,48 @@ export const AudioControlCSS = () => {
           filter: invert(82%) sepia(0%) saturate(0%) hue-rotate(222deg)
             brightness(97%) contrast(86%);
         }
+
+        .centralControls {
+          display: flex;
+          width: 40%;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+          border: 1.5px solid ${theme.secondaryColor};
+          border-radius: 20px;
+          backdrop-filter: blur(10px);
+          box-shadow: 0px 0px 5px cyan;
+          :hover {
+            scale: 1.05;
+          }
+        }
+
+        .playPause,
+        .seekIcon {
+          margin: 1rem;
+          margin-bottom: 1rem;
+          transition: ease 200ms;
+          :hover {
+            color: ${theme.secondaryColor};
+          }
+        }
       `}
     />
   )
 }
 
 export const Container = styled.div`
-  height: 6rem;
+  height: 4rem;
   width: 70%;
-  background: transparent;
-  border: 2px solid black;
   position: absolute;
   bottom: 0rem;
   margin: 0.5rem;
-  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+`
+
+export const PlayBtn = styled.img`
+  color: ${({ theme }) => theme.tertiaryTextColor};
+  transition: ease 200ms;
+  padding-bottom: 1.25rem;
 `

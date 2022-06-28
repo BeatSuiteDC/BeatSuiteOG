@@ -74,7 +74,6 @@ export default observer(() => {
     if (!playlist.inQueue(song)) {
       playlist.addNext(song)
     }
-
     playlist.active = song
   }
   const handleArtist = (e: any) => {
