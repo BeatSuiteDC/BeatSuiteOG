@@ -4,6 +4,7 @@ import {
   VolumeOffOutlined as volOff,
   VolumeUpOutlined as volUp,
 } from "@mui/icons-material"
+import { ReactJkMusicPlayerInstance } from "react-jinke-music-player"
 import Playlist from "../../../../common/playlist/Playlist"
 import { Track } from "../Album/Album"
 import { defaultOptions, Player } from "../Audio/JankePlayer"
@@ -32,14 +33,16 @@ export default class Streamer {
   private _options: Player = defaultOptions
 
   disableSeek: boolean = false
-
   loop: LoopSetting | null = null
+
+  audio: ReactJkMusicPlayerInstance | undefined
 
   constructor(playlist: Playlist) {
     makeObservable<
       Streamer,
       "_options" | "_currentTick" | "_isPlaying" | "_volume" | "_isMuted"
     >(this, {
+      audio: observable,
       _options: observable,
       _currentTick: observable,
       _isPlaying: observable,
@@ -71,7 +74,7 @@ export default class Streamer {
   }
 
   get playlist() {
-    return [...this._playlist.queue]
+    return [...this._playlist?.queue]
   }
 
   get options() {
@@ -88,7 +91,7 @@ export default class Streamer {
   }
 
   play() {
-    if (!this.playlist) {
+    if (!this.canPlay()) {
       console.warn("No tracks in queue.")
       this._isPlaying = false
       return
@@ -96,21 +99,18 @@ export default class Streamer {
     if (!this.active) {
       this.active = this.playlist[0]
     }
+    this.audio?.play()
     this._isPlaying = true
   }
 
   pause() {
-    if (!this.isPlaying) {
-      console.warn("called pause() while paused. aborted.")
-      return
-    }
-
+    this.audio?.pause()
     this._isPlaying = false
   }
 
   stop() {
-    this._currentTick = 0
-    // this.allSoundsOff()
+    this.position = 0
+    this._playlist.reset()
     this.pause()
   }
 
@@ -180,6 +180,10 @@ export default class Streamer {
 
   set currentTempo(value: number) {
     this._currentTempo = value
+  }
+
+  canPlay() {
+    return this.playlist.length > 0
   }
 
   // tickToMillisec(tick: number) {

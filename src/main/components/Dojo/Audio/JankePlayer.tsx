@@ -1,5 +1,4 @@
 export interface Player {
-  audioLists: Array<any>
   defaultPlayIndex: number
   theme: string
   bounds: string
@@ -50,8 +49,6 @@ export interface Player {
 }
 
 export const defaultOptions: Player = {
-  audioLists: [],
-
   // default play index of the audio player  [type `number` default `0`]
   defaultPlayIndex: 0,
 

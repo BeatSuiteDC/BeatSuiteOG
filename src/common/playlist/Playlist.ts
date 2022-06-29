@@ -75,7 +75,12 @@ export default class Playlist {
     this._queue = q
   }
 
-  audioList(): Array<ReactJkMusicPlayerAudioListProps> {
+  reset() {
+    this._active = undefined
+    this._queue = []
+  }
+
+  toAudioList(): Array<ReactJkMusicPlayerAudioListProps> {
     const queue = this.queue
     return queue.map((i) => {
       return {

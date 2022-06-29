@@ -1,4 +1,3 @@
-// import { motion } from "framer-motion"
 import { observer } from "mobx-react-lite"
 import React, { FC, useState } from "react"
 import { useStores } from "../../../hooks/useStores"
@@ -16,6 +15,7 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious"
 
 import { Fade, List, ListItemButton, ListItemIcon, Popper } from "@mui/material"
 import { Box } from "@mui/system"
+import ReactJkMusicPlayer from "react-jinke-music-player"
 import { Track } from "../Album/Album"
 
 export const TransportPlayer: FC = observer(() => {
@@ -30,7 +30,6 @@ export const TransportPlayer: FC = observer(() => {
 
   const handlePlay = (e: React.MouseEvent) => {
     streamer.isPlaying ? streamer.pause() : streamer.play()
-    console.log("Button pressd")
   }
   const handleSkip = (e: React.MouseEvent) => {}
   const handleNext = (e: React.MouseEvent) => {}
@@ -38,7 +37,6 @@ export const TransportPlayer: FC = observer(() => {
   const handleSeek = (e: React.MouseEvent) => {}
   const handlePlaylistPopper = (e: React.MouseEvent<SVGSVGElement>) => {
     setUnmount(unmount ? null : e.currentTarget)
-    console.log(unmount)
   }
   const handleLoop = (e: React.MouseEvent) => {}
   const handleQueue = (e: React.MouseEvent, track: Track) => {}
@@ -49,6 +47,16 @@ export const TransportPlayer: FC = observer(() => {
   return (
     <Container>
       <CSS />
+
+      {streamer.canPlay() && (
+        <ReactJkMusicPlayer
+          getAudioInstance={(instance) => {
+            streamer.audio = instance
+          }}
+          audioLists={playlist.toAudioList()}
+          {...streamer.options}
+        />
+      )}
       <div className="centralControls">
         <AllInclusiveIcon
           className="seekIcon"
@@ -100,7 +108,7 @@ export const TransportPlayer: FC = observer(() => {
               <List component="nav" aria-label="main playlist content">
                 {queue &&
                   queue.map((track, i) => {
-                    const active = playlist.active === track
+                    const active = streamer.active === track
                     return (
                       <>
                         <ListItemButton
@@ -128,26 +136,3 @@ export const TransportPlayer: FC = observer(() => {
     </Container>
   )
 })
-
-// {streamer.isPlaying ? null : (
-//   <ReactJkMusicPlayer
-//     {...streamer.options}
-//     audioLists={playlist.audioList()}
-//     onThemeChange={(theme) => {
-//       console.log("onThemeChange: ", theme)
-//       streamer.options = { theme }
-//     }}
-//     onModeChange={(mode) => {
-//       console.log("onModeChange: ", mode)
-//       streamer.options = { mode }
-//     }}
-//     onPlayModeChange={(playMode) => {
-//       console.log("onPlayModeChange: ", playMode)
-//       streamer.options = { playMode }
-//     }}
-//     onPlayIndexChange={(playIndex) => {
-//       console.log("onPlayIndexChange: ", playIndex)
-//       streamer.options = { playIndex }
-//     }}
-//   />
-// )}

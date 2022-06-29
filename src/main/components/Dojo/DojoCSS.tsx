@@ -427,13 +427,11 @@ export const LogoDiv = styled.div`
   height: 10%;
   text-align: center;
   font-size: 32px;
-  background: black;
-  color: white;
   font-weight: 200;
   text-transform: uppercase;
   letter-spacing: 7px;
   transform: scale(1, 0.9);
-  text-shadow: 1px 1px rgb(0 0 0 / 50%);
+  text-shadow: 1px 1px rgb(0 0 0 / 60%);
   display: flex;
   flex-direction: row;
   justify-content: left;
