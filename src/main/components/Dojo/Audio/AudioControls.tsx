@@ -109,13 +109,13 @@ export const TransportPlayer: FC = observer(() => {
                           selected={active}
                           onClick={(e) => handleQueue(e, track)}
                         >
-                          <div className="_trackTitle">{track.title}</div>
                           <ListItemIcon>
                             <PlaylistRemoveIcon
                               className="playlistIcon"
                               onClick={(e) => playlist.remove(track)}
                             />
                           </ListItemIcon>
+                          <div className="_trackTitle">{track.title}</div>
                         </ListItemButton>
                       </>
                     )

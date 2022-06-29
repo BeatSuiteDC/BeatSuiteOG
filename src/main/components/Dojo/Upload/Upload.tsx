@@ -54,8 +54,7 @@ export default observer(() => {
     if (file) {
       try {
         album.updateTrack(trackIdx, file)
-        let songs = album.songs
-        console.log(songs[trackIdx])
+        console.log("uploaded", { ...album.songs[trackIdx] })
       } catch (ex) {
         console.error(ex)
       }
@@ -72,11 +71,15 @@ export default observer(() => {
   const handleSave = (e: any) => {}
 
   const handlePlay = (song: Track) => {
+    console.log("playing")
     if (!playlist.inQueue(song)) {
+      console.log("track not in queue")
       playlist.addNext(song)
     }
-    playlist.active = song
+    console.log("setting active")
+    playlist.setActive(song)
   }
+
   const handleArtist = (e: any) => {
     album.artist = e.target.value
   }

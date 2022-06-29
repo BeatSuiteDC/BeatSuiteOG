@@ -207,14 +207,16 @@ export class EmptyAlbum {
   }
 
   remove(index: number) {
-    if (confirm("Are you sure?")) {
-      this._songs.splice(index, 1)
-    }
+    this._songs.splice(index, 1)
   }
 
   updateTrack(idx: number, file: File) {
     const song = this._songs[idx]
+    console.log("song", song)
+
     const songs = this.songs
+    console.log("songs", songs)
+
     songs.splice(idx, 1, {
       ...song,
       album: this.title,

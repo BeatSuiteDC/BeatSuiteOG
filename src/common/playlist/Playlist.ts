@@ -25,34 +25,52 @@ export default class Playlist {
     return this._active || this._queue[0]
   }
 
-  set active(item: Track) {
-    if (this._active) {
-      const index = this._queue.indexOf(this._active)
-      this._queue.splice(index, 0, item)
+  setActive(item: Track) {
+    const active = this.active
+    console.log("match", active === item)
+    if (active === item) {
+      console.warn("track active already")
+      return
+    }
+    const q = this.queue
+    if (active) {
+      console.log("previous track", active)
+      const index = q.indexOf(active)
+      q.splice(index, 0, item)
+      console.log({ q, index })
     } else {
-      this._queue.unshift(item)
+      q.unshift(item)
+      this._queue = [...q]
     }
     this._active = item
+    console.log("match now", active === this._active)
   }
 
   inQueue(item: Track) {
-    return this.queue.includes(item)
+    const q = this.queue
+    return q.some((p) => {
+      return p.title === item.title && p.album === item.album
+    })
+    // return this.queue.includes(item)
   }
 
   addNext(item: Track) {
     const queue = this.queue
-
+    console.log("queue", queue.length)
+    console.log("state", this.queue.length)
     if (this.inQueue(item)) {
       console.warn("Track already in queue")
       return
     }
     queue.splice(1, 0, item)
+
     this._queue = [...queue]
+    console.log("queue", queue.length)
+    console.log("state", this.queue.length)
   }
 
   remove(item: Track) {
     const q = this.queue
-    console.log("length", this._queue.length)
     const idx = q.indexOf(item)
     if (!this.inQueue(item) || idx === -1) {
       console.warn("track not in queue")
@@ -60,11 +78,10 @@ export default class Playlist {
     }
     if (this.active === item) {
       console.log("skipping to next track")
-      this.active = q[idx + 1]
+      this.setActive(q[idx + 1])
     }
     q.splice(idx, 1)
     this._queue = q
-    console.log("length", this._queue.length)
   }
 
   audioList(): Array<ReactJkMusicPlayerAudioListProps> {

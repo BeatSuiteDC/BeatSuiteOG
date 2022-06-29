@@ -66,7 +66,7 @@ export default class Streamer {
   }
 
   set active(track: Track) {
-    this._playlist.active = track
+    this._playlist.setActive(track)
   }
 
   get playlist() {

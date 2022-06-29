@@ -30,6 +30,7 @@ export const TrackPlayer: FC = observer(() => {
   const handleVolume = (e: any) => {
     streamer.setVolume(e.target.valueAsNumber)
   }
+
   return (
     <>
       <TrackPlayerCSS />

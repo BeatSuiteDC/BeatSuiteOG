@@ -176,6 +176,7 @@ export default () => {
           border: 1px solid ${theme.secondaryColor};
           border-radius: 10px;
           backdrop-filter: blur(15px);
+          overflow: scroll;
         }
 
         .playlistTitle {
