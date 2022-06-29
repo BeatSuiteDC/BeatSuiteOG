@@ -13,7 +13,7 @@ export interface Player {
     right: number
     bottom: number
   }
-  defaultPlayMode: string
+  defaultPlayMode: "order" | "orderLoop" | "singleLoop" | "shufflePlay"
   mode: "full" | "mini"
   once: boolean
   autoPlay: boolean

@@ -41,7 +41,11 @@ export default () => {
           font-size: 20px;
           :hover {
             cursor: pointer;
+
             color: ${theme.headerColor};
+          }
+          #disabled:hover {
+            cursor: pointer;
           }
         }
 
@@ -73,6 +77,8 @@ export default () => {
           :hover {
             color: #99badd;
           }
+
+        
       `}
     />
   )
@@ -84,6 +90,19 @@ export const AlbumContent = styled.div`
   overflow-y: scroll;
   font-weight: 800px;
   height: 37rem;
+`
+
+export const ImportButton = styled.button`
+  font-family: ${({ theme }) => theme.fontFamily};
+  display: flex;
+  margin: 5px;
+  position: relative;
+  font-size: 16px;
+  padding-bottom: 5px;
+  left: 5rem;
+  :hover {
+    color: ${({ theme }) => theme.headerColor};
+  }
 `
 
 export const TopBan = styled.div`

@@ -15,8 +15,8 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious"
 
 import { Fade, List, ListItemButton, ListItemIcon, Popper } from "@mui/material"
 import { Box } from "@mui/system"
-import ReactJkMusicPlayer from "react-jinke-music-player"
 import { Track } from "../Album/Album"
+import Player from "./Player"
 
 export const TransportPlayer: FC = observer(() => {
   const rootStore = useStores()
@@ -47,16 +47,7 @@ export const TransportPlayer: FC = observer(() => {
   return (
     <Container>
       <CSS />
-
-      {streamer.canPlay() && (
-        <ReactJkMusicPlayer
-          getAudioInstance={(instance) => {
-            streamer.audio = instance
-          }}
-          audioLists={playlist.toAudioList()}
-          {...streamer.options}
-        />
-      )}
+      <Player />
       <div className="centralControls">
         <AllInclusiveIcon
           className="seekIcon"

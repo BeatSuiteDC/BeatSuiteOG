@@ -5,25 +5,22 @@ import CSS, {
   Cover,
   Details,
   OpenButton,
-  TableContent,
   TableHeader,
   Title,
   TitleHeader,
   TopBan,
-  TrackInput,
 } from "./CSS"
+
+import BulkImport from "./Bulk"
 
 import AddCircleIcon from "@mui/icons-material/AddCircle"
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate"
-import AirplayIcon from "@mui/icons-material/Airplay"
-import CloudUploadIcon from "@mui/icons-material/CloudUpload"
-import PlayDisabledIcon from "@mui/icons-material/PlayDisabled"
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline"
 
 import { observer } from "mobx-react-lite"
 import { ChangeEvent, useEffect, useRef, useState } from "react"
 import Opensea from "../../../images/opensea.png"
 import { Track } from "../Album/Album"
+import TrackItem from "./TrackItem"
 
 export default observer(() => {
   const rootStore = useStores()
@@ -35,6 +32,8 @@ export default observer(() => {
       album.artist = info.name
     }
   }, [])
+
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const [trackIdx, setTrackIdx] = useState<number>(-1)
   const audioRef = useRef<HTMLInputElement>(null)
@@ -49,17 +48,6 @@ export default observer(() => {
     }
   }
 
-  const uploadTrack = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.item(0)
-    if (file) {
-      try {
-        album.updateTrack(trackIdx, file)
-        console.log("uploaded", { ...album.songs[trackIdx] })
-      } catch (ex) {
-        console.error(ex)
-      }
-    }
-  }
   const uploadImg = (e: ChangeEvent<HTMLInputElement>) => {
     const img = e.target.files?.item(0)
     if (img) {
@@ -70,20 +58,9 @@ export default observer(() => {
   const handleMint = (e: any) => {}
   const handleSave = (e: any) => {}
 
-  const handlePlay = (song: Track) => {
-    console.log("playing")
-    if (!playlist.inQueue(song)) {
-      console.log("track not in queue")
-      playlist.addNext(song)
-    }
-    console.log("setting active")
-    playlist.setActive(song)
-  }
-
   const handleArtist = (e: any) => {
     album.artist = e.target.value
   }
-
   const handleTitle = (e: any) => {
     album.title = e.target.value
   }
@@ -124,45 +101,13 @@ export default observer(() => {
             onClick={(e) => album.addTrack()}
           />
           <TitleHeader>BANGERS</TitleHeader>
+          <BulkImport />
         </TableHeader>
 
         {album.songs.map((song: Track, i) => {
-          return (
-            <div key={i}>
-              <TableContent>
-                <RemoveCircleOutlineIcon
-                  className="removeIcon"
-                  onClick={(e) => album.remove(i)}
-                />
-                <TrackInput
-                  type="text"
-                  onChange={(e) => (song.title = e.target.value)}
-                  value={song.title}
-                />
-                <CloudUploadIcon
-                  className="uploadIcon"
-                  onClick={(e) => triggerInput("audio", i)}
-                />
-
-                {song.src ? (
-                  <AirplayIcon
-                    className="playIcon"
-                    onClick={(e) => handlePlay(song)}
-                  />
-                ) : (
-                  <PlayDisabledIcon className="playIcon" />
-                )}
-              </TableContent>
-            </div>
-          )
+          return <TrackItem song={song} key={i} />
         })}
         <div style={{ display: "none" }}>
-          <input
-            accept="audio/*"
-            type="file"
-            ref={audioRef}
-            onChange={uploadTrack}
-          />
           <input
             accept="image/*"
             type="file"

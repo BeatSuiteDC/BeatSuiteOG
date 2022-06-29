@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { useStores } from "../../hooks/useStores"
 import dashboard from "../../images/dashboard.png"
 import {
@@ -44,12 +44,7 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
 const Dojo = observer(() => {
   const {
     router: { path },
-    services: {
-      streamer: { isPlaying },
-    },
   } = useStores()
-
-  useEffect(() => {}, [path, isPlaying])
 
   return (
     <>

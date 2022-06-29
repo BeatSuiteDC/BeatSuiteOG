@@ -4,7 +4,10 @@ import {
   VolumeOffOutlined as volOff,
   VolumeUpOutlined as volUp,
 } from "@mui/icons-material"
-import { ReactJkMusicPlayerInstance } from "react-jinke-music-player"
+import {
+  ReactJkMusicPlayerAudioListProps,
+  ReactJkMusicPlayerInstance,
+} from "react-jinke-music-player"
 import Playlist from "../../../../common/playlist/Playlist"
 import { Track } from "../Album/Album"
 import { defaultOptions, Player } from "../Audio/JankePlayer"
@@ -37,6 +40,8 @@ export default class Streamer {
 
   audio: ReactJkMusicPlayerInstance | undefined
 
+  livestreamUrl: string
+
   constructor(playlist: Playlist) {
     makeObservable<
       Streamer,
@@ -56,6 +61,7 @@ export default class Streamer {
       options: computed,
       playlist: computed,
       active: computed,
+      livestreamUrl: observable,
     })
 
     this._playlist = playlist
@@ -63,6 +69,7 @@ export default class Streamer {
       level: 0.35,
       image: volUp,
     }
+    this.livestreamUrl = LIVESTREAM_URL
   }
 
   get active() {
@@ -78,8 +85,21 @@ export default class Streamer {
   }
 
   get options() {
+    const onAudioEnded = (
+      currentPlayId: any,
+      audioLists: ReactJkMusicPlayerAudioListProps[],
+      audioInfo: any
+    ) => {
+      console.log("Audio ended", { currentPlayId, audioInfo })
+      if (audioLists.length == 0) {
+        console.log("Playlist empty, stopping")
+        this.stop()
+      }
+    }
+
     return {
       ...this._options,
+      onAudioEnded,
     }
   }
 
@@ -172,6 +192,7 @@ export default class Streamer {
       this._volume.level = level
       this._volume.image = volUp
     }
+    this.audio ? (this.audio.volume = level) : null
   }
 
   get currentTempo() {
