@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite"
 import ReactPlayer from "react-player"
 import { useStores } from "../../hooks/useStores"
+import { LIVESTREAM_URL } from "./Streamer/Streamer"
 
 const LiveStreamer = observer(() => {
   const rootStore = useStores()
@@ -9,7 +10,6 @@ const LiveStreamer = observer(() => {
   } = rootStore
 
   const { isPlaying, volume } = streamer
-  const url = "https://www.youtube.com/watch?v=_ITiwPMUzho"
 
   return (
     <div className="videoContainer">
@@ -20,7 +20,7 @@ const LiveStreamer = observer(() => {
         loop={true}
         playing={true}
         volume={isPlaying ? 0 : volume.level}
-        url={url}
+        url={LIVESTREAM_URL}
       />
     </div>
   )

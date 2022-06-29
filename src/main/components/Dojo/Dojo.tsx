@@ -1,7 +1,9 @@
 import { observer } from "mobx-react-lite"
 import { FC, useEffect } from "react"
 import { useStores } from "../../hooks/useStores"
+import dashboard from "../../images/dashboard.png"
 import {
+  BackgroundImage,
   BreadCrumb,
   DojoCSS,
   InterfaceContainer,
@@ -14,7 +16,6 @@ import Loading from "./Loading"
 import { MainePane } from "./MainePane"
 import { SearchBar } from "./SearchBar"
 
-// import LiveStreamer from "./LiveStreamer"
 import SideBar from "./SideBar"
 import { TrackPlayer } from "./TrackPlayer/TrackPlayer"
 import { PTag } from "./TrackPlayer/TrackPlayerCSS"
@@ -54,7 +55,8 @@ const Dojo = observer(() => {
     <>
       <DojoCSS />
       {/* <LiveStreamer /> */}
-      <InterfaceContainer className="dojoInterface">
+      <InterfaceContainer>
+        <BackgroundImage src={dashboard} />
         <SideBarContainer>
           <LogoDiv>
             | BeatSuite |{" "}

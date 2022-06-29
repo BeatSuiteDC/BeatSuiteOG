@@ -21,6 +21,7 @@ export type Volume = {
   image: any
 }
 
+export const LIVESTREAM_URL = "https://www.youtube.com/watch?v=_ITiwPMUzho"
 export default class Streamer {
   private _currentTempo = DEFAULT_TEMPO
   private _currentTick = 0

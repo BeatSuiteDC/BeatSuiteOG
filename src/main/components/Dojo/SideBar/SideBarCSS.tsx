@@ -2,7 +2,6 @@ import styled from "@emotion/styled"
 
 export const Container = styled.div`
   overflow: hidden;
-  backdrop-filter: blur(10px);
   width: 90%;
   height: 60%;
   box-shadow: 1px 0px 3px #99badd;
@@ -10,7 +9,6 @@ export const Container = styled.div`
   display: flex;
   border-radius: 0% 10% 3% 15%;
   padding-left: 15px;
-  z-index: 1;
 `
 
 export const List = styled.ul`

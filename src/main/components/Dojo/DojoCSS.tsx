@@ -16,10 +16,15 @@ export const DojoCSS = () => {
           z-index: -1;
         }
 
-        .dojoInterface {
+        .bgImage {
           background-image: url(${dashboard});
           background-size: cover;
           background-position: center center;
+          filter: blur(10px);
+          width: 100%;
+          height: 100vh;
+          z-index: -10;
+          position: absolute;
         }
 
         .play {
@@ -192,7 +197,8 @@ export const DojoCSS = () => {
 
         .videoContainer {
           position: absolute;
-          z-index: -1;
+          filter: blur(10px);
+          z-index: -10;
           height: 100%;
           width: 100%;
           top: -220px;
@@ -390,20 +396,27 @@ export const DojoCSS = () => {
 }
 
 export const InterfaceContainer = styled.div`
-  width: 98%;
-  height: 97vh;
+  width: 100%;
+  height: 100vh;
   display: flex;
-  margin-left: 20px;
-  margin-top: 20px;
   flex-direction: row;
   justify-content: space-between;
   font-family: ${({ theme }) => theme.fontFamily};
+`
+export const BackgroundImage = styled.img`
+  background-size: cover;
+  filter: blur(10px);
+  width: 100%;
+  height: 100vh;
+  z-index: -10;
+  position: absolute;
 `
 
 export const SideBarContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 15vw;
+  margin-left: 20px;
   position: relative;
   align-content: flex-end;
   transition: all 0.3s cubic-bezier(0.175, 0885, 0.32, 1.275);
@@ -414,8 +427,8 @@ export const LogoDiv = styled.div`
   height: 10%;
   text-align: center;
   font-size: 32px;
+  background: black;
   color: white;
-  font-family: "Kdam Thmor Pro", sans-serif;
   font-weight: 200;
   text-transform: uppercase;
   letter-spacing: 7px;

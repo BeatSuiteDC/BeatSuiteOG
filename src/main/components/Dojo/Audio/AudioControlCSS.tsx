@@ -154,7 +154,7 @@ export default () => {
           box-shadow: 0px 0px 5px cyan;
           transition: transform 0.2s;
           :hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
           }
         }
 

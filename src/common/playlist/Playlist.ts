@@ -26,24 +26,15 @@ export default class Playlist {
   }
 
   setActive(item: Track) {
-    const active = this.active
+    const active = this._active
     console.log("match", active === item)
     if (active === item) {
       console.warn("track active already")
       return
     }
-    const q = this.queue
-    if (active) {
-      console.log("previous track", active)
-      const index = q.indexOf(active)
-      q.splice(index, 0, item)
-      console.log({ q, index })
-    } else {
-      q.unshift(item)
-      this._queue = [...q]
-    }
+
     this._active = item
-    console.log("match now", active === this._active)
+    console.log("match now", item === this._active)
   }
 
   inQueue(item: Track) {
