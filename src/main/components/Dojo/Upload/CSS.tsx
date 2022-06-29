@@ -110,11 +110,6 @@ export const TopBan = styled.div`
   align-items: center;
   gap: 30px;
 `
-export const Cover = styled.img`
-  width: 200px;
-  height: 200px;
-  transition: 100ms ease;
-`
 
 export const Details = styled.div`
   display: flex;
@@ -196,23 +191,4 @@ export const TitleHeader = styled.div`
   display: flex;
   color: ${({ theme }) => theme.headerColor};
   padding-top: 5px;
-`
-export const TrackInput = styled.input`
-  color: #99badd;
-  background: none;
-  margin-left: 4rem;
-  border-radius: 5px;
-  padding-left: 10px;
-  overflow-x: scroll;
-  width: 20rem;
-  :hover {
-    opacity: 0.5;
-  }
-`
-
-export const TableContent = styled.div`
-  border-bottom: 1px solid rgb(67, 67, 67);
-  display: flex;
-  align-items: center;
-  overflow: auto;
 `

@@ -2,7 +2,6 @@ import { useStores } from "../../../hooks/useStores"
 import CSS, {
   AlbumContent,
   Artist,
-  Cover,
   Details,
   OpenButton,
   TableHeader,
@@ -14,12 +13,12 @@ import CSS, {
 import BulkImport from "./Bulk"
 
 import AddCircleIcon from "@mui/icons-material/AddCircle"
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate"
 
 import { observer } from "mobx-react-lite"
-import { ChangeEvent, useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import Opensea from "../../../images/opensea.png"
 import { Track } from "../Album/Album"
+import AlbumImage from "./AlbumImage"
 import TrackItem from "./TrackItem"
 
 export default observer(() => {
@@ -35,26 +34,6 @@ export default observer(() => {
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
-  const [trackIdx, setTrackIdx] = useState<number>(-1)
-  const audioRef = useRef<HTMLInputElement>(null)
-  const imgRef = useRef<HTMLInputElement>(null)
-
-  const triggerInput = (type: "image" | "audio", idx = -1) => {
-    if (type === "audio") {
-      setTrackIdx(idx)
-      audioRef.current?.click()
-    } else if (type === "image") {
-      imgRef.current?.click()
-    }
-  }
-
-  const uploadImg = (e: ChangeEvent<HTMLInputElement>) => {
-    const img = e.target.files?.item(0)
-    if (img) {
-      album.cover = URL.createObjectURL(img)
-      console.log("Album cover", album.cover)
-    }
-  }
   const handleMint = (e: any) => {}
   const handleSave = (e: any) => {}
 
@@ -70,13 +49,7 @@ export default observer(() => {
       <CSS />
       <AlbumContent>
         <TopBan>
-          <div
-            className="albumContainer"
-            onClick={(e) => triggerInput("image")}
-          >
-            <Cover id="cover" src={album.cover} alt="albumCover" />
-            <AddPhotoAlternateIcon id="icon" className="albumUploadIcon" />
-          </div>
+          <AlbumImage />
           <Details>
             <div>ALBUM</div>
             <Title type="text" onChange={handleTitle} value={album.title} />
@@ -107,14 +80,6 @@ export default observer(() => {
         {album.songs.map((song: Track, i) => {
           return <TrackItem song={song} key={i} />
         })}
-        <div style={{ display: "none" }}>
-          <input
-            accept="image/*"
-            type="file"
-            ref={imgRef}
-            onChange={uploadImg}
-          />
-        </div>
       </AlbumContent>
     </>
   )
