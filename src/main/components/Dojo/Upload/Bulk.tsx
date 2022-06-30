@@ -34,7 +34,6 @@ const BulkImport: FC<{ album: EmptyAlbum }> = ({ album }) => {
     if (files) {
       for (let i = 0; i < files.length; i++) {
         const file = files.item(i)
-        console.log("file", file)
         const result = file ? album.addFromFile(file) : undefined
         console.log("Upload", result)
       }

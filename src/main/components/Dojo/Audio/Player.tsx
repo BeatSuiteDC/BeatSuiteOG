@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite"
-import ReactJkMusicPlayer from "react-jinke-music-player"
 import { useStores } from "../../../hooks/useStores"
 
 const Player = observer(() => {
@@ -8,25 +7,9 @@ const Player = observer(() => {
     playlist,
   } = useStores()
 
-  return (
-    <div>
-      {streamer.canPlay() && (
-        <ReactJkMusicPlayer
-          style={{ display: "none" }}
-          getAudioInstance={(instance) => {
-            streamer.audio = instance
-          }}
-          audioLists={playlist.toAudioList()}
-          {...streamer.options}
-          onAudioProgress={onAudioProgress}
-          onAudioReload={onAudioReload}
-          onAudioError={onAudioError}
-          onAudioListsChange={onAudioListsChange}
-          onAudioPlayTrackChange={onAudioPlayTrackChange}
-        />
-      )}
-    </div>
-  )
+  const handleTrackChange = () => {}
+
+  return <div>{streamer.canPlay() && <></>}</div>
 })
 
 function onAudioProgress(audioInfo: any) {

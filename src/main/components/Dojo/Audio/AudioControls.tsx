@@ -14,7 +14,6 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious"
 
 import { Fade, List, Popper } from "@mui/material"
 import { Box } from "@mui/system"
-import Player from "./Player"
 import PlaylistPopper from "./PlaylistPopper"
 
 export const TransportPlayer: FC = observer(() => {
@@ -25,13 +24,16 @@ export const TransportPlayer: FC = observer(() => {
   } = rootStore
 
   const [unmount, setUnmount] = useState<null | SVGSVGElement>(null)
-  const queue = playlist.queue
 
   const handlePlay = (e: React.MouseEvent) => {
     streamer.isPlaying ? streamer.pause() : streamer.play()
   }
-  const handleSkip = (e: React.MouseEvent) => {}
-  const handleNext = (e: React.MouseEvent) => {}
+  const handlePrevious = (e: React.MouseEvent) => {
+    streamer.previous()
+  }
+  const handleNext = (e: React.MouseEvent) => {
+    streamer.skip()
+  }
   const handleRewind = (e: React.MouseEvent) => {}
   const handleSeek = (e: React.MouseEvent) => {}
   const handlePlaylistPopper = (e: React.MouseEvent<SVGSVGElement>) => {
@@ -45,7 +47,6 @@ export const TransportPlayer: FC = observer(() => {
   return (
     <Container>
       <CSS />
-      <Player />
       <div className="centralControls">
         <AllInclusiveIcon
           className="seekIcon"
@@ -55,7 +56,7 @@ export const TransportPlayer: FC = observer(() => {
         <SkipPreviousIcon
           className="seekIcon"
           fontSize="medium"
-          onClick={handleSkip}
+          onClick={handlePrevious}
         />
         <FastRewindIcon
           className="seekIcon"
@@ -96,18 +97,17 @@ export const TransportPlayer: FC = observer(() => {
             <Box className="playlistContainer">
               Queue
               <List component="nav" aria-label="main playlist content">
-                {queue &&
-                  queue.map((track, i) => {
-                    const active = streamer.active === track
-                    return (
-                      <PlaylistPopper
-                        track={track}
-                        idx={i}
-                        active={active}
-                        playlist={playlist}
-                      />
-                    )
-                  })}
+                {playlist.queue.map((track, i) => {
+                  const active = streamer.active === track
+                  return (
+                    <PlaylistPopper
+                      track={track}
+                      idx={i}
+                      active={active}
+                      playlist={playlist}
+                    />
+                  )
+                })}
               </List>
             </Box>
           </Fade>

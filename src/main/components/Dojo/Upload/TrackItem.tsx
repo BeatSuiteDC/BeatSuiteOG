@@ -42,16 +42,13 @@ const TrackItem: FC<{
     playlist.setActive(song)
   }
   const handleQueue = (song: Track) => {
-    if (!playlist.inQueue(song)) {
-      console.log("track not in queue")
-      playlist.addNext(song)
-    }
+    playlist.addNext(song)
   }
 
   const handleRemove = () => {
     album.remove(song)
     if (!playlist.inQueue(song)) {
-      playlist.remove(song)
+      playlist.remove(key)
     }
   }
 
@@ -64,7 +61,9 @@ const TrackItem: FC<{
     if (file) {
       try {
         album.updateTrack(key, file)
-        console.log("uploaded", { ...album.songs[key] })
+        const track = { ...album.songs[key] }
+        playlist.addToQueue(track)
+        console.log("uploaded", track)
       } catch (ex) {
         console.error(ex)
       }

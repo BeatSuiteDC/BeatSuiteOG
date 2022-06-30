@@ -4,10 +4,7 @@ import {
   VolumeOffOutlined as volOff,
   VolumeUpOutlined as volUp,
 } from "@mui/icons-material"
-import {
-  ReactJkMusicPlayerAudioListProps,
-  ReactJkMusicPlayerInstance,
-} from "react-jinke-music-player"
+import { ReactJkMusicPlayerAudioListProps } from "react-jinke-music-player"
 import Playlist from "../../../../common/playlist/Playlist"
 import { Track } from "../Album/Album"
 import { defaultOptions, Player } from "../Audio/JankePlayer"
@@ -37,9 +34,6 @@ export default class Streamer {
 
   disableSeek: boolean = false
   loop: LoopSetting | null = null
-
-  audio: ReactJkMusicPlayerInstance | undefined
-
   livestreamUrl: string
 
   constructor(playlist: Playlist) {
@@ -47,7 +41,6 @@ export default class Streamer {
       Streamer,
       "_options" | "_currentTick" | "_isPlaying" | "_volume" | "_isMuted"
     >(this, {
-      audio: observable,
       _options: observable,
       _currentTick: observable,
       _isPlaying: observable,
@@ -61,6 +54,7 @@ export default class Streamer {
       options: computed,
       playlist: computed,
       active: computed,
+      audio: computed,
       livestreamUrl: observable,
     })
 
@@ -72,12 +66,22 @@ export default class Streamer {
     this.livestreamUrl = LIVESTREAM_URL
   }
 
-  get active() {
-    return this._playlist.active
+  get audio() {
+    return this.active?.data
   }
 
-  set active(track: Track) {
-    this._playlist.setActive(track)
+  get active() {
+    const idx = this._playlist.active
+    if (idx === undefined) {
+      return undefined
+    }
+    return this.playlist[idx]
+  }
+
+  set active(track: Track | undefined) {
+    if (track !== undefined) {
+      this._playlist.setActive(track)
+    }
   }
 
   get playlist() {
@@ -126,6 +130,31 @@ export default class Streamer {
   pause() {
     this.audio?.pause()
     this._isPlaying = false
+  }
+
+  skip() {
+    const next = this._playlist.next()
+    console.log("next", { ...next })
+    if (next) {
+      this.play()
+    } else {
+      console.warn("playlist is empty")
+    }
+  }
+
+  previous() {
+    if (this.audio !== undefined) {
+      const { currentTime, duration } = this.audio
+      console.log("Currently active", { currentTime, duration })
+      if (currentTime < 2.5) {
+        this.audio.currentTime = 0
+        console.log("resetting track")
+        return
+      }
+    }
+
+    const prev = this._playlist.previous()
+    console.log("previous", { ...prev })
   }
 
   stop() {
@@ -192,7 +221,9 @@ export default class Streamer {
       this._volume.level = level
       this._volume.image = volUp
     }
-    this.audio ? (this.audio.volume = level) : null
+    if (this.active?.data) {
+      this.active.data.volume = level
+    }
   }
 
   get currentTempo() {

@@ -52,11 +52,8 @@ const PosterCard: FC<PosterProps> = observer(({ album, key }) => {
       <AlbumImg src={album.cover} />
       <IconDiv>
         <PlayPauseIcon>
-          {album.songs.includes(playlist.active) && streamer.isPlaying ? (
-            <Pause />
-          ) : (
-            <PlayArrow />
-          )}
+          {/* album.songs.includes(playlist.active) && */}
+          {streamer.isPlaying ? <Pause /> : <PlayArrow />}
         </PlayPauseIcon>
       </IconDiv>
       <div style={{ fontSize: "15px" }}>

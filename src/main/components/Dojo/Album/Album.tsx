@@ -6,7 +6,7 @@ export type Track = {
   title: string
   cover: string
   duration?: string | number
-  data?: any
+  data?: HTMLMediaElement
 }
 export type AlbumProps = {
   cover: string
@@ -207,8 +207,6 @@ export class EmptyAlbum {
   addFromFile(file: File) {
     const src = URL.createObjectURL(file)
     const data = new Audio(src)
-
-    console.log({ src, data })
 
     const track: Track = {
       album: this.title,

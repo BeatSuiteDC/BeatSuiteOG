@@ -13,22 +13,21 @@ const PlaylistPopper: FC<{
   const handleQueue = (e: React.MouseEvent, track: Track) => {}
 
   return (
-    <>
-      <ListItemButton
-        className="playlistItem"
-        key={"playlist-item-" + idx}
-        selected={active}
-        onClick={(e) => handleQueue(e, track)}
-      >
-        <ListItemIcon>
-          <PlaylistRemoveIcon
-            className="playlistIcon"
-            onClick={(e) => playlist.remove(track)}
-          />
-        </ListItemIcon>
-        <div className="_trackTitle">{track.title}</div>
-      </ListItemButton>
-    </>
+    <ListItemButton
+      className="playlistItem"
+      key={"playlist-item-btn-" + idx * Math.random()}
+      selected={active}
+      onClick={(e) => handleQueue(e, track)}
+    >
+      <ListItemIcon>
+        <PlaylistRemoveIcon
+          key={"playlist-item-icon-" + idx}
+          className="playlistIcon"
+          onClick={(e) => playlist.remove(idx)}
+        />
+      </ListItemIcon>
+      <span className="_trackTitle">{track.title}</span>
+    </ListItemButton>
   )
 }
 

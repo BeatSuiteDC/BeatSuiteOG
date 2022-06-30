@@ -4,12 +4,19 @@ import { Track } from "../../main/components/Dojo/Album/Album"
 
 export default class Playlist {
   private _queue: Track[]
-  private _active: Track | undefined
+  private _active: number | undefined
 
   constructor() {
     makeObservable<Playlist, "_queue" | "_active">(this, {
       _queue: observable,
       _active: observable,
+      next: observable,
+      previous: observable,
+      setActive: observable,
+      inQueue: observable,
+      addNext: observable,
+      remove: observable,
+      reset: observable,
       queue: computed,
       active: computed,
     })
@@ -22,64 +29,69 @@ export default class Playlist {
   }
 
   get active() {
-    return this._active || this._queue[0]
+    if (this.queue.length === 0) {
+      this._active = undefined
+    }
+    return this._active
   }
 
-  setActive(item: Track) {
-    const active = this._active
+  setActive = (item: Track) => {
+    if (this.active === undefined) {
+      this._queue.unshift(item)
+      this._active = 0
+      console.log("starting queue with", item.title)
+      return
+    }
 
-    if (active === item) {
+    const q = this.queue
+    const active = { ...q[this.active] }
+
+    if (active == { ...item }) {
       console.warn("track active already")
       return
     }
+    console.log("active != {..item}")
 
-    const q = this.queue
-    const idx = q.indexOf(item)
-    const nextIdx = active ? q.indexOf(active) : 0
+    const inQueue = this.inQueue({ ...item })
+    const idx = q.indexOf({ ...item })
     if (idx != -1) {
+      console.debug(item.title, "is queued already ->", idx)
       q.splice(idx, 1)
     }
 
-    q.splice(nextIdx, 0, item)
-
-    const tracks = this.queue.length
-    console.log({ active, tracks })
-
+    console.log({ inQueue, idx })
+    q.splice(this.active, 0, { ...item })
     this._queue = [...q]
-    this._active = item
-    console.log("match now", item === this._active)
   }
 
-  inQueue(item: Track) {
+  inQueue = (item: Track) => {
     const q = this.queue
-    return q.includes(item)
+    return q.some((t) => {
+      return t.title == item.title && t.album == item.album
+    })
   }
 
-  addNext(item: Track) {
+  addNext = (item: Track) => {
     const queue = this.queue
-    console.log("state", this.queue.length)
-    if (this.inQueue(item)) {
+    if (this.inQueue({ ...item })) {
       console.warn("Track already in queue")
       return
     }
-    queue.splice(1, 0, item)
+    console.log("queue before", [...queue])
+    queue.splice(1, 0, { ...item })
 
     this._queue = [...queue]
-    console.log("queue", queue.length)
-    console.log("state", this.queue.length)
+    console.log("after", [...queue])
   }
 
-  remove(item: Track) {
-    const q = this.queue
-    const idx = q.indexOf(item)
-    if (!this.inQueue(item) || idx === -1) {
-      console.warn("track not in queue")
-      return
-    }
-    if (this.active === item) {
-      console.log("skipping to next track")
-      this.setActive(q[idx + 1])
-    }
+  addToQueue = (item: Track) => {
+    console.log("adding track", item.title)
+    this._queue = [...this.queue, item]
+  }
+
+  remove = (idx: number) => {
+    const q = [...this.queue]
+    console.log("Removing", q[idx].title)
     q.splice(idx, 1)
     this._queue = q
   }
@@ -87,6 +99,26 @@ export default class Playlist {
   reset() {
     this._active = undefined
     this._queue = []
+  }
+
+  next = () => {
+    const q = this.queue
+    const idx = this.active
+    if (idx !== undefined && idx + 1 < q.length) {
+      this._active = idx + 1
+      const n = q[this._active]
+      console.log("skipping to", n.title)
+      return { ...n }
+    }
+  }
+
+  previous = () => {
+    const idx = this.active
+    if (idx && idx - 1 >= 0) {
+      this._active = idx - 1
+      const p = this.queue[this._active]
+      return { ...p }
+    }
   }
 
   toAudioList(): Array<ReactJkMusicPlayerAudioListProps> {
