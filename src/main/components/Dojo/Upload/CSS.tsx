@@ -111,31 +111,6 @@ export const TopBan = styled.div`
   gap: 30px;
 `
 
-export const Details = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  color: rgb(205, 203, 203);
-`
-
-export const Title = styled.input`
-  color: white;
-  font-size: 40px;
-  font-weight: bold;
-  background: transparent;
-  :hover {
-    opacity: 0.5;
-  }
-`
-export const Artist = styled.input`
-  font-size: 20px;
-  color: white;
-  background: transparent;
-  :hover {
-    opacity: 0.5;
-  }
-`
-
 export const OpenButton = styled.button`
   padding: 5px;
   background-color: transparent;

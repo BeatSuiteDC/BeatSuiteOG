@@ -9,14 +9,13 @@ import FastRewindIcon from "@mui/icons-material/FastRewind"
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline"
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline"
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
-import PlaylistRemoveIcon from "@mui/icons-material/PlaylistRemove"
 import SkipNextIcon from "@mui/icons-material/SkipNext"
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious"
 
-import { Fade, List, ListItemButton, ListItemIcon, Popper } from "@mui/material"
+import { Fade, List, Popper } from "@mui/material"
 import { Box } from "@mui/system"
-import { Track } from "../Album/Album"
 import Player from "./Player"
+import PlaylistPopper from "./PlaylistPopper"
 
 export const TransportPlayer: FC = observer(() => {
   const rootStore = useStores()
@@ -39,7 +38,6 @@ export const TransportPlayer: FC = observer(() => {
     setUnmount(unmount ? null : e.currentTarget)
   }
   const handleLoop = (e: React.MouseEvent) => {}
-  const handleQueue = (e: React.MouseEvent, track: Track) => {}
 
   const open = Boolean(unmount)
   const id = open ? "playlist-popper" : undefined
@@ -96,27 +94,18 @@ export const TransportPlayer: FC = observer(() => {
         <Popper placement="right-start" id={id} open={open} anchorEl={unmount}>
           <Fade in={open} exit={true}>
             <Box className="playlistContainer">
+              Queue
               <List component="nav" aria-label="main playlist content">
                 {queue &&
                   queue.map((track, i) => {
                     const active = streamer.active === track
                     return (
-                      <>
-                        <ListItemButton
-                          className="playlistItem"
-                          key={"playlist-item-" + i}
-                          selected={active}
-                          onClick={(e) => handleQueue(e, track)}
-                        >
-                          <ListItemIcon>
-                            <PlaylistRemoveIcon
-                              className="playlistIcon"
-                              onClick={(e) => playlist.remove(track)}
-                            />
-                          </ListItemIcon>
-                          <div className="_trackTitle">{track.title}</div>
-                        </ListItemButton>
-                      </>
+                      <PlaylistPopper
+                        track={track}
+                        idx={i}
+                        active={active}
+                        playlist={playlist}
+                      />
                     )
                   })}
               </List>
