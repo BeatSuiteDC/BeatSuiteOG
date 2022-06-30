@@ -111,6 +111,7 @@ export const TableHeader = styled.div`
   font-weight: 500;
   padding-bottom: 8px;
 `
+
 export const NumberHeader = styled.span`
   width: 10%;
   transition: transform 0.2s;

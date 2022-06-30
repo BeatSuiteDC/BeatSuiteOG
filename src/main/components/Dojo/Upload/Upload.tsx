@@ -17,6 +17,7 @@ import Opensea from "../../../images/opensea.png"
 import { Track } from "../Album/Album"
 import AlbumDetails from "./AlbumDetails"
 import AlbumImage from "./AlbumImage"
+import DropImport from "./DropImport"
 import TrackItem from "./TrackItem"
 
 export default observer(() => {
@@ -63,9 +64,11 @@ export default observer(() => {
           <BulkImport album={album} />
         </TableHeader>
 
-        {album.songs.map((song: Track, i) => {
-          return <TrackItem song={song} key={i} />
-        })}
+        <DropImport album={album}>
+          {album.songs.map((song: Track, i) => {
+            return <TrackItem song={song} key={i} />
+          })}
+        </DropImport>
       </AlbumContent>
     </>
   )

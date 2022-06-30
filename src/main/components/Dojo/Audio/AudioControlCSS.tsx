@@ -173,9 +173,9 @@ export default () => {
           height: 30rem;
           position: relative;
           left: 4.6rem;
-          border: 1px solid ${theme.secondaryColor};
-          border-radius: 10px;
+          box-shadow: 0px 0px 10px ${theme.secondaryColor};
           backdrop-filter: blur(15px);
+          border-radius: 10px;
           overflow: scroll;
         }
 
