@@ -76,7 +76,7 @@ const TrackItem: FC<{
       <TrackInput
         type="text"
         onChange={(e) => (song.title = e.target.value)}
-        value={song.title}
+        defaultValue={song.title}
       />
       <CloudUploadIcon className="uploadIcon" onClick={triggerInput} />
 

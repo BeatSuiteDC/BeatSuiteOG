@@ -95,7 +95,7 @@ export const TransportPlayer: FC = observer(() => {
           onClick={handlePlaylistPopper}
         />
         <Popper placement="right-start" id={id} open={open} anchorEl={unmount}>
-          <Fade in={open} exit={true}>
+          <Fade in={open} exit={true} timeout={300}>
             <Box className="playlistContainer">
               Queue
               <List component="nav" aria-label="main playlist content">

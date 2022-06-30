@@ -470,7 +470,7 @@ export const SubHeader = styled.div`
 `
 export const SidePanel = styled.div`
   height: 100vh;
-  width: 100px;
+  width: 110px;
   min-width: 100px;
   display: flex;
   flex-direction: column;

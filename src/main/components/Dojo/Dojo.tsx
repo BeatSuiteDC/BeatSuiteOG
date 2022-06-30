@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite"
 import { FC } from "react"
 import { useStores } from "../../hooks/useStores"
 import dashboard from "../../images/dashboard.png"
+import TimePatrol from "./Audio/TimePatrol"
 import {
   BackgroundImage,
   BreadCrumb,
@@ -49,8 +50,8 @@ const Dojo = observer(() => {
     <>
       <DojoCSS />
       {/* <LiveStreamer /> */}
+      <BackgroundImage src={dashboard} />
       <InterfaceContainer>
-        <BackgroundImage src={dashboard} />
         <SideBarContainer>
           <LogoDiv>
             | BeatSuite |{" "}
@@ -68,7 +69,9 @@ const Dojo = observer(() => {
 
         <MainePane />
 
-        <SidePanel></SidePanel>
+        <SidePanel>
+          <TimePatrol />
+        </SidePanel>
       </InterfaceContainer>
     </>
   )

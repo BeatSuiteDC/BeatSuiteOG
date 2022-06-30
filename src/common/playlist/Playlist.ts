@@ -91,6 +91,12 @@ export default class Playlist {
   remove = (idx: number) => {
     const q = [...this.queue]
     console.log("Removing", q[idx].title)
+    if (this.active === idx) {
+      this._active = idx - 1 >= 0 ? idx - 1 : idx
+    } else if (this.active && idx < this.active) {
+      this._active = this.active - 1
+    }
+
     q.splice(idx, 1)
     this._queue = q
   }

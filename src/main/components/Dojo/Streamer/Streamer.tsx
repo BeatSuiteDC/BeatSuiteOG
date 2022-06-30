@@ -7,12 +7,7 @@ import {
 import ReactPlayer from "react-player"
 import Playlist from "../../../../common/playlist/Playlist"
 import { Track } from "../Album/Album"
-
-export interface LoopSetting {
-  begin: number
-  end: number
-  enabled: boolean
-}
+import Looper from "./Looper"
 
 export const DEFAULT_TEMPO = 120
 
@@ -31,9 +26,9 @@ export default class Streamer {
   private _playlist: Playlist
 
   disableSeek: boolean = false
-  loop: LoopSetting | null = null
   livestreamUrl: string
   _audioRef: ReactPlayer | null = null
+  _loop: Looper
 
   constructor(playlist: Playlist) {
     makeObservable<
@@ -45,7 +40,6 @@ export default class Streamer {
       _isPlaying: observable,
       _volume: observable,
       _isMuted: observable,
-      loop: observable,
       position: computed,
       isPlaying: computed,
       isMuted: computed,
@@ -54,6 +48,7 @@ export default class Streamer {
       active: computed,
       audio: computed,
       livestreamUrl: observable,
+      loop: computed,
     })
 
     this._playlist = playlist
@@ -62,6 +57,7 @@ export default class Streamer {
       image: volUp,
     }
     this.livestreamUrl = LIVESTREAM_URL
+    this._loop = new Looper()
   }
 
   get audio() {
@@ -84,6 +80,10 @@ export default class Streamer {
     if (track !== undefined) {
       this._playlist.setActive(track)
     }
+  }
+
+  get loop() {
+    return this._loop.setting
   }
 
   get playlist() {
@@ -170,10 +170,16 @@ export default class Streamer {
 
     if (this.isPlaying) {
       // this.allSoundsOff()
+      this.audio?.setState({ played: tick })
     }
   }
 
   get position() {
+    if (this.isPlaying && this.audio) {
+      const current = this.audio.getCurrentTime()
+      const duration = this.audio.getDuration()
+      const tick = (current / duration) * 100
+    }
     return this._currentTick
   }
 

@@ -37,8 +37,8 @@ const AlbumDetails = () => {
   return (
     <Container>
       <div>ALBUM</div>
-      <Title type="text" onChange={handleTitle} value={album.title} />
-      <Artist type="text" onChange={handleArtist} value={album.artist} />
+      <Title type="text" onChange={handleTitle} defaultValue={album.title} />
+      <Artist type="text" onChange={handleArtist} defaultValue={album.artist} />
       {album.year} • {album.songs.length} tracks
     </Container>
   )
