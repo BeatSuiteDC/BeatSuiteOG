@@ -1,43 +1,62 @@
-import { Input, Popover } from "@mui/material"
-import React from "react"
-import { ImportButton } from "./CSS"
+import styled from "@emotion/styled"
 
-export default () => {
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
+import React, { FC, useRef } from "react"
+
+import UploadFileIcon from "@mui/icons-material/UploadFile"
+import { EmptyAlbum } from "../Album/Album"
+
+const IconStyle = {
+  margin: "5px",
+}
+
+const ImportButton = styled.button`
+  font-family: ${({ theme }) => theme.fontFamily};
+  display: flex;
+  align-items: center;
+  position: relative;
+  font-size: 16px;
+  padding-bottom: 5px;
+  left: 5rem;
+  :hover {
+    color: ${({ theme }) => theme.headerColor};
+  }
+`
+
+const BulkImport: FC<{ album: EmptyAlbum }> = ({ album }) => {
+  const ref = useRef<HTMLInputElement>(null)
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    ref.current?.click()
   }
 
-  const handleClose = () => {
-    setAnchorEl(null)
+  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files.item(i)
+        console.log("file", file)
+        const result = file ? album.addFromFile(file) : undefined
+        console.log("Upload", result)
+      }
+    }
   }
-
-  const handleImport = (e: React.ChangeEvent) => {}
-
-  const open = Boolean(anchorEl)
-  const id = open ? "simple-popover" : undefined
 
   return (
     <div>
-      <ImportButton aria-describedby={id} onClick={handleClick}>
+      <ImportButton onClick={handleClick}>
         Import
+        <UploadFileIcon style={IconStyle} />
       </ImportButton>
-      <Input onChange={handleImport} style={{ display: "none" }} type="file" />
-      <Popover
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "center",
-          horizontal: "right",
-        }}
-      >
-        From Local
-      </Popover>
+      <input
+        accept="audio/*"
+        type="file"
+        ref={ref}
+        multiple={true}
+        onChange={handleImport}
+        style={{ display: "none" }}
+      />
     </div>
   )
 }
+
+export default BulkImport

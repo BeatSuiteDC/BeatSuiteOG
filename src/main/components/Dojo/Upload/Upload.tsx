@@ -57,10 +57,10 @@ export default observer(() => {
         <TableHeader>
           <AddCircleIcon
             className="addIcon"
-            onClick={(e) => album.addTrack()}
+            onClick={(e) => album.createTrack()}
           />
           <TitleHeader>BANGERS</TitleHeader>
-          <BulkImport />
+          <BulkImport album={album} />
         </TableHeader>
 
         {album.songs.map((song: Track, i) => {

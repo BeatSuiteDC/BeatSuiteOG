@@ -82,10 +82,11 @@ export default class Playlist {
 
   toAudioList(): Array<ReactJkMusicPlayerAudioListProps> {
     const queue = this.queue
+
     return queue.map((i) => {
       return {
         name: i.title,
-        musicSrc: i.src,
+        musicSrc: i.src ? i.src : "",
         cover: i.cover,
       }
     })

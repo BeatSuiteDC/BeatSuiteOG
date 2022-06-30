@@ -1,12 +1,12 @@
 import { computed, makeObservable, observable } from "mobx"
 
 export type Track = {
-  src: string
+  src?: string
   album: string
   title: string
-  duration: string
   cover: string
-  data?: File
+  duration?: string | number
+  data?: any
 }
 export type AlbumProps = {
   cover: string
@@ -192,18 +192,35 @@ export class EmptyAlbum {
     this._songs = _songs
   }
 
-  addTrack() {
+  createTrack() {
     this._tracks++
     this._songs = [
       ...this._songs,
       {
-        src: "",
-        album: this._title,
-        cover: this._cover,
+        album: this.title,
+        cover: this.cover,
         title: `untitled banger ${this._tracks}`,
-        duration: "",
       },
     ]
+  }
+
+  addFromFile(file: File) {
+    const src = URL.createObjectURL(file)
+    const data = new Audio(src)
+
+    console.log({ src, data })
+
+    const track: Track = {
+      album: this.title,
+      cover: this.cover,
+      title: file.name,
+      duration: data.duration,
+      src,
+      data,
+    }
+
+    this._songs = [...this.songs, track]
+    return track
   }
 
   remove(index: number) {
@@ -211,18 +228,18 @@ export class EmptyAlbum {
   }
 
   updateTrack(idx: number, file: File) {
-    const song = this._songs[idx]
-    console.log("song", song)
-
     const songs = this.songs
-    console.log("songs", songs)
+    const song = songs[idx]
+
+    const src = URL.createObjectURL(file)
+    const data = new Audio(src)
 
     songs.splice(idx, 1, {
       ...song,
       album: this.title,
       title: file.name,
-      src: URL.createObjectURL(file),
-      data: file,
+      src,
+      data,
     })
     this.songs = songs
   }

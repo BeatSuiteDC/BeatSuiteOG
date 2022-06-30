@@ -10,21 +10,6 @@ export default () => {
           height: 20px;
         }
 
-        .albumContainer {
-          width: 200px;
-          height: 200px;
-          cursor: pointer;
-          border-radius: 20px;
-          :hover > #cover {
-            scale: 1.05;
-            opacity: 0.5;
-            border: 15px solid ${theme.secondaryTextColor};
-          }
-          :hover > #icon {
-            opacity: 1;
-          }
-        }
-
         .albumUploadIcon {
           position: absolute;
           margin: 0px;
@@ -90,19 +75,6 @@ export const AlbumContent = styled.div`
   overflow-y: scroll;
   font-weight: 800px;
   height: 37rem;
-`
-
-export const ImportButton = styled.button`
-  font-family: ${({ theme }) => theme.fontFamily};
-  display: flex;
-  margin: 5px;
-  position: relative;
-  font-size: 16px;
-  padding-bottom: 5px;
-  left: 5rem;
-  :hover {
-    color: ${({ theme }) => theme.headerColor};
-  }
 `
 
 export const TopBan = styled.div`
