@@ -35,6 +35,7 @@ export const PTag = styled.p`
   color: #f1f1f1;
   font-size: 14px;
   overflow-x: scroll;
+  flex-wrap: nowrap;
 `
 export const Artist = styled.span`
   display: block;

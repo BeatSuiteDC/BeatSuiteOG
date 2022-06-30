@@ -4,11 +4,9 @@ import {
   VolumeOffOutlined as volOff,
   VolumeUpOutlined as volUp,
 } from "@mui/icons-material"
-import { ReactJkMusicPlayerAudioListProps } from "react-jinke-music-player"
 import ReactPlayer from "react-player"
 import Playlist from "../../../../common/playlist/Playlist"
 import { Track } from "../Album/Album"
-import { defaultOptions, Player } from "../Audio/JankePlayer"
 
 export interface LoopSetting {
   begin: number
@@ -31,7 +29,6 @@ export default class Streamer {
   private _isMuted = false
   private _volume: Volume
   private _playlist: Playlist
-  private _options: Player = defaultOptions
 
   disableSeek: boolean = false
   loop: LoopSetting | null = null
@@ -41,10 +38,9 @@ export default class Streamer {
   constructor(playlist: Playlist) {
     makeObservable<
       Streamer,
-      "_options" | "_currentTick" | "_isPlaying" | "_volume" | "_isMuted"
+      "_currentTick" | "_isPlaying" | "_volume" | "_isMuted"
     >(this, {
       _audioRef: observable,
-      _options: observable,
       _currentTick: observable,
       _isPlaying: observable,
       _volume: observable,
@@ -54,7 +50,6 @@ export default class Streamer {
       isPlaying: computed,
       isMuted: computed,
       volume: computed,
-      options: computed,
       playlist: computed,
       active: computed,
       audio: computed,
@@ -95,32 +90,6 @@ export default class Streamer {
     return [...this._playlist?.queue]
   }
 
-  get options() {
-    const onAudioEnded = (
-      currentPlayId: any,
-      audioLists: ReactJkMusicPlayerAudioListProps[],
-      audioInfo: any
-    ) => {
-      console.log("Audio ended", { currentPlayId, audioInfo })
-      if (audioLists.length == 0) {
-        console.log("Playlist empty, stopping")
-        this.stop()
-      }
-    }
-
-    return {
-      ...this._options,
-      onAudioEnded,
-    }
-  }
-
-  set options(_options: object) {
-    this.options = {
-      ...this.options,
-      ..._options,
-    }
-  }
-
   play() {
     if (!this.canPlay()) {
       console.warn("No tracks in queue.")
@@ -135,7 +104,6 @@ export default class Streamer {
   }
 
   pause() {
-    // this.audio?.pause()
     this._isPlaying = false
   }
 
@@ -174,7 +142,6 @@ export default class Streamer {
   }
 
   reset() {
-    // this.resetControllers()
     this.stop()
   }
 

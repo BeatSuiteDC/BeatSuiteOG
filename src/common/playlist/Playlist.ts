@@ -1,5 +1,4 @@
 import { computed, makeObservable, observable } from "mobx"
-import { ReactJkMusicPlayerAudioListProps } from "react-jinke-music-player"
 import { Track } from "../../main/components/Dojo/Album/Album"
 
 export default class Playlist {
@@ -119,17 +118,5 @@ export default class Playlist {
       const p = this.queue[this._active]
       return { ...p }
     }
-  }
-
-  toAudioList(): Array<ReactJkMusicPlayerAudioListProps> {
-    const queue = this.queue
-
-    return queue.map((i) => {
-      return {
-        name: i.title,
-        musicSrc: i.src ? i.src : "",
-        cover: i.cover,
-      }
-    })
   }
 }

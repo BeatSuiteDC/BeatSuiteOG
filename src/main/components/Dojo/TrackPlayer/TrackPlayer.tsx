@@ -25,7 +25,7 @@ export const TrackPlayer: FC = observer(() => {
     services: { streamer },
   } = useStores()
 
-  const { volume, isPlaying, isMuted } = streamer
+  const { volume, isPlaying } = streamer
 
   const handleVolume = (e: any) => {
     streamer.setVolume(e.target.valueAsNumber)

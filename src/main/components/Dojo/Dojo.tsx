@@ -10,7 +10,6 @@ import {
   LogoDiv,
   SideBarContainer,
   SidePanel,
-  SubHeader,
 } from "./DojoCSS"
 import Loading from "./Loading"
 import { MainePane } from "./MainePane"
@@ -59,8 +58,6 @@ const Dojo = observer(() => {
               <PTag>{path}</PTag>
             </BreadCrumb>
           </LogoDiv>
-
-          <SubHeader />
 
           <SearchBar />
 
