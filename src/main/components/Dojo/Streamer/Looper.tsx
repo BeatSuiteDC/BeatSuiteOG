@@ -1,4 +1,4 @@
-import { computed, makeObservable } from "mobx"
+import { computed, makeObservable, observable } from "mobx"
 
 export enum Loop {
   ALL,
@@ -11,6 +11,7 @@ export interface Sample {
   begin: number
   end: number
   enabled: boolean
+  current: number
 }
 
 export interface SavedSample extends Sample {
@@ -19,8 +20,9 @@ export interface SavedSample extends Sample {
 
 const DEFAULT_SAMPLE: Sample = {
   begin: 0,
-  end: 1,
+  end: 100,
   enabled: true,
+  current: 0,
 }
 
 export default class Looper {
@@ -31,6 +33,8 @@ export default class Looper {
 
   constructor() {
     makeObservable<Looper>(this, {
+      _setting: observable,
+      _sample: observable,
       sample: computed,
       setting: computed,
     })

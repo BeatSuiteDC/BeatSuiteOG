@@ -7,7 +7,7 @@ import {
 import ReactPlayer from "react-player"
 import Playlist from "../../../../common/playlist/Playlist"
 import { Track } from "../Album/Album"
-import Looper from "./Looper"
+import Looper, { Sample } from "./Looper"
 
 export const DEFAULT_TEMPO = 120
 
@@ -49,6 +49,7 @@ export default class Streamer {
       audio: computed,
       livestreamUrl: observable,
       loop: computed,
+      dial: observable,
     })
 
     this._playlist = playlist
@@ -58,6 +59,26 @@ export default class Streamer {
     }
     this.livestreamUrl = LIVESTREAM_URL
     this._loop = new Looper()
+  }
+
+  dial = (decimals: number = 2) => {
+    let end = this.audio ? this.audio.getDuration() : 100
+    let begin = this.loop.begin
+    let current = this.audio ? this.audio.getCurrentTime() : this.position
+
+    const round = (v: number) => {
+      const d = 10 ** decimals
+      return Math.floor(v * d) / d
+    }
+
+    end = round(end)
+    begin = round(begin)
+    current = round(current)
+    return {
+      end,
+      begin,
+      current,
+    }
   }
 
   get audio() {
@@ -83,7 +104,13 @@ export default class Streamer {
   }
 
   get loop() {
-    return this._loop.setting
+    return this._loop.sample
+  }
+
+  set loop(s: Sample) {
+    this._loop.sample = {
+      ...s,
+    }
   }
 
   get playlist() {
@@ -158,27 +185,30 @@ export default class Streamer {
   }
 
   set position(tick: number) {
-    if (!Number.isInteger(tick)) {
-      console.warn("Player.tick should be an integer", tick)
-    }
     if (this.disableSeek) {
       return
     }
-    tick = Math.min(Math.max(Math.floor(tick), 0))
 
     this._currentTick = tick
 
-    if (this.isPlaying) {
-      // this.allSoundsOff()
-      this.audio?.setState({ played: tick })
+    if (this.audio != null) {
+      this.loop = {
+        ...this.loop,
+        current: tick,
+      }
+      // this.audio?.setState({ played: tick })
     }
   }
 
   get position() {
-    if (this.isPlaying && this.audio) {
+    if (this.audio && this.active !== undefined) {
       const current = this.audio.getCurrentTime()
       const duration = this.audio.getDuration()
-      const tick = (current / duration) * 100
+      let tick = Math.max(current, 0) / duration
+      tick = Math.min(tick, duration)
+      this._currentTick = tick
+      console.log("get tick", tick)
+      return tick
     }
     return this._currentTick
   }

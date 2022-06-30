@@ -11,6 +11,15 @@ const Player = observer(() => {
     console.log("track ended")
     streamer.skip()
   }
+  const handleStart = () => {
+    streamer.position = streamer.audio?.getCurrentTime() || 0
+    const loop = streamer.loop
+    streamer.loop = {
+      ...loop,
+      end: streamer.audio?.getDuration() || loop.end,
+      begin: loop.begin || 0,
+    }
+  }
 
   return (
     <div>
@@ -24,6 +33,10 @@ const Player = observer(() => {
             muted={streamer.isMuted}
             playing={streamer.isPlaying}
             onEnded={handleEnded}
+            onDuration={(d) => (streamer.loop = { ...streamer.loop, end: d })}
+            onProgress={(p) => (streamer.position = p.playedSeconds)}
+            onReady={() => console.log("onReady")}
+            onStart={handleStart}
           />
         </>
       )}

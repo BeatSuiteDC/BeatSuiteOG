@@ -19,6 +19,7 @@ import AlbumDetails from "./AlbumDetails"
 import AlbumImage from "./AlbumImage"
 import DropImport from "./DropImport"
 import TrackItem from "./TrackItem"
+import UploadAll from "./UploadAll"
 
 export default observer(() => {
   const rootStore = useStores()
@@ -62,6 +63,7 @@ export default observer(() => {
           />
           <TitleHeader>BANGERS</TitleHeader>
           <BulkImport album={album} />
+          <UploadAll album={album} playlist={playlist} />
         </TableHeader>
 
         <DropImport album={album}>
