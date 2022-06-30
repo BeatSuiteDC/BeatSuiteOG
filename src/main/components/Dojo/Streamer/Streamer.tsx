@@ -5,6 +5,7 @@ import {
   VolumeUpOutlined as volUp,
 } from "@mui/icons-material"
 import { ReactJkMusicPlayerAudioListProps } from "react-jinke-music-player"
+import ReactPlayer from "react-player"
 import Playlist from "../../../../common/playlist/Playlist"
 import { Track } from "../Album/Album"
 import { defaultOptions, Player } from "../Audio/JankePlayer"
@@ -35,12 +36,14 @@ export default class Streamer {
   disableSeek: boolean = false
   loop: LoopSetting | null = null
   livestreamUrl: string
+  _audioRef: ReactPlayer | null = null
 
   constructor(playlist: Playlist) {
     makeObservable<
       Streamer,
       "_options" | "_currentTick" | "_isPlaying" | "_volume" | "_isMuted"
     >(this, {
+      _audioRef: observable,
       _options: observable,
       _currentTick: observable,
       _isPlaying: observable,
@@ -67,7 +70,11 @@ export default class Streamer {
   }
 
   get audio() {
-    return this.active?.data
+    return this._audioRef
+  }
+
+  set audio(ref: ReactPlayer | null) {
+    this._audioRef = ref
   }
 
   get active() {
@@ -123,12 +130,12 @@ export default class Streamer {
     if (!this.active) {
       this.active = this.playlist[0]
     }
-    this.audio?.play()
+    this.audio?.setState({ url: this.active.src })
     this._isPlaying = true
   }
 
   pause() {
-    this.audio?.pause()
+    // this.audio?.pause()
     this._isPlaying = false
   }
 
@@ -143,11 +150,11 @@ export default class Streamer {
   }
 
   previous() {
-    if (this.audio !== undefined) {
-      const { currentTime, duration } = this.audio
-      console.log("Currently active", { currentTime, duration })
-      if (currentTime < 2.5) {
-        this.audio.currentTime = 0
+    if (this.audio !== null) {
+      const currentTime = this.audio.getCurrentTime()
+      console.log("currentTime", currentTime)
+      if (currentTime > 2.5) {
+        this.audio.seekTo(0)
         console.log("resetting track")
         return
       }
@@ -155,6 +162,9 @@ export default class Streamer {
 
     const prev = this._playlist.previous()
     console.log("previous", { ...prev })
+    if (prev && this.active != undefined) {
+      this.audio?.setState({ url: this.active?.src })
+    }
   }
 
   stop() {

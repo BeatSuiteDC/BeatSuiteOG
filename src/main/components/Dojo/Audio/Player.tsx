@@ -1,15 +1,28 @@
 import { observer } from "mobx-react-lite"
+import ReactPlayer from "react-player"
 import { useStores } from "../../../hooks/useStores"
 
 const Player = observer(() => {
   const {
     services: { streamer },
-    playlist,
   } = useStores()
 
-  const handleTrackChange = () => {}
-
-  return <div>{streamer.canPlay() && <></>}</div>
+  return (
+    <div>
+      {streamer.canPlay() && (
+        <>
+          <ReactPlayer
+            style={{ display: "none" }}
+            ref={(e) => (streamer.audio = e)}
+            url={streamer.active?.src}
+            volume={streamer.volume.level}
+            muted={streamer.isMuted}
+            playing={streamer.isPlaying}
+          />
+        </>
+      )}
+    </div>
+  )
 })
 
 function onAudioProgress(audioInfo: any) {

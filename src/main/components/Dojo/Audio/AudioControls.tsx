@@ -14,6 +14,7 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious"
 
 import { Fade, List, Popper } from "@mui/material"
 import { Box } from "@mui/system"
+import Player from "./Player"
 import PlaylistPopper from "./PlaylistPopper"
 
 export const TransportPlayer: FC = observer(() => {
@@ -47,6 +48,7 @@ export const TransportPlayer: FC = observer(() => {
   return (
     <Container>
       <CSS />
+      <Player />
       <div className="centralControls">
         <AllInclusiveIcon
           className="seekIcon"
