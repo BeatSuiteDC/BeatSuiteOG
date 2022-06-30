@@ -22,7 +22,7 @@ import TrackItem from "./TrackItem"
 
 export default observer(() => {
   const rootStore = useStores()
-  const { user, album } = rootStore
+  const { user, album, playlist } = rootStore
 
   useEffect(() => {
     const info = user.info
@@ -66,7 +66,14 @@ export default observer(() => {
 
         <DropImport album={album}>
           {album.songs.map((song: Track, i) => {
-            return <TrackItem song={song} key={i} />
+            return (
+              <TrackItem
+                song={song}
+                key={i}
+                playlist={playlist}
+                album={album}
+              />
+            )
           })}
         </DropImport>
       </AlbumContent>

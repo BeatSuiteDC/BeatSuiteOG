@@ -1,12 +1,13 @@
 import styled from "@emotion/styled"
 import AirplayIcon from "@mui/icons-material/Airplay"
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
+
 import CloudUploadIcon from "@mui/icons-material/CloudUpload"
 import PlayDisabledIcon from "@mui/icons-material/PlayDisabled"
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline"
-import { observer } from "mobx-react-lite"
 import { ChangeEvent, FC, useRef } from "react"
-import { useStores } from "../../../hooks/useStores"
-import { Track } from "../Album/Album"
+import Playlist from "../../../../common/playlist/Playlist"
+import { EmptyAlbum, Track } from "../Album/Album"
 
 const Container = styled.div`
   border-bottom: 1px solid rgb(67, 67, 67);
@@ -28,69 +29,78 @@ const TrackInput = styled.input`
   }
 `
 
-const TrackItem: FC<{ key: number; song: Track }> = observer(
-  ({ key, song }) => {
-    const { playlist, album } = useStores()
+const TrackItem: FC<{
+  key: number
+  song: Track
+  album: EmptyAlbum
+  playlist: Playlist
+}> = ({ key, song, album, playlist }) => {
+  const audioRef = useRef<HTMLInputElement>(null)
 
-    const audioRef = useRef<HTMLInputElement>(null)
-
-    const handlePlay = (song: Track) => {
-      console.log("playing")
-      if (!playlist.inQueue(song)) {
-        console.log("track not in queue")
-        playlist.addNext(song)
-      }
-      console.log("setting active")
-      playlist.setActive(song)
-    }
-
-    const triggerInput = () => {
-      audioRef.current?.click()
-    }
-
-    const uploadTrack = (e: ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.item(0)
-      if (file) {
-        try {
-          album.updateTrack(key, file)
-          console.log("uploaded", { ...album.songs[key] })
-        } catch (ex) {
-          console.error(ex)
-        }
-      }
-    }
-
-    return (
-      <Container key={key}>
-        <RemoveCircleOutlineIcon
-          className="removeIcon"
-          onClick={(e) => album.remove(key)}
-        />
-        <TrackInput
-          type="text"
-          onChange={(e) => (song.title = e.target.value)}
-          value={song.title}
-        />
-        <CloudUploadIcon
-          className="uploadIcon"
-          onClick={(e) => triggerInput()}
-        />
-
-        {song.src ? (
-          <AirplayIcon className="playIcon" onClick={(e) => handlePlay(song)} />
-        ) : (
-          <PlayDisabledIcon id="disabled" className="playIcon" />
-        )}
-        <input
-          style={{ display: "none" }}
-          accept="audio/*"
-          type="file"
-          ref={audioRef}
-          onChange={uploadTrack}
-        />
-      </Container>
-    )
+  const handlePlay = () => {
+    console.log("playing")
+    playlist.setActive(song)
   }
-)
+  const handleQueue = (song: Track) => {
+    if (!playlist.inQueue(song)) {
+      console.log("track not in queue")
+      playlist.addNext(song)
+    }
+  }
+
+  const handleRemove = () => {
+    album.remove(song)
+    if (!playlist.inQueue(song)) {
+      playlist.remove(song)
+    }
+  }
+
+  const triggerInput = () => {
+    audioRef.current?.click()
+  }
+
+  const uploadTrack = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.item(0)
+    if (file) {
+      try {
+        album.updateTrack(key, file)
+        console.log("uploaded", { ...album.songs[key] })
+      } catch (ex) {
+        console.error(ex)
+      }
+    }
+  }
+
+  return (
+    <Container key={key}>
+      <RemoveCircleOutlineIcon className="removeIcon" onClick={handleRemove} />
+      <TrackInput
+        type="text"
+        onChange={(e) => (song.title = e.target.value)}
+        value={song.title}
+      />
+      <CloudUploadIcon className="uploadIcon" onClick={triggerInput} />
+
+      {song.data ? (
+        <>
+          <AirplayIcon className="playIcon" onClick={handlePlay} />
+          <PlaylistAddIcon
+            className="playIcon"
+            onClick={(e) => handleQueue(song)}
+          />
+        </>
+      ) : (
+        <PlayDisabledIcon id="disabled" className="playIcon" />
+      )}
+      <input
+        style={{ display: "none" }}
+        accept="audio/*"
+        type="file"
+        ref={audioRef}
+        onChange={uploadTrack}
+      />
+    </Container>
+  )
+}
 
 export default TrackItem

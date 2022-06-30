@@ -223,8 +223,9 @@ export class EmptyAlbum {
     return track
   }
 
-  remove(index: number) {
-    this._songs.splice(index, 1)
+  remove(track: Track) {
+    const idx = this.songs.indexOf(track)
+    this._songs.splice(idx, 1)
   }
 
   updateTrack(idx: number, file: File) {
