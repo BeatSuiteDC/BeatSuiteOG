@@ -1,5 +1,5 @@
 import styled from "@emotion/styled"
-import { Slider } from "@mui/material"
+import { Input, Slider } from "@mui/material"
 import { observer } from "mobx-react-lite"
 import { SyntheticEvent, useEffect } from "react"
 import { useStores } from "../../../hooks/useStores"
@@ -21,15 +21,13 @@ const TimePatrol = observer(() => {
 
   const { end, begin, current } = streamer.dial(4)
 
+  const max = streamer.audio ? streamer.audio.getDuration() * 1.2 : 10 ** 5
+
   useEffect(() => {}, [end, begin, current])
   const marks = [
     {
       value: current,
       label: `${Math.round(current * 1)}s`,
-    },
-    {
-      value: end,
-      label: `${Math.round(end * 1)}s`,
     },
   ]
 
@@ -65,10 +63,49 @@ const TimePatrol = observer(() => {
     }
   }
 
+  const setBegin = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.valueAsNumber
+    // if (value > current || value < 0) {
+    //   return
+    // }
+    streamer.loop.begin = value
+  }
+  const setEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.valueAsNumber
+    // if (value < current || value > max) {
+    //   return
+    // }
+    console.log({ value, max })
+    streamer.loop.end = value
+  }
+
+  const STEP = 0.05 * (end - begin)
+
   return (
     <Container>
       {
         <>
+          <Input
+            sx={{
+              width: "100%",
+              margin: "1px",
+              position: "absolute",
+              left: "20%",
+              top: "-8%",
+              textAlign: "right",
+            }}
+            value={end}
+            size="small"
+            onChange={setEnd}
+            // onBlur={handleBlur}
+            inputProps={{
+              step: STEP,
+              min: current,
+              max: max,
+              type: "number",
+              "aria-labelledby": "input-slider",
+            }}
+          />
           <Slider
             getAriaLabel={() => "Temperature"}
             orientation="vertical"
@@ -81,6 +118,27 @@ const TimePatrol = observer(() => {
             onChange={handleSlider}
             onChangeCommitted={handleChangeCommitted}
             marks={marks}
+          />
+          <Input
+            sx={{
+              width: "100%",
+              margin: "1px",
+              position: "absolute",
+              left: "20%",
+              bottom: "-8%",
+              textAlign: "right",
+            }}
+            value={begin}
+            size="small"
+            onChange={setBegin}
+            // onBlur={handleBlur}
+            inputProps={{
+              step: 0.05 * (end - begin) || current - 0.00001,
+              min: 0,
+              max: current - 0.0001,
+              type: "number",
+              "aria-labelledby": "input-slider",
+            }}
           />
         </>
       }

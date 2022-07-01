@@ -1,28 +1,55 @@
 import { observer } from "mobx-react-lite"
-import React, { FC, useState } from "react"
+import React, { FC, ReactElement, useState } from "react"
 import { useStores } from "../../../hooks/useStores"
 import CSS, { Container } from "./AudioControlCSS"
 
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive"
 import FastForwardIcon from "@mui/icons-material/FastForward"
-import FastRewindIcon from "@mui/icons-material/FastRewind"
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline"
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline"
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
+import RestoreIcon from "@mui/icons-material/Restore"
 import SkipNextIcon from "@mui/icons-material/SkipNext"
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious"
+import { Tooltip } from "@mui/material"
 
 import { Fade, List, Popper } from "@mui/material"
 import { Box } from "@mui/system"
 import Player from "./Player"
 import PlaylistPopper from "./PlaylistPopper"
 
-import RepeatIcon from "@mui/icons-material/Repeat"
 import RepeatOnIcon from "@mui/icons-material/RepeatOn"
 import RepeatOneOnIcon from "@mui/icons-material/RepeatOneOn"
+import UpdateDisabledIcon from "@mui/icons-material/UpdateDisabled"
 import { Loop } from "../Streamer/Looper"
 
-const LoopIcons = [RepeatIcon, RepeatOnIcon, RepeatOneOnIcon, AllInclusiveIcon]
+// renders late so these are off and index
+const LoopIcons = [
+  RepeatOnIcon,
+  RepeatOneOnIcon,
+  UpdateDisabledIcon,
+  AllInclusiveIcon,
+]
+
+const loopToolTips = ["Loop All", "Loop 1", "Loop off", "Sampler"]
+
+const TT: FC<{ title: string; children: ReactElement<any, any> }> = ({
+  title,
+  children,
+}) => {
+  return (
+    <>
+      <Tooltip
+        title={title}
+        placement="bottom"
+        enterDelay={100}
+        enterNextDelay={150}
+      >
+        {children}
+      </Tooltip>
+    </>
+  )
+}
 
 export const TransportPlayer: FC = observer(() => {
   const rootStore = useStores()
@@ -42,9 +69,32 @@ export const TransportPlayer: FC = observer(() => {
   const handleNext = (e: React.MouseEvent) => {
     streamer.skip()
   }
-  const handleRewind = (e: React.MouseEvent) => {}
-  const handleSeek = (e: React.MouseEvent) => {}
+  const handleRewind = (e: React.MouseEvent) => {
+    const { begin, end, current, enabled } = streamer.loop
 
+    let progress
+    let tick
+    if (enabled) {
+      progress = Math.max(begin / end, 0.00001)
+    } else {
+      tick = current / end
+      progress = Math.max(tick - 0.05 * end, 0.00001)
+    }
+
+    const setting = _loop.setting
+    console.log({ tick, progress, setting })
+    streamer.audio?.setState({ played: progress })
+    streamer.audio?.seekTo(progress, "fraction")
+  }
+  const handleSeek = (e: React.MouseEvent) => {
+    const { end, current } = streamer.loop
+
+    const tick = current / end
+    const progress = tick + 0.05
+    console.log({ tick, progress, current, end })
+    streamer.audio?.setState({ played: progress })
+    streamer.audio?.seekTo(progress, "fraction")
+  }
   const handlePlaylistPopper = (e: React.MouseEvent<SVGSVGElement>) => {
     setUnmount(unmount ? null : e.currentTarget)
   }
@@ -53,7 +103,6 @@ export const TransportPlayer: FC = observer(() => {
   const LoopIcon = LoopIcons[_loop.setting]
 
   const handleLoop = (e: React.MouseEvent) => {
-    console.log("loop setting", _loop.setting)
     const setting = _loop.setting
     streamer._loop.setting = setting > 2 ? 0 : setting + 1
     streamer.loop.enabled = setting === Loop.OFF ? false : true
@@ -68,46 +117,70 @@ export const TransportPlayer: FC = observer(() => {
       <Player />
 
       <div className="centralControls">
-        <LoopIcon className="seekIcon" fontSize="medium" onClick={handleLoop} />
-        <SkipPreviousIcon
-          className="seekIcon"
-          fontSize="medium"
-          onClick={handlePrevious}
-        />
-        <FastRewindIcon
-          className="seekIcon"
-          fontSize="medium"
-          onClick={handleRewind}
-        />
+        <TT title={loopToolTips[_loop.setting]}>
+          <LoopIcon
+            className="seekIcon"
+            fontSize="medium"
+            onClick={handleLoop}
+          />
+        </TT>
+        <TT title="Previous">
+          <SkipPreviousIcon
+            className="seekIcon"
+            fontSize="medium"
+            onClick={handlePrevious}
+          />
+        </TT>
+        <TT title="Loop back">
+          <RestoreIcon
+            className="seekIcon"
+            fontSize="medium"
+            onClick={handleRewind}
+          />
+        </TT>
+
         {streamer.isPlaying ? (
-          <PauseCircleOutlineIcon
-            className="playPause"
-            fontSize="large"
-            onClick={handlePlay}
-          />
+          <TT title="Pause">
+            <PauseCircleOutlineIcon
+              className="playPause"
+              fontSize="large"
+              onClick={handlePlay}
+            />
+          </TT>
         ) : (
-          <PlayCircleOutlineIcon
-            className="playPause"
-            fontSize="large"
-            onClick={handlePlay}
-          />
+          <TT title="Play">
+            <PlayCircleOutlineIcon
+              className="playPause"
+              fontSize="large"
+              onClick={handlePlay}
+            />
+          </TT>
         )}
-        <FastForwardIcon
-          className="seekIcon"
-          fontSize="medium"
-          onClick={handleSeek}
-        />
-        <SkipNextIcon
-          className="seekIcon"
-          fontSize="medium"
-          onClick={handleNext}
-        />
-        <PlaylistAddIcon
-          aria-describedby={id}
-          className="seekIcon"
-          fontSize="medium"
-          onClick={handlePlaylistPopper}
-        />
+        <TT title="Seek">
+          <FastForwardIcon
+            className="seekIcon"
+            fontSize="medium"
+            onClick={handleSeek}
+          />
+        </TT>
+
+        <TT title="Skip">
+          <SkipNextIcon
+            className="seekIcon"
+            fontSize="medium"
+            onClick={handleNext}
+          />
+        </TT>
+
+        <TT title="Open queue">
+          <PlaylistAddIcon
+            aria-describedby={id}
+            className="seekIcon"
+            fontSize="medium"
+            onClick={handlePlaylistPopper}
+          />
+        </TT>
+
         <Popper placement="right-start" id={id} open={open} anchorEl={unmount}>
           <Fade in={open} exit={true} timeout={300}>
             <Box className="playlistContainer">

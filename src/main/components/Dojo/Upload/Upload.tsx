@@ -15,6 +15,7 @@ import { observer } from "mobx-react-lite"
 import { useEffect } from "react"
 import Opensea from "../../../images/opensea.png"
 import { Track } from "../Album/Album"
+import { SearchBar } from "../SearchBar"
 import AlbumDetails from "./AlbumDetails"
 import AlbumImage from "./AlbumImage"
 import DropImport from "./DropImport"
@@ -62,6 +63,8 @@ export default observer(() => {
           <TitleHeader>BANGERS</TitleHeader>
           <BulkImport album={album} />
           <UploadAll album={album} playlist={playlist} />
+
+          <SearchBar />
         </TableHeader>
 
         <DropImport album={album}>
