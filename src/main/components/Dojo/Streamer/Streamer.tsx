@@ -1,9 +1,5 @@
 import { computed, makeObservable, observable } from "mobx"
 
-import {
-  VolumeOffOutlined as volOff,
-  VolumeUpOutlined as volUp,
-} from "@mui/icons-material"
 import ReactPlayer from "react-player"
 import Playlist from "../../../../common/playlist/Playlist"
 import { Track } from "../Album/Album"
@@ -11,18 +7,13 @@ import Looper, { Sample } from "./Looper"
 
 export const DEFAULT_TEMPO = 120
 
-export type Volume = {
-  level: number
-  image: any
-}
-
 export const LIVESTREAM_URL = "https://www.youtube.com/watch?v=_ITiwPMUzho"
 export default class Streamer {
   private _currentTempo = DEFAULT_TEMPO
   private _currentTick = 0
   private _isPlaying = false
   private _isMuted = false
-  private _volume: Volume
+  private _volume: number = 0.35
   private _playlist: Playlist
 
   disableSeek: boolean = false
@@ -53,10 +44,7 @@ export default class Streamer {
     })
 
     this._playlist = playlist
-    this._volume = {
-      level: 0.35,
-      image: volUp,
-    }
+
     this.livestreamUrl = LIVESTREAM_URL
     this._loop = new Looper()
   }
@@ -179,12 +167,9 @@ export default class Streamer {
   mute(_mute: boolean) {
     this._isMuted = _mute
     if (_mute) {
-      this._volume = {
-        level: 0,
-        image: volOff,
-      }
-    } else {
-      this._volume.image = volUp
+      this._volume = 0
+    } else if (this._volume === 0) {
+      this._volume = 0.35
     }
   }
 
@@ -228,14 +213,13 @@ export default class Streamer {
     return this._volume
   }
 
-  setVolume(level: number) {
+  set volume(level: number) {
     if (level === 0) {
       this._isMuted = true
-      this._volume.image = volOff
+      this._volume = 0
     } else {
       this._isMuted = false
-      this._volume.level = level
-      this._volume.image = volUp
+      this._volume = level
     }
     if (this.active?.data) {
       this.active.data.volume = level

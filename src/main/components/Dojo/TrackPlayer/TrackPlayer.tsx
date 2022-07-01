@@ -14,11 +14,11 @@ import {
   VolumeDial,
 } from "./TrackPlayerCSS"
 
-type Tracklist = {
-  trackName: string
-  artistName: string
-  children?: any
-}
+import {
+  VolumeDownOutlined as volDown,
+  VolumeOffOutlined as volOff,
+  VolumeUpOutlined as volUp,
+} from "@mui/icons-material"
 
 export const TrackPlayer: FC = observer(() => {
   const {
@@ -28,8 +28,10 @@ export const TrackPlayer: FC = observer(() => {
   const { volume, isPlaying, active } = streamer
 
   const handleVolume = (e: any) => {
-    streamer.setVolume(e.target.valueAsNumber)
+    streamer.volume = e.target.valueAsNumber
   }
+
+  const VolumeIcon = volume > 0.35 ? volUp : volume > 0 ? volDown : volOff
 
   return (
     <>
@@ -50,11 +52,15 @@ export const TrackPlayer: FC = observer(() => {
         </Top>
 
         <Bottom>
-          <Icon></Icon>
+          <VolumeIcon
+            onClick={(e) => streamer.mute(!streamer.isMuted)}
+            sx={{ fontSize: 30 }}
+            className="volumeIcon"
+          />
           <VolumeDial
             min={0}
             max={1}
-            value={volume.level}
+            value={volume}
             step={0.01}
             onChange={handleVolume}
             type="range"

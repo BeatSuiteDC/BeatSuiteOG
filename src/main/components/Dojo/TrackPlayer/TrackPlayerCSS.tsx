@@ -15,6 +15,10 @@ export const TrackPlayerCSS = () => {
             transform: rotate(360deg);
           }
         }
+
+        .volumeIcon {
+          margin-top: 1px;
+        }
       `}
     />
   )
@@ -22,10 +26,14 @@ export const TrackPlayerCSS = () => {
 
 export const Container = styled.div`
   padding-top: 20px;
+  height: 10rem;
+  width: 100%;
 `
 export const Top = styled.div`
   display: flex;
   align-items: center;
+  height: 6rem;
+  margin-y: 2rem;
 `
 export const TopImg = styled.img`
   width: 50px !important;
@@ -38,12 +46,15 @@ export const PTag = styled.p`
   flex-wrap: nowrap;
 `
 export const Artist = styled.span`
+  padding-top: 5px;
   display: block;
   font-size; 12px;
   color: #848484;
 `
 
 export const Bottom = styled.div`
+  position: relative;
+  top: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,9 +70,8 @@ export const Icon = styled.i`
 `
 export const VolumeDial = styled.input`
   border: #c7c7c7 1px solid;
-  margin-top: 10px;
   height: 2px;
-  width: 100px;
+  width: 150px;
   justify-content: center;
   background-color: #c0c0c0;
   border-radius: 10px;
