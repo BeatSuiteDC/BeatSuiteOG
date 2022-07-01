@@ -27,15 +27,15 @@ const Player = observer(() => {
         <>
           <ReactPlayer
             style={{ display: "none" }}
-            ref={(e) => (streamer.audio = e)}
-            url={streamer.active?.src}
-            volume={streamer.volume.level}
             muted={streamer.isMuted}
+            url={streamer.active?.src}
             playing={streamer.isPlaying}
-            onEnded={handleEnded}
-            onDuration={(d) => (streamer.loop = { ...streamer.loop, end: d })}
+            volume={streamer.volume.level}
+            ref={(e) => (streamer.audio = e)}
             onProgress={(p) => (streamer.position = p.playedSeconds)}
-            onReady={() => console.log("onReady")}
+            onDuration={(d) => (streamer.loop = { ...streamer.loop, end: d })}
+            onEnded={handleEnded}
+            onReady={handleStart}
             onStart={handleStart}
           />
         </>

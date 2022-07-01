@@ -35,21 +35,21 @@ export default class Streamer {
       Streamer,
       "_currentTick" | "_isPlaying" | "_volume" | "_isMuted"
     >(this, {
-      _audioRef: observable,
+      livestreamUrl: observable,
       _currentTick: observable,
       _isPlaying: observable,
-      _volume: observable,
+      _audioRef: observable,
       _isMuted: observable,
-      position: computed,
+      _volume: observable,
       isPlaying: computed,
+      position: computed,
+      playlist: computed,
       isMuted: computed,
       volume: computed,
-      playlist: computed,
       active: computed,
-      audio: computed,
-      livestreamUrl: observable,
-      loop: computed,
       dial: observable,
+      audio: computed,
+      loop: computed,
     })
 
     this._playlist = playlist
@@ -71,13 +71,14 @@ export default class Streamer {
       return Math.floor(v * d) / d
     }
 
-    end = round(end)
+    end = round(end) + 0.02
     begin = round(begin)
-    current = round(current)
+    current = round(current) + 0.01
+
     return {
-      end,
-      begin,
       current,
+      begin,
+      end,
     }
   }
 
@@ -124,7 +125,9 @@ export default class Streamer {
       return
     }
     if (!this.active) {
-      this.active = this.playlist[0]
+      console.log("no active track")
+      this._isPlaying = false
+      return
     }
     this.audio?.setState({ url: this.active.src })
     this._isPlaying = true
@@ -136,11 +139,12 @@ export default class Streamer {
 
   skip() {
     const next = this._playlist.next()
-    console.log("next", { ...next })
+    console.log("next", next?.title)
     if (next) {
       this.play()
     } else {
       console.warn("playlist is empty")
+      this.stop()
     }
   }
 
@@ -156,7 +160,7 @@ export default class Streamer {
     }
 
     const prev = this._playlist.previous()
-    console.log("previous", { ...prev })
+    console.log("previous", prev?.title)
     if (prev && this.active != undefined) {
       this.audio?.setState({ url: this.active?.src })
     }
@@ -207,7 +211,6 @@ export default class Streamer {
       let tick = Math.max(current, 0) / duration
       tick = Math.min(tick, duration)
       this._currentTick = tick
-      console.log("get tick", tick)
       return tick
     }
     return this._currentTick

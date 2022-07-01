@@ -23,7 +23,7 @@ const PlaylistPopper: FC<{
         <PlaylistRemoveIcon
           key={"playlist-item-icon-" + idx}
           className="playlistIcon"
-          onClick={(e) => playlist.remove(idx)}
+          onClick={(e) => playlist.remove(track)}
         />
       </ListItemIcon>
       <span className="_trackTitle">{track.title}</span>

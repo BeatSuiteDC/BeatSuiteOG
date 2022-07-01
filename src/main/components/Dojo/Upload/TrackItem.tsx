@@ -5,6 +5,7 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
 import CloudUploadIcon from "@mui/icons-material/CloudUpload"
 import PlayDisabledIcon from "@mui/icons-material/PlayDisabled"
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline"
+import { observer } from "mobx-react-lite"
 import { ChangeEvent, FC, useRef } from "react"
 import Playlist from "../../../../common/playlist/Playlist"
 import { EmptyAlbum, Track } from "../Album/Album"
@@ -34,7 +35,7 @@ const TrackItem: FC<{
   song: Track
   album: EmptyAlbum
   playlist: Playlist
-}> = ({ key, song, album, playlist }) => {
+}> = observer(({ key, song, album, playlist }) => {
   const audioRef = useRef<HTMLInputElement>(null)
 
   const handlePlay = () => {
@@ -47,8 +48,8 @@ const TrackItem: FC<{
 
   const handleRemove = () => {
     album.remove(song)
-    if (!playlist.inQueue(song)) {
-      playlist.remove(key)
+    if (playlist.inQueue(song)) {
+      playlist.remove(song)
     }
   }
 
@@ -63,7 +64,7 @@ const TrackItem: FC<{
         album.updateTrack(key, file)
         const track = { ...album.songs[key] }
         playlist.addToQueue(track)
-        console.log("uploaded", track)
+        console.log("uploaded", track.title)
       } catch (ex) {
         console.error(ex)
       }
@@ -76,7 +77,7 @@ const TrackItem: FC<{
       <TrackInput
         type="text"
         onChange={(e) => (song.title = e.target.value)}
-        defaultValue={song.title}
+        value={song.title}
       />
       <CloudUploadIcon className="uploadIcon" onClick={triggerInput} />
 
@@ -100,6 +101,6 @@ const TrackItem: FC<{
       />
     </Container>
   )
-}
+})
 
 export default TrackItem

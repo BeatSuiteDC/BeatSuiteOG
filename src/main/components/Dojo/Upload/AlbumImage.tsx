@@ -1,8 +1,8 @@
 import styled from "@emotion/styled"
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate"
 import { observer } from "mobx-react-lite"
-import { ChangeEvent, useRef } from "react"
-import { useStores } from "../../../hooks/useStores"
+import { ChangeEvent, FC, useRef } from "react"
+import { EmptyAlbum } from "../Album/Album"
 
 const Container = styled.div`
   width: 200px;
@@ -23,8 +23,7 @@ const Cover = styled.img`
   height: 200px;
   transition: 100ms ease;
 `
-const AlbumImage = observer(() => {
-  const { album } = useStores()
+const AlbumImage: FC<{ album: EmptyAlbum }> = observer(({ album }) => {
   const imgRef = useRef<HTMLInputElement>(null)
 
   const triggerInput = () => {

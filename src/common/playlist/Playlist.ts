@@ -4,10 +4,12 @@ import { Track } from "../../main/components/Dojo/Album/Album"
 export default class Playlist {
   private _queue: Track[]
   private _active: number | undefined
+  private _unmount: null | SVGSVGElement
 
   constructor() {
-    makeObservable<Playlist, "_queue" | "_active">(this, {
+    makeObservable<Playlist, "_unmount" | "_queue" | "_active">(this, {
       _queue: observable,
+      _unmount: observable,
       _active: observable,
       next: observable,
       previous: observable,
@@ -18,9 +20,19 @@ export default class Playlist {
       reset: observable,
       queue: computed,
       active: computed,
+      unmount: computed,
     })
 
     this._queue = []
+    this._unmount = null
+  }
+
+  get unmount() {
+    return this._unmount
+  }
+
+  set unmount(_unmount: null | SVGSVGElement) {
+    this._unmount = _unmount
   }
 
   get queue() {
@@ -30,6 +42,8 @@ export default class Playlist {
   get active() {
     if (this.queue.length === 0) {
       this._active = undefined
+    } else if (this._active === undefined) {
+      this._active = 0
     }
     return this._active
   }
@@ -65,8 +79,9 @@ export default class Playlist {
 
   inQueue = (item: Track) => {
     const q = this.queue
+
     return q.some((t) => {
-      return t.title == item.title && t.album == item.album
+      return t.title === item.title && t.album === item.album
     })
   }
 
@@ -88,17 +103,17 @@ export default class Playlist {
     this._queue = [...this.queue, item]
   }
 
-  remove = (idx: number) => {
+  remove = (track: Track) => {
     const q = [...this.queue]
-    console.log("Removing", q[idx].title)
+    const idx = q.findIndex(
+      (x) => x.title === track.title && x.album === track.album
+    )
     if (this.active === idx) {
       this._active = idx - 1 >= 0 ? idx - 1 : idx
     } else if (this.active && idx < this.active) {
       this._active = this.active - 1
     }
-
-    q.splice(idx, 1)
-    this._queue = q
+    this._queue.splice(idx, 1)
   }
 
   reset() {

@@ -49,7 +49,6 @@ export const TransportPlayer: FC = observer(() => {
     <Container>
       <CSS />
       <Player />
-      {streamer.position}
 
       <div className="centralControls">
         <AllInclusiveIcon

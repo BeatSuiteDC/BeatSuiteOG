@@ -160,19 +160,20 @@ export default () => {
 
         .playPause,
         .seekIcon {
-          margin: 1rem;
+          margin: 0.5rem;
           margin-bottom: 1rem;
           transition: ease 200ms;
           :hover {
+            cursor: pointer;
             color: ${theme.secondaryColor};
           }
         }
 
         .playlistContainer {
-          width: 20rem;
+          width: 18rem;
           height: 30rem;
           position: relative;
-          left: 4.6rem;
+          left: 9rem;
           box-shadow: 0px 0px 10px ${theme.secondaryColor};
           backdrop-filter: blur(15px);
           border-radius: 10px;

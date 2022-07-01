@@ -25,7 +25,7 @@ export const TrackPlayer: FC = observer(() => {
     services: { streamer },
   } = useStores()
 
-  const { volume, isPlaying } = streamer
+  const { volume, isPlaying, active } = streamer
 
   const handleVolume = (e: any) => {
     streamer.setVolume(e.target.valueAsNumber)
@@ -39,8 +39,9 @@ export const TrackPlayer: FC = observer(() => {
           <TopImg
             style={{
               animation: `${isPlaying ? "spin 3s linear infinite" : ""}`,
+              borderRadius: "100%",
             }}
-            src={Track}
+            src={active?.cover || Track}
           />
           <PTag>
             {streamer.active?.title || "no track"}

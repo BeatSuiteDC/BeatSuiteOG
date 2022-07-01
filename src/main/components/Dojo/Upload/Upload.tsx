@@ -12,7 +12,7 @@ import BulkImport from "./Bulk"
 import AddCircleIcon from "@mui/icons-material/AddCircle"
 
 import { observer } from "mobx-react-lite"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Opensea from "../../../images/opensea.png"
 import { Track } from "../Album/Album"
 import AlbumDetails from "./AlbumDetails"
@@ -32,8 +32,6 @@ export default observer(() => {
     }
   }, [])
 
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
-
   const handleMint = (e: any) => {}
   const handleSave = (e: any) => {}
 
@@ -42,8 +40,8 @@ export default observer(() => {
       <CSS />
       <AlbumContent>
         <TopBan>
-          <AlbumImage />
-          <AlbumDetails />
+          <AlbumImage album={album} />
+          <AlbumDetails album={album} />
         </TopBan>
 
         <TopBan>

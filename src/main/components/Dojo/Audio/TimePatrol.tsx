@@ -1,7 +1,7 @@
 import styled from "@emotion/styled"
 import { Slider } from "@mui/material"
 import { observer } from "mobx-react-lite"
-import { useEffect, useRef } from "react"
+import { SyntheticEvent, useEffect } from "react"
 import { useStores } from "../../../hooks/useStores"
 
 const Container = styled.div`
@@ -19,29 +19,46 @@ const TimePatrol = observer(() => {
     services: { streamer },
   } = useStores()
 
-  const dialRef = useRef<HTMLInputElement>(null)
+  const { end, begin, current } = streamer.dial(4)
 
-  const { end, begin, current } = streamer.dial()
-
-  useEffect(() => {
-    console.log({ end, begin, current })
-  }, [end, begin, current])
+  useEffect(() => {}, [end, begin, current])
   const marks = [
     {
-      value: begin,
-      label: `${begin}`,
-    },
-    {
       value: current,
-      label: `${current}`,
+      label: `${Math.round(current * 1)} s`,
     },
     {
       value: end,
-      label: `${end}`,
+      label: `${Math.round(end * 1)} s`,
     },
   ]
 
-  const handleSlider = (e: any) => {}
+  const handleChangeCommitted = (
+    event: Event | SyntheticEvent<Element, Event>,
+    value: number | number[]
+  ) => {
+    typeof value === "object" && streamer.audio?.setState({ played: value[1] })
+    streamer.audio?.setState({ seeking: false })
+  }
+
+  const handleSlider = (event: Event, newValue: number | number[]) => {
+    if (typeof newValue === "object") {
+      const [_begin, _current, _end] = newValue
+
+      if (_current != current && streamer.audio !== null) {
+        console.log("current changed")
+        streamer.audio.setState({ seeking: true })
+      }
+
+      const loop = streamer.loop
+      streamer.loop = {
+        ...loop,
+        begin: _begin,
+        end: _end,
+        current: current,
+      }
+    }
+  }
 
   return (
     <Container>
@@ -56,6 +73,8 @@ const TimePatrol = observer(() => {
             max={end}
             defaultValue={[begin, current, end]}
             valueLabelDisplay="auto"
+            onChange={handleSlider}
+            onChangeCommitted={handleChangeCommitted}
             marks={marks}
           />
         </>

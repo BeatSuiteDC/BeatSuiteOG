@@ -1,5 +1,7 @@
 import styled from "@emotion/styled"
-import { useStores } from "../../../hooks/useStores"
+import { observer } from "mobx-react-lite"
+import { FC } from "react"
+import { EmptyAlbum } from "../Album/Album"
 
 const Container = styled.div`
   display: flex;
@@ -25,9 +27,7 @@ const Artist = styled.input`
   }
 `
 
-const AlbumDetails = () => {
-  const { album } = useStores()
-
+const AlbumDetails: FC<{ album: EmptyAlbum }> = observer(({ album }) => {
   const handleArtist = (e: any) => {
     album.artist = e.target.value
   }
@@ -37,11 +37,11 @@ const AlbumDetails = () => {
   return (
     <Container>
       <div>ALBUM</div>
-      <Title type="text" onChange={handleTitle} defaultValue={album.title} />
-      <Artist type="text" onChange={handleArtist} defaultValue={album.artist} />
+      <Title type="text" onChange={handleTitle} value={album.title} />
+      <Artist type="text" onChange={handleArtist} value={album.artist} />
       {album.year} • {album.songs.length} tracks
     </Container>
   )
-}
+})
 
 export default AlbumDetails
