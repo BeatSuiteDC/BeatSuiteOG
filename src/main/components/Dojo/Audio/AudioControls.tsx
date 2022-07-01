@@ -17,6 +17,13 @@ import { Box } from "@mui/system"
 import Player from "./Player"
 import PlaylistPopper from "./PlaylistPopper"
 
+import RepeatIcon from "@mui/icons-material/Repeat"
+import RepeatOnIcon from "@mui/icons-material/RepeatOn"
+import RepeatOneOnIcon from "@mui/icons-material/RepeatOneOn"
+import { Loop } from "../Streamer/Looper"
+
+const LoopIcons = [RepeatIcon, RepeatOnIcon, RepeatOneOnIcon, AllInclusiveIcon]
+
 export const TransportPlayer: FC = observer(() => {
   const rootStore = useStores()
   const {
@@ -37,10 +44,20 @@ export const TransportPlayer: FC = observer(() => {
   }
   const handleRewind = (e: React.MouseEvent) => {}
   const handleSeek = (e: React.MouseEvent) => {}
+
   const handlePlaylistPopper = (e: React.MouseEvent<SVGSVGElement>) => {
     setUnmount(unmount ? null : e.currentTarget)
   }
-  const handleLoop = (e: React.MouseEvent) => {}
+
+  const { _loop } = streamer
+  const LoopIcon = LoopIcons[_loop.setting]
+
+  const handleLoop = (e: React.MouseEvent) => {
+    console.log("loop setting", _loop.setting)
+    const setting = _loop.setting
+    streamer._loop.setting = setting > 2 ? 0 : setting + 1
+    streamer.loop.enabled = setting === Loop.OFF ? false : true
+  }
 
   const open = Boolean(unmount)
   const id = open ? "playlist-popper" : undefined
@@ -51,11 +68,7 @@ export const TransportPlayer: FC = observer(() => {
       <Player />
 
       <div className="centralControls">
-        <AllInclusiveIcon
-          className="seekIcon"
-          fontSize="medium"
-          onClick={handleLoop}
-        />
+        <LoopIcon className="seekIcon" fontSize="medium" onClick={handleLoop} />
         <SkipPreviousIcon
           className="seekIcon"
           fontSize="medium"

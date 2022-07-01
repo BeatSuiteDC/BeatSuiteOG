@@ -25,11 +25,11 @@ const TimePatrol = observer(() => {
   const marks = [
     {
       value: current,
-      label: `${Math.round(current * 1)} s`,
+      label: `${Math.round(current * 1)}s`,
     },
     {
       value: end,
-      label: `${Math.round(end * 1)} s`,
+      label: `${Math.round(end * 1)}s`,
     },
   ]
 
@@ -37,8 +37,13 @@ const TimePatrol = observer(() => {
     event: Event | SyntheticEvent<Element, Event>,
     value: number | number[]
   ) => {
-    typeof value === "object" && streamer.audio?.setState({ played: value[1] })
-    streamer.audio?.setState({ seeking: false })
+    if (typeof value === "object") {
+      const progress = value[1] / value[2]
+      console.log("progress", progress)
+      streamer.audio?.setState({ played: progress })
+      streamer.audio?.seekTo(progress, "fraction")
+      streamer.audio?.setState({ seeking: false })
+    }
   }
 
   const handleSlider = (event: Event, newValue: number | number[]) => {
@@ -46,16 +51,16 @@ const TimePatrol = observer(() => {
       const [_begin, _current, _end] = newValue
 
       if (_current != current && streamer.audio !== null) {
-        console.log("current changed")
+        console.log("Seeking")
         streamer.audio.setState({ seeking: true })
       }
 
       const loop = streamer.loop
       streamer.loop = {
         ...loop,
+        current: current,
         begin: _begin,
         end: _end,
-        current: current,
       }
     }
   }

@@ -11,6 +11,7 @@ const Player = observer(() => {
     console.log("track ended")
     streamer.skip()
   }
+
   const handleStart = () => {
     const loop = streamer.loop
     streamer.loop = {
@@ -31,6 +32,7 @@ const Player = observer(() => {
             url={streamer.active?.src}
             playing={streamer.isPlaying}
             volume={streamer.volume}
+            loop={streamer.loop.enabled}
             ref={(e) => (streamer.audio = e)}
             onProgress={(p) =>
               (streamer.loop = { ...streamer.loop, current: p.playedSeconds })

@@ -50,10 +50,7 @@ export default class Streamer {
   }
 
   dial = (decimals: number = 2) => {
-    let end = this.audio ? this.audio.getDuration() : 100
-    let begin = this.loop.begin
-    let current = this.audio ? this.audio.getCurrentTime() : this.position
-
+    let { end, begin, current } = this.loop
     const round = (v: number) => {
       const d = 10 ** decimals
       return Math.floor(v * d) / d
@@ -202,6 +199,9 @@ export default class Streamer {
   }
 
   get isPlaying() {
+    if (this.active === undefined) {
+      return false
+    }
     return this._isPlaying
   }
 
