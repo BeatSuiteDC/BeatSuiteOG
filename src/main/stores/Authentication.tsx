@@ -3,10 +3,10 @@
 // import { CHAIN_NAMESPACES } from "@web3auth/base"
 // import { Web3Auth } from "@web3auth/web3auth"
 
-// import WalletConnectProvider from "@walletconnect/web3-provider"
-// import { providers } from "ethers"
+import WalletConnectProvider from "@walletconnect/web3-provider"
 
-// const { Web3Provider } = providers
+import { providers } from "ethers"
+const { Web3Provider } = providers
 
 import { computed, makeObservable, observable } from "mobx"
 import { User } from "../../common/sanity/Sanity"
@@ -15,8 +15,8 @@ const INFURA_ID = process.env.REACT_APP_INFURA_ID as string
 
 export default class Authentication {
   private _user: User
-  private _provider: any
-  private _isConnected: boolean
+  private _provider: WalletConnectProvider
+  private _isConnected = false
 
   constructor() {
     makeObservable<Authentication, "_isConnected" | "_provider" | "_user">(
@@ -31,16 +31,26 @@ export default class Authentication {
       }
     )
 
-    // this._provider = new WalletConnectProvider({
-    //   infuraId: INFURA_ID,
-    // })
-
-    this._isConnected = false
+    this._provider = new WalletConnectProvider({
+      infuraId: INFURA_ID,
+      qrcodeModalOptions: {
+        mobileLinks: [
+          "rainbow",
+          "metamask",
+          "argent",
+          "trust",
+          "imtoken",
+          "pillar",
+        ],
+      },
+    })
+    this._provider.enable()
     this._user = {}
   }
 
   get isConnected() {
-    return this._isConnected
+    console.log(this._provider.connected)
+    return this._provider.connected
   }
 
   get info() {
@@ -68,12 +78,17 @@ export default class Authentication {
   }
 
   async connect() {
-    // if (!this.isConnected) {
-    //   await this._provider.enable()
-    // this._provider.connector.on("connect", (error, payload) => {
-    //   console.log("payload", payload)
-    // })
-    // }
+    if (!this.isConnected) {
+      const result = this._provider.onConnect(() => {})
+      console.log("result", result)
+
+      // this._provider.connector. ("connect", (error, payload) => {
+      //   if (error) throw error
+
+      //   this._isConnected = true
+
+      // })
+    }
     // if (!this.isConnected) {
     //   this._connector.createSession()
     //   this._connector.on("connect", (err, payload) => {
@@ -94,8 +109,8 @@ export default class Authentication {
     //   })
     // }
     // console.log("user", this.info)
-    this._isConnected = true
-    return "it worked"
+
+    return this.isConnected
   }
 
   async logout() {

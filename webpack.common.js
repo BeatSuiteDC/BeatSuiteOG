@@ -53,12 +53,12 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       inject: true,
-      filename: "dojo.html",
-      template: path.join(__dirname, "public", "dojo.html"),
+      filename: "app.html",
+      template: path.join(__dirname, "public", "app.html"),
     }),
     new HtmlWebpackPlugin({
       inject: true,
-      filename: "edit.html",
+      filename: "dojo.html",
       template: path.join(__dirname, "public", "edit.html"),
     }),
     new HtmlWebpackPlugin({
@@ -67,4 +67,5 @@ module.exports = {
       template: path.join(__dirname, "public", "app.html"),
     }),
   ],
+  ignoreWarnings: [/not found/, /Failed to parse source map/],
 }

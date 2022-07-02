@@ -1,6 +1,5 @@
 // import styled from "@emotion/styled"
 import { FC } from "react"
-import ReactPlayer from "react-player"
 import { Navigate } from "react-router-dom"
 import { useStores } from "../../hooks/useStores"
 import logo from "../../images/logo.png"
@@ -16,7 +15,7 @@ const Hero: FC<React.PropsWithChildren<unknown>> = () => {
       <HeroCSS />
       <div className="heroContainer">
         <div className="videoContainer2">
-          <ReactPlayer
+          {/* <ReactPlayer
             className="react-player"
             url="https://www.youtube.com/watch?v=_ITiwPMUzho"
             width="100%"
@@ -26,7 +25,7 @@ const Hero: FC<React.PropsWithChildren<unknown>> = () => {
             playing={true}
             loop={true}
             muted={true}
-          />
+          /> */}
         </div>
       </div>
       <div className="titleContainer">

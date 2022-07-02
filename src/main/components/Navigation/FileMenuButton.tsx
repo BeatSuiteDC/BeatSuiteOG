@@ -128,7 +128,7 @@ export const FileMenuButton: FC<React.PropsWithChildren<unknown>> = observer(
         )
       ) {
         const navigate = useNavigate()
-        navigate("/dojo")
+        navigate("/app")
       }
     }
 
@@ -174,7 +174,7 @@ export const FileMenuButton: FC<React.PropsWithChildren<unknown>> = observer(
 
           <Divider />
 
-          <MenuItem onClick={onClickDojo}>{localized("dojo", "Dojo")}</MenuItem>
+          <MenuItem href="/app">{localized("app", "App")}</MenuItem>
 
           <Divider />
 

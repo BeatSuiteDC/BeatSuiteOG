@@ -21,6 +21,7 @@ export default class Playlist {
       queue: computed,
       active: computed,
       unmount: computed,
+      skipTo: observable,
     })
 
     this._queue = []

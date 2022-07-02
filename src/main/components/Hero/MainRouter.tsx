@@ -8,8 +8,8 @@ const MainRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Hero />} />
-        <Route path="/dojo" element={<Dojo />} />
-        <Route path="/edit" element={<RootView />} />
+        <Route path="/app" element={<Dojo />} />
+        <Route path="/dojo" element={<RootView />} />
       </Routes>
     </BrowserRouter>
   )
