@@ -140,4 +140,6 @@ export default class Playlist {
       return { ...p }
     }
   }
+
+  skipTo = (idx: Number) => {}
 }

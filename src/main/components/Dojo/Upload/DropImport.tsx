@@ -38,6 +38,7 @@ const DropImport: FC<React.PropsWithChildren<{ album: EmptyAlbum }>> = ({
   }
   const handleDragOut = (e: React.DragEvent) => {
     e.preventDefault()
+
     setDragging(false)
   }
 

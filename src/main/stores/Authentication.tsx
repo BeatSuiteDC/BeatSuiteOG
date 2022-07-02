@@ -94,6 +94,7 @@ export default class Authentication {
     //   })
     // }
     // console.log("user", this.info)
+    this._isConnected = true
     return "it worked"
   }
 

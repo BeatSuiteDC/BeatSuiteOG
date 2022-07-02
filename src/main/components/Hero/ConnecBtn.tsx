@@ -6,7 +6,9 @@ const ConnectWallet: FC = () => {
   const { user } = useStores()
 
   const login = async (event: any) => {
-    const result = await user.connect()
+    const result = await user.connect().then((res) => {
+      console.log("res", res)
+    })
     console.log("result", result)
   }
 

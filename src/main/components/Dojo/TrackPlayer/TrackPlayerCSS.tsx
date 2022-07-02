@@ -25,6 +25,9 @@ export const TrackPlayerCSS = () => {
 }
 
 export const Container = styled.div`
+  position: absolute;
+  bottom: 4%;
+  left: 5%;
   padding-top: 20px;
   height: 10rem;
   width: 100%;

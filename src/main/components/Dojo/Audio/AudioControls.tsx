@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import React, { FC, ReactElement, useState } from "react"
+import React, { FC, useState } from "react"
 import { useStores } from "../../../hooks/useStores"
 import CSS, { Container } from "./AudioControlCSS"
 
@@ -11,7 +11,7 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
 import RestoreIcon from "@mui/icons-material/Restore"
 import SkipNextIcon from "@mui/icons-material/SkipNext"
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious"
-import { Tooltip } from "@mui/material"
+import ToolTip from "../../../helpers/tootlTip"
 
 import { Fade, List, Popper } from "@mui/material"
 import { Box } from "@mui/system"
@@ -32,24 +32,6 @@ const LoopIcons = [
 ]
 
 const loopToolTips = ["Loop All", "Loop 1", "Loop off", "Sampler"]
-
-const TT: FC<{ title: string; children: ReactElement<any, any> }> = ({
-  title,
-  children,
-}) => {
-  return (
-    <>
-      <Tooltip
-        title={title}
-        placement="bottom"
-        enterDelay={100}
-        enterNextDelay={150}
-      >
-        {children}
-      </Tooltip>
-    </>
-  )
-}
 
 export const TransportPlayer: FC = observer(() => {
   const rootStore = useStores()
@@ -117,70 +99,69 @@ export const TransportPlayer: FC = observer(() => {
       <Player />
 
       <div className="centralControls">
-        <TT title={loopToolTips[_loop.setting]}>
+        <ToolTip title={loopToolTips[_loop.setting]}>
           <LoopIcon
             className="seekIcon"
             fontSize="medium"
             onClick={handleLoop}
           />
-        </TT>
-        <TT title="Previous">
+        </ToolTip>
+        <ToolTip title="Previous">
           <SkipPreviousIcon
             className="seekIcon"
             fontSize="medium"
             onClick={handlePrevious}
           />
-        </TT>
-        <TT title="Loop back">
+        </ToolTip>
+        <ToolTip title="Loop back">
           <RestoreIcon
             className="seekIcon"
             fontSize="medium"
             onClick={handleRewind}
           />
-        </TT>
+        </ToolTip>
 
         {streamer.isPlaying ? (
-          <TT title="Pause">
+          <ToolTip title="Pause">
             <PauseCircleOutlineIcon
               className="playPause"
               fontSize="large"
               onClick={handlePlay}
             />
-          </TT>
+          </ToolTip>
         ) : (
-          <TT title="Play">
+          <ToolTip title="Play">
             <PlayCircleOutlineIcon
               className="playPause"
               fontSize="large"
               onClick={handlePlay}
             />
-          </TT>
+          </ToolTip>
         )}
-        <TT title="Seek">
+        <ToolTip title="Seek">
           <FastForwardIcon
             className="seekIcon"
             fontSize="medium"
             onClick={handleSeek}
           />
-        </TT>
+        </ToolTip>
 
-        <TT title="Skip">
+        <ToolTip title="Skip">
           <SkipNextIcon
             className="seekIcon"
             fontSize="medium"
             onClick={handleNext}
           />
-        </TT>
+        </ToolTip>
 
-        <TT title="Open queue">
+        <ToolTip title="Open queue">
           <PlaylistAddIcon
             aria-describedby={id}
             className="seekIcon"
             fontSize="medium"
             onClick={handlePlaylistPopper}
           />
-        </TT>
-
+        </ToolTip>
         <Popper placement="right-start" id={id} open={open} anchorEl={unmount}>
           <Fade in={open} exit={true} timeout={300}>
             <Box className="playlistContainer">

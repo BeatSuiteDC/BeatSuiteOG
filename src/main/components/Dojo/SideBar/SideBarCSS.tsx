@@ -4,6 +4,7 @@ export const Container = styled.div`
   overflow: hidden;
   width: 90%;
   height: 60%;
+  top: 50%;
   box-shadow: 1px 0px 3px #99badd;
   text-align: center;
   display: flex;

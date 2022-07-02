@@ -79,8 +79,6 @@ const TimePatrol = observer(() => {
     streamer.loop.end = value
   }
 
-  const STEP = 0.05 * (end - begin)
-
   return (
     <Container>
       {
@@ -99,8 +97,8 @@ const TimePatrol = observer(() => {
             onChange={setEnd}
             // onBlur={handleBlur}
             inputProps={{
-              step: STEP,
-              min: current,
+              step: 0.05 * (end - begin) || current + 0.000001,
+              min: 0,
               max: max,
               type: "number",
               "aria-labelledby": "input-slider",

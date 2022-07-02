@@ -5,7 +5,6 @@ import dashboard from "../../images/dashboard.png"
 import TimePatrol from "./Audio/TimePatrol"
 import {
   BackgroundImage,
-  BreadCrumb,
   DojoCSS,
   InterfaceContainer,
   LogoDiv,
@@ -14,9 +13,7 @@ import {
 } from "./DojoCSS"
 import Loading from "./Loading"
 import { MainePane } from "./MainePane"
-import { SearchBar } from "./SearchBar"
 
-import SideBar from "./SideBar"
 import { TrackPlayer } from "./TrackPlayer/TrackPlayer"
 import { PTag } from "./TrackPlayer/TrackPlayerCSS"
 // import Socials from "./Socials"
@@ -54,15 +51,10 @@ const Dojo = observer(() => {
       <InterfaceContainer>
         <SideBarContainer>
           <LogoDiv>
-            | BeatSuite |{" "}
-            <BreadCrumb>
-              <PTag>{path}</PTag>
-            </BreadCrumb>
+            | BeatSuite | <PTag>{path}</PTag>
           </LogoDiv>
 
-          <SearchBar />
-
-          <SideBar />
+          {/* <SideBar /> */}
 
           <TrackPlayer />
         </SideBarContainer>

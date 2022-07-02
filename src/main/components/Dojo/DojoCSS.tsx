@@ -478,8 +478,6 @@ export const SidePanel = styled.div`
   backdrop-filter: blur(10px);
 `
 
-export const BreadCrumb = styled.div``
-
 export const PathContainer = styled.div`
   position: absolute;
   top: 18%;
