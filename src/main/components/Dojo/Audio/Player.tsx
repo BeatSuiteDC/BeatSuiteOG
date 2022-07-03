@@ -62,16 +62,11 @@ const Player = observer(() => {
     loaded: number
     loadedSeconds: number
   }) => {
-    const {
-      loop,
-      audio,
-      _loop: { setting },
-    } = streamer
     let progress = p.playedSeconds
 
     if (progress >= loop.end) {
       if (setting === Loop.SAMPLE) {
-        progress = loop.begin / (audio?.getDuration() || loop.end)
+        progress = loop.begin / (streamer.audio?.getDuration() || loop.end)
       }
       streamer.audio?.setState({ played: progress })
       streamer.audio?.seekTo(progress, "fraction")
