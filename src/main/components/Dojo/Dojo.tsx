@@ -1,7 +1,9 @@
+import { Breadcrumbs, Link } from "@mui/material"
 import { observer } from "mobx-react-lite"
-import { FC } from "react"
+import React, { FC } from "react"
 import { useStores } from "../../hooks/useStores"
 import dashboard from "../../images/dashboard.png"
+import { RoutePath } from "../../stores/Router"
 import WalletInfo from "../WalletInfo"
 import TimePatrol from "./Audio/TimePatrol"
 import {
@@ -40,9 +42,7 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
 })
 
 const Dojo = observer(() => {
-  const {
-    router: { path },
-  } = useStores()
+  const { router } = useStores()
 
   return (
     <>
@@ -50,8 +50,42 @@ const Dojo = observer(() => {
       <BackgroundImage src={dashboard} />
       <InterfaceContainer>
         <SideBarContainer>
-          <LogoDiv>
-            | BeatSuite | <PTag>{path}</PTag>
+          <LogoDiv onClick={(e) => router.path === "upload"}>
+            | BeatSuite |
+            <Breadcrumbs>
+              <Link
+                aria-current={router.path === "upload"}
+                underline="hover"
+                color="#99badd"
+                onClick={(e) => (router.path = "upload")}
+              >
+                Upload
+              </Link>
+              <Link
+                aria-current={router.path === "bangers"}
+                underline="hover"
+                color="#99badd"
+                onClick={(e) => (router.path = "bangers")}
+              >
+                Bangers
+              </Link>
+              <Link
+                aria-current={router.path === "sampler"}
+                underline="hover"
+                color="#99badd"
+                onClick={(e) => (router.path = "sampler")}
+              >
+                Sampler
+              </Link>
+              <Link
+                aria-current={router.path === "feed"}
+                underline="hover"
+                color="#99badd"
+                onClick={(e) => (router.path = "feed")}
+              >
+                Feed
+              </Link>
+            </Breadcrumbs>
           </LogoDiv>
 
           {/* <SideBar /> */}
@@ -69,5 +103,19 @@ const Dojo = observer(() => {
     </>
   )
 })
+
+const PathBreadCrumb: FC<React.PropsWithChildren<{ path: RoutePath }>> = ({
+  path: RoutePath,
+}) => {
+  return (
+    <>
+      <Breadcrumbs>
+        <PTag>Feed</PTag>
+        <PTag>Bangers</PTag>
+        <PTag>Home</PTag>
+      </Breadcrumbs>
+    </>
+  )
+}
 
 export default Dojo

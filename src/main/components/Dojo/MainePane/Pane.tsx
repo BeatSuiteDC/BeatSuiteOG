@@ -41,7 +41,7 @@ const Body: FC = observer(() => {
   console.log({ path })
   return (
     <BodyContainer>
-      {path === "home" && <Effect />}
+      {path === "sampler" && <Effect />}
       {/* {path === "albums" && <Album />} */}
       {path === "bangers" && <Poster />}
       {path === "upload" && <Upload />}
