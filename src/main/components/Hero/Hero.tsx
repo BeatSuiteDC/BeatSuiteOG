@@ -11,7 +11,7 @@ const Hero: FC<React.PropsWithChildren<unknown>> = () => {
 
   return (
     <div>
-      {user.isConnected && <Navigate to="/dojo" />}
+      {user.isConnected && <Navigate to="/app" />}
       <HeroCSS />
       <div className="heroContainer">
         <div className="videoContainer2">

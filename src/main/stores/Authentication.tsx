@@ -49,7 +49,7 @@ export default class Authentication {
   }
 
   get isConnected() {
-    console.log(this._provider.connected)
+    console.log("provider connected", this._provider.connected)
     return this._provider.connected
   }
 
@@ -81,6 +81,8 @@ export default class Authentication {
     if (!this.isConnected) {
       const result = this._provider.onConnect(() => {})
       console.log("result", result)
+
+      const web3Provider = new Web3Provider(this._provider)
 
       // this._provider.connector. ("connect", (error, payload) => {
       //   if (error) throw error

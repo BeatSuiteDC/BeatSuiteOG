@@ -19,6 +19,7 @@ import {
   VolumeOffOutlined as volOff,
   VolumeUpOutlined as volUp,
 } from "@mui/icons-material"
+import Player from "../Audio/Player"
 
 export const TrackPlayer: FC = observer(() => {
   const {
@@ -37,6 +38,7 @@ export const TrackPlayer: FC = observer(() => {
     <>
       <TrackPlayerCSS />
       <Container>
+        <Player />
         <Top>
           <TopImg
             style={{

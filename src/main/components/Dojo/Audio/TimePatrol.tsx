@@ -75,7 +75,7 @@ const TimePatrol = observer(() => {
     // if (value < current || value > max) {
     //   return
     // }
-    console.log({ value, max })
+    // console.log({ value, max })
     streamer.loop.end = value
   }
 

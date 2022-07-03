@@ -1,10 +1,10 @@
 import { computed, makeObservable, observable } from "mobx"
 
 export enum Loop {
+  SAMPLE,
   ALL,
   ONE,
   OFF,
-  SAMPLE,
 }
 
 export interface Sample {
@@ -15,7 +15,7 @@ export interface Sample {
 }
 
 export interface SavedSample extends Sample {
-  src: string
+  name: string
 }
 
 const DEFAULT_SAMPLE: Sample = {
@@ -28,7 +28,6 @@ const DEFAULT_SAMPLE: Sample = {
 export default class Looper {
   _setting: Loop
   _sample: Sample
-
   _saved: Set<SavedSample> = new Set([])
 
   constructor() {
@@ -59,11 +58,11 @@ export default class Looper {
     this._setting = _setting
   }
 
-  save = (src: string, s: Sample | undefined) => {
+  save = (name: string, s: Sample | undefined) => {
     const sample = s === undefined ? this.sample : s
     const saved: SavedSample = {
       ...sample,
-      src,
+      name,
     }
     this._saved.add(saved)
     return

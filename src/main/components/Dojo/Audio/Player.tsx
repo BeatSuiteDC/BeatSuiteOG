@@ -1,21 +1,31 @@
+import styled from "@emotion/styled"
 import { observer } from "mobx-react-lite"
 import ReactPlayer from "react-player"
 import { useStores } from "../../../hooks/useStores"
 import { Loop } from "../Streamer/Looper"
+
+const BackgroundImage = styled.img`
+  background-size: cover;
+  filter: blur(10px);
+  width: 100%;
+  height: 100vh;
+  z-index: -10;
+  position: absolute;
+`
 
 const Player = observer(() => {
   const {
     services: { streamer },
   } = useStores()
 
-  const handleEnded = () => {
-    const {
-      active,
-      playlist,
-      loop,
-      _loop: { setting },
-    } = streamer
+  const {
+    active,
+    playlist,
+    loop,
+    _loop: { setting },
+  } = streamer
 
+  const handleEnded = () => {
     console.log("ended", { setting })
     if (setting === Loop.ALL) {
       if (active === undefined || playlist.indexOf(active) >= playlist.length) {
@@ -38,16 +48,12 @@ const Player = observer(() => {
   }
 
   const handleDuration = (d: number) => {
-    const {
-      _loop: { setting },
-    } = streamer
-
     if (setting === Loop.SAMPLE) {
       console.log("duration", { setting })
       return
     }
 
-    streamer.loop = { ...streamer.loop, end: d }
+    streamer.loop.end = d
   }
 
   const handleProgress = (p: {
@@ -72,6 +78,7 @@ const Player = observer(() => {
     }
     streamer.loop.current = progress
   }
+
   const handleStart = () => {
     const loop = streamer.loop
     streamer.loop = {
@@ -83,26 +90,24 @@ const Player = observer(() => {
   }
 
   return (
-    <div>
+    <>
       {streamer.canPlay() && (
-        <>
-          <ReactPlayer
-            style={{ display: "none" }}
-            muted={streamer.isMuted}
-            url={streamer.active?.src}
-            playing={streamer.isPlaying}
-            volume={streamer.volume}
-            loop={streamer.loop.enabled}
-            ref={(e) => (streamer.audio = e)}
-            onProgress={(p) => handleProgress(p)}
-            onDuration={(d) => handleDuration(d)}
-            onEnded={handleEnded}
-            onReady={handleStart}
-            onStart={handleStart}
-          />
-        </>
+        <ReactPlayer
+          style={{ display: "none" }}
+          muted={streamer.isMuted}
+          url={streamer.active?.src}
+          playing={streamer.isPlaying}
+          volume={streamer.volume}
+          loop={streamer.loop.enabled}
+          ref={(e) => (streamer.audio = e)}
+          onProgress={(p) => handleProgress(p)}
+          onDuration={(d) => handleDuration(d)}
+          onEnded={handleEnded}
+          onReady={handleStart}
+          onStart={handleStart}
+        />
       )}
-    </div>
+    </>
   )
 })
 

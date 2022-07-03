@@ -15,7 +15,6 @@ import ToolTip from "../../../helpers/tootlTip"
 
 import { Fade, List, Popper } from "@mui/material"
 import { Box } from "@mui/system"
-import Player from "./Player"
 import PlaylistPopper from "./PlaylistPopper"
 
 import RepeatOnIcon from "@mui/icons-material/RepeatOn"
@@ -25,13 +24,13 @@ import { Loop } from "../Streamer/Looper"
 
 // renders late so these are off and index
 const LoopIcons = [
+  AllInclusiveIcon,
   RepeatOnIcon,
   RepeatOneOnIcon,
   UpdateDisabledIcon,
-  AllInclusiveIcon,
 ]
 
-const loopToolTips = ["Loop All", "Loop 1", "Loop off", "Sampler"]
+const loopToolTips = ["Sampler", "Loop All", "Loop 1", "Loop off"]
 
 export const TransportPlayer: FC = observer(() => {
   const rootStore = useStores()
@@ -58,9 +57,11 @@ export const TransportPlayer: FC = observer(() => {
     let tick
     if (enabled) {
       progress = Math.max(begin / end, 0.00001)
+      console.log("progress - enabled", progress)
     } else {
       tick = current / end
       progress = Math.max(tick - 0.05 * end, 0.00001)
+      console.log("progress - ", progress)
     }
 
     const setting = _loop.setting
@@ -68,15 +69,16 @@ export const TransportPlayer: FC = observer(() => {
     streamer.audio?.setState({ played: progress })
     streamer.audio?.seekTo(progress, "fraction")
   }
+
   const handleSeek = (e: React.MouseEvent) => {
     const { end, current } = streamer.loop
-
     const tick = current / end
     const progress = tick + 0.05
     console.log({ tick, progress, current, end })
     streamer.audio?.setState({ played: progress })
     streamer.audio?.seekTo(progress, "fraction")
   }
+
   const handlePlaylistPopper = (e: React.MouseEvent<SVGSVGElement>) => {
     setUnmount(unmount ? null : e.currentTarget)
   }
@@ -85,9 +87,14 @@ export const TransportPlayer: FC = observer(() => {
   const LoopIcon = LoopIcons[_loop.setting]
 
   const handleLoop = (e: React.MouseEvent) => {
-    const setting = _loop.setting
-    streamer._loop.setting = setting > 2 ? 0 : setting + 1
+    let setting = _loop.setting
+    setting = setting > 2 ? 0 : setting + 1
+    const enabled = setting === Loop.OFF ? false : true
+
     streamer.loop.enabled = setting === Loop.OFF ? false : true
+    streamer._loop.setting = setting
+
+    console.log({ setting, enabled })
   }
 
   const open = Boolean(unmount)
@@ -96,8 +103,6 @@ export const TransportPlayer: FC = observer(() => {
   return (
     <Container>
       <CSS />
-      <Player />
-
       <div className="centralControls">
         <ToolTip title={loopToolTips[_loop.setting]}>
           <LoopIcon

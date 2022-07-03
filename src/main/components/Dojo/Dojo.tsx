@@ -46,7 +46,6 @@ const Dojo = observer(() => {
   return (
     <>
       <DojoCSS />
-      {/* <LiveStreamer /> */}
       <BackgroundImage src={dashboard} />
       <InterfaceContainer>
         <SideBarContainer>
