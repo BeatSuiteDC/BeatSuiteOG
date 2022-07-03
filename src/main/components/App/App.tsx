@@ -6,6 +6,7 @@ import { StoreContext } from "../../hooks/useStores"
 import { ThemeContext } from "../../hooks/useTheme"
 import RootStore from "../../stores/RootStore"
 import MainRouter from "../Hero/MainRouter"
+import { GlobalKeyboardShortcut } from "../KeyboardShortcut/GlobalKeyboardShortcut"
 import { EmotionThemeProvider } from "../Theme/EmotionThemeProvider"
 import { GlobalCSS } from "../Theme/GlobalCSS"
 import { MuiThemeProvider } from "../Theme/MuiThemeProvider"
@@ -18,7 +19,7 @@ export function App() {
           <ThemeContext.Provider value={defaultTheme}>
             <MuiThemeProvider>
               <EmotionThemeProvider>
-                {/* <GlobalKeyboardShortcut /> */}
+                <GlobalKeyboardShortcut />
                 <GlobalCSS />
                 <MainRouter />
               </EmotionThemeProvider>

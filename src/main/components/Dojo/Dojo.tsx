@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite"
 import { FC } from "react"
 import { useStores } from "../../hooks/useStores"
 import dashboard from "../../images/dashboard.png"
+import WalletInfo from "../WalletInfo"
 import TimePatrol from "./Audio/TimePatrol"
 import {
   BackgroundImage,
@@ -61,6 +62,7 @@ const Dojo = observer(() => {
         <MainePane />
 
         <SidePanel>
+          <WalletInfo />
           <TimePatrol />
         </SidePanel>
       </InterfaceContainer>

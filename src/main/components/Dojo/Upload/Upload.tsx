@@ -34,7 +34,9 @@ export default observer(() => {
   }, [])
 
   const handleMint = (e: any) => {}
-  const handleSave = (e: any) => {}
+  const handleSave = (e: any) => {
+    user
+  }
 
   return (
     <>

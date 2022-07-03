@@ -38,7 +38,7 @@ export default class Looper {
       setting: computed,
     })
 
-    this._setting = Loop.ONE
+    this._setting = Loop.SAMPLE
     this._sample = DEFAULT_SAMPLE
   }
 

@@ -67,19 +67,18 @@ export default class Authentication {
   }
 
   get address() {
-    // if (!this.isConnected) return ""
-    // const account = this._provider.accounts[0]
-    // console.log({ account })
-    // return `${account.slice(0, 6)}...${account.slice(
-    //   account.length - 4,
-    //   account.length
-    // )}`
-    return false
+    if (!this.isConnected) return ""
+    const account = this._provider.accounts[0]
+    console.log({ account })
+    return `${account.slice(0, 6)}...${account.slice(
+      account.length - 4,
+      account.length
+    )}`
   }
 
   async connect() {
     if (!this.isConnected) {
-      const result = this._provider.onConnect(() => {})
+      const result = this._provider.enable()
       console.log("result", result)
 
       const web3Provider = new Web3Provider(this._provider)
