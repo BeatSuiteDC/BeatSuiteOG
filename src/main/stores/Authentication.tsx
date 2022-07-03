@@ -3,54 +3,40 @@
 // import { CHAIN_NAMESPACES } from "@web3auth/base"
 // import { Web3Auth } from "@web3auth/web3auth"
 
-import WalletConnectProvider from "@walletconnect/web3-provider"
+// import WalletConnectProvider from "@walletconnect/web3-provider"
 
 import { providers } from "ethers"
 const { Web3Provider } = providers
 
 import { computed, makeObservable, observable } from "mobx"
+import { useWeb3Context } from "web3-react"
+import { Web3Context } from "web3-react/dist/context"
 import { User } from "../../common/sanity/Sanity"
 
 const INFURA_ID = process.env.REACT_APP_INFURA_ID as string
 
 export default class Authentication {
-  private _user: User
-  private _provider: WalletConnectProvider
+  private _user: User = {}
   private _isConnected = false
 
-  constructor() {
-    makeObservable<Authentication, "_isConnected" | "_provider" | "_user">(
-      this,
-      {
-        _user: observable,
-        _provider: observable,
-        _isConnected: observable,
-        address: computed,
-        isConnected: computed,
-        info: computed,
-      }
-    )
+  web3: Web3Context
 
-    this._provider = new WalletConnectProvider({
-      infuraId: INFURA_ID,
-      qrcodeModalOptions: {
-        mobileLinks: [
-          "rainbow",
-          "metamask",
-          "argent",
-          "trust",
-          "imtoken",
-          "pillar",
-        ],
-      },
+  constructor() {
+    makeObservable<Authentication, "_isConnected" | "_user">(this, {
+      _user: observable,
+      _isConnected: observable,
+      address: computed,
+      isConnected: computed,
+      info: computed,
     })
-    this._provider.enable()
-    this._user = {}
+
+    this.web3 = useWeb3Context()
   }
 
   get isConnected() {
-    console.log("provider connected", this._provider.connected)
-    return this._provider.connected
+    const web3 = this.web3.account
+    console.log({ web3 })
+    return this.web3.account ? true : false
   }
 
   get info() {
@@ -68,7 +54,7 @@ export default class Authentication {
 
   get address() {
     if (!this.isConnected) return ""
-    const account = this._provider.accounts[0]
+    const account = "this is an account for now"
     console.log({ account })
     return `${account.slice(0, 6)}...${account.slice(
       account.length - 4,
@@ -78,17 +64,6 @@ export default class Authentication {
 
   async connect() {
     if (!this.isConnected) {
-      const result = this._provider.enable()
-      console.log("result", result)
-
-      const web3Provider = new Web3Provider(this._provider)
-
-      // this._provider.connector. ("connect", (error, payload) => {
-      //   if (error) throw error
-
-      //   this._isConnected = true
-
-      // })
     }
     // if (!this.isConnected) {
     //   this._connector.createSession()
@@ -114,16 +89,5 @@ export default class Authentication {
     return this.isConnected
   }
 
-  async logout() {
-    // if (!this.isConnected) {
-    //   console.log("already disconnected")
-    //   return
-    // }
-    // this._connector.killSession()
-    // this._connector.on("disconnect", (err, payload) => {
-    //   if (err) throw err
-    //   this._user = undefined
-    //   console.log("logged out")
-    // })
-  }
+  async logout() {}
 }

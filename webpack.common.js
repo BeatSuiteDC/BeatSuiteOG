@@ -2,6 +2,7 @@ const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const webpack = require("webpack")
 const Dotenv = require("dotenv-webpack")
+const framerProcess = "node_modules/framer-motion/dist/es/utils/process.mjs"
 
 module.exports = {
   context: __dirname,
@@ -40,6 +41,7 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
+      process: ["process/browser"],
       Buffer: ["buffer", "Buffer"],
     }),
     new webpack.EnvironmentPlugin({

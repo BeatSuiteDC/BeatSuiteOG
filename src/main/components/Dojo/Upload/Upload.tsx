@@ -33,7 +33,10 @@ export default observer(() => {
     }
   }, [])
 
-  const handleMint = (e: any) => {}
+  const handleMint = (e: any) => {
+    user.connect()
+    console.log("active", user.web3)
+  }
   const handleSave = (e: any) => {
     user
   }

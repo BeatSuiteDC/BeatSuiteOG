@@ -32,6 +32,7 @@ const WalletInfo = observer(() => {
         </Text>
       </Box>
       <Button
+        onClick={handleConnectWallet}
         bg="black"
         border="1px solid transparent"
         _hover={{
