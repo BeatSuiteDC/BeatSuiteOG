@@ -1,6 +1,8 @@
 import { observer } from "mobx-react-lite"
 import { FC } from "react"
 import { useStores } from "../../../hooks/useStores"
+import MetaMaskCard from "../../../Web3/ConnectorCards/MetaMaskCard"
+import WalletConnectCard from "../../../Web3/ConnectorCards/WalletConnectCard"
 import { TransportPlayer } from "../Audio/AudioControls"
 import Banner from "../Banner/Banner"
 import Poster from "../Poster"
@@ -21,14 +23,29 @@ type BannerTab = {
 
 const Effect: FC = () => {
   return (
-    <EffectsContainer>
-      <EffectsH2>Effects</EffectsH2>
-      <EffectsWrapper>
-        {effects.map((e, i) => {
-          return <Effectdiv>{e}</Effectdiv>
-        })}
-      </EffectsWrapper>
-    </EffectsContainer>
+    <>
+      <div style={{ position: "relative" }}>
+        Web3 Provider
+        <div
+          style={{
+            display: "flex",
+            flexFlow: "wrap",
+            fontFamily: "sans-serif",
+          }}
+        >
+          <MetaMaskCard />
+          <WalletConnectCard />
+        </div>
+      </div>
+      <EffectsContainer>
+        <EffectsH2>Effects</EffectsH2>
+        <EffectsWrapper>
+          {effects.map((e, i) => {
+            return <Effectdiv>{e}</Effectdiv>
+          })}
+        </EffectsWrapper>
+      </EffectsContainer>
+    </>
   )
 }
 

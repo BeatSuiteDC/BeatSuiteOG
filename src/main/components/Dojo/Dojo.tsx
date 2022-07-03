@@ -52,12 +52,13 @@ const Dojo = observer(() => {
         <SideBarContainer>
           <LogoDiv onClick={(e) => router.path === "upload"}>
             | BeatSuite |
-            <Breadcrumbs>
+            <Breadcrumbs aria-label="breadcrumb">
               <Link
                 aria-current={router.path === "upload"}
                 underline="hover"
                 color="#99badd"
                 onClick={(e) => (router.path = "upload")}
+                href="#upload"
               >
                 Upload
               </Link>
@@ -66,6 +67,7 @@ const Dojo = observer(() => {
                 underline="hover"
                 color="#99badd"
                 onClick={(e) => (router.path = "bangers")}
+                href="#bangers"
               >
                 Bangers
               </Link>
@@ -74,6 +76,7 @@ const Dojo = observer(() => {
                 underline="hover"
                 color="#99badd"
                 onClick={(e) => (router.path = "sampler")}
+                href="#sampler"
               >
                 Sampler
               </Link>
@@ -82,6 +85,7 @@ const Dojo = observer(() => {
                 underline="hover"
                 color="#99badd"
                 onClick={(e) => (router.path = "feed")}
+                href="#feed"
               >
                 Feed
               </Link>
