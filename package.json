@@ -97,6 +97,7 @@
     "framer-motion": "^6.3.16",
     "html-webpack-plugin": "^5.5.0",
     "https-browserify": "^1.0.0",
+    "ipfs-http-client": "^57.0.3",
     "jest": "^28.1.0",
     "os-browserify": "^0.3.0",
     "prettier": "^2.6.2",

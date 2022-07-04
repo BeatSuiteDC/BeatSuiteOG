@@ -12,8 +12,9 @@ import BulkImport from "./Bulk"
 import AddCircleIcon from "@mui/icons-material/AddCircle"
 
 import { observer } from "mobx-react-lite"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Opensea from "../../../images/opensea.png"
+import ipfs from "../../../IPFS"
 import { Track } from "../Album/Album"
 import { SearchBar } from "../SearchBar"
 import AlbumDetails from "./AlbumDetails"
@@ -25,6 +26,7 @@ import UploadAll from "./UploadAll"
 export default observer(() => {
   const rootStore = useStores()
   const { user, album, playlist } = rootStore
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const info = user.info
@@ -34,11 +36,23 @@ export default observer(() => {
   }, [])
 
   const handleMint = (e: any) => {
-    user.connect()
     console.log("active", user.web3)
   }
-  const handleSave = (e: any) => {
-    user
+  const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    setLoading(true)
+    const ipfsUrl = "https://beatsuite.infura-ipfs.io/"
+    let hashes: string[] = []
+    await album.songs.forEach(async (song) => {
+      if (song.file) {
+        await ipfs(song.file).then((res) => {
+          if (res) hashes.push(ipfsUrl + res)
+        })
+      }
+    })
+
+    console.log("hashes", hashes)
+    setLoading(false)
   }
 
   return (
