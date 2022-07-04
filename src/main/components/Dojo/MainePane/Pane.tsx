@@ -1,8 +1,7 @@
 import { observer } from "mobx-react-lite"
 import { FC } from "react"
 import { useStores } from "../../../hooks/useStores"
-import MetaMaskCard from "../../../Web3/ConnectorCards/MetaMaskCard"
-import WalletConnectCard from "../../../Web3/ConnectorCards/WalletConnectCard"
+import Wallets from "../../Wallets/Wallets"
 import { TransportPlayer } from "../Audio/AudioControls"
 import Banner from "../Banner/Banner"
 import Poster from "../Poster"
@@ -17,26 +16,9 @@ import {
   MainCSS,
 } from "./CSS"
 
-type BannerTab = {
-  title: string
-}
-
 const Effect: FC = () => {
   return (
     <>
-      <div style={{ position: "relative" }}>
-        Web3 Provider
-        <div
-          style={{
-            display: "flex",
-            flexFlow: "wrap",
-            fontFamily: "sans-serif",
-          }}
-        >
-          <MetaMaskCard />
-          <WalletConnectCard />
-        </div>
-      </div>
       <EffectsContainer>
         <EffectsH2>Effects</EffectsH2>
         <EffectsWrapper>
@@ -52,14 +34,14 @@ const Effect: FC = () => {
 const effects = ["Wicked", "tough", "wild", "ultra"]
 
 const Body: FC = observer(() => {
-  const { router, user } = useStores()
+  const { router } = useStores()
   const path = router.path
 
   console.log({ path })
   return (
     <BodyContainer>
       {path === "sampler" && <Effect />}
-      {/* {path === "albums" && <Album />} */}
+      {path === "wallets" && <Wallets />}
       {path === "bangers" && <Poster />}
       {path === "upload" && <Upload />}
     </BodyContainer>

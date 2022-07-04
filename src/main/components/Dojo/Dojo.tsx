@@ -1,10 +1,8 @@
 import { Breadcrumbs, Link } from "@mui/material"
 import { observer } from "mobx-react-lite"
-import React, { FC } from "react"
 import { useStores } from "../../hooks/useStores"
 import dashboard from "../../images/dashboard.png"
-import { RoutePath } from "../../stores/Router"
-import WalletInfo from "../WalletInfo"
+import WalletInfo from "../Wallets/WalletInfo"
 import TimePatrol from "./Audio/TimePatrol"
 import {
   BackgroundImage,
@@ -14,32 +12,9 @@ import {
   SideBarContainer,
   SidePanel,
 } from "./DojoCSS"
-import Loading from "./Loading"
 import { MainePane } from "./MainePane"
 
 import { TrackPlayer } from "./TrackPlayer/TrackPlayer"
-import { PTag } from "./TrackPlayer/TrackPlayerCSS"
-// import Socials from "./Socials"
-
-const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
-  const {
-    router: { path },
-    services: {
-      streamer: { isPlaying },
-    },
-  } = useStores()
-
-  console.log({ isPlaying, path })
-  return (
-    <>
-      {/* <PathContainer>{path === "/home" && <Featured />}</PathContainer> */}
-      {/* {path === "/app" && <Hero />} */}
-      {/* {path === "/home" && <PianoRollEditor />} */}
-      {/* {path === "/tempo" && <TempoEditor />} */}
-      {!isPlaying && <Loading />}
-    </>
-  )
-})
 
 const Dojo = observer(() => {
   const { router } = useStores()
@@ -64,8 +39,8 @@ const Dojo = observer(() => {
               </Link>
               <Link
                 aria-current={router.path === "bangers"}
-                underline="hover"
-                color="#99badd"
+                underline="none"
+                color="grey"
                 onClick={(e) => (router.path = "bangers")}
                 href="#bangers"
               >
@@ -73,8 +48,8 @@ const Dojo = observer(() => {
               </Link>
               <Link
                 aria-current={router.path === "sampler"}
-                underline="hover"
-                color="#99badd"
+                underline="none"
+                color="grey"
                 onClick={(e) => (router.path = "sampler")}
                 href="#sampler"
               >
@@ -82,12 +57,21 @@ const Dojo = observer(() => {
               </Link>
               <Link
                 aria-current={router.path === "feed"}
-                underline="hover"
-                color="#99badd"
+                underline="none"
+                color="grey"
                 onClick={(e) => (router.path = "feed")}
                 href="#feed"
               >
                 Feed
+              </Link>
+              <Link
+                aria-current={router.path === "wallets"}
+                underline="hover"
+                color="#99badd"
+                onClick={(e) => (router.path = "wallets")}
+                href="#wallets"
+              >
+                Wallets
               </Link>
             </Breadcrumbs>
           </LogoDiv>
@@ -107,19 +91,5 @@ const Dojo = observer(() => {
     </>
   )
 })
-
-const PathBreadCrumb: FC<React.PropsWithChildren<{ path: RoutePath }>> = ({
-  path: RoutePath,
-}) => {
-  return (
-    <>
-      <Breadcrumbs>
-        <PTag>Feed</PTag>
-        <PTag>Bangers</PTag>
-        <PTag>Home</PTag>
-      </Breadcrumbs>
-    </>
-  )
-}
 
 export default Dojo

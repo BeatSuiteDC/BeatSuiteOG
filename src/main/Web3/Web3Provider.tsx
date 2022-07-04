@@ -7,6 +7,7 @@ import {
 import { MetaMask } from "@web3-react/metamask"
 import { Network } from "@web3-react/network"
 import { WalletConnect } from "@web3-react/walletconnect"
+import React, { FC } from "react"
 import {
   coinbaseWallet,
   hooks as coinbaseWalletHooks,
@@ -35,10 +36,14 @@ function Child() {
   return null
 }
 
-export default function ProviderExample() {
+const ProviderExample: FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   return (
     <Web3ReactProvider connectors={connectors}>
       <Child />
+      {children}
     </Web3ReactProvider>
   )
 }
+export default ProviderExample

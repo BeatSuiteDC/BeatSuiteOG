@@ -125,7 +125,13 @@ export function ConnectWithSelect({
 
   if (error) {
     return (
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          background: "transparent",
+        }}
+      >
         {!(connector instanceof GnosisSafe) && (
           <ChainSelect
             chainId={desiredChainId}
@@ -140,7 +146,13 @@ export function ConnectWithSelect({
     )
   } else if (isActive) {
     return (
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          background: "transparent",
+        }}
+      >
         {!(connector instanceof GnosisSafe) && (
           <ChainSelect
             chainId={desiredChainId === -1 ? -1 : chainId}
@@ -165,7 +177,13 @@ export function ConnectWithSelect({
     )
   } else {
     return (
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          background: "transparent",
+        }}
+      >
         {!(connector instanceof GnosisSafe) && (
           <ChainSelect
             chainId={desiredChainId}

@@ -1,13 +1,3 @@
-// import WalletConnect from "@walletconnect/client"
-// import QRCodeModal from "@walletconnect/qrcode-modal"
-// import { CHAIN_NAMESPACES } from "@web3auth/base"
-// import { Web3Auth } from "@web3auth/web3auth"
-
-// import WalletConnectProvider from "@walletconnect/web3-provider"
-
-import { providers } from "ethers"
-const { Web3Provider } = providers
-
 import { computed, makeObservable, observable } from "mobx"
 import { useWeb3Context } from "web3-react"
 import { Web3Context } from "web3-react/dist/context"
@@ -17,14 +7,12 @@ const INFURA_ID = process.env.REACT_APP_INFURA_ID as string
 
 export default class Authentication {
   private _user: User = {}
-  private _isConnected = false
 
   web3: Web3Context
 
   constructor() {
-    makeObservable<Authentication, "_isConnected" | "_user">(this, {
+    makeObservable<Authentication, "_user">(this, {
       _user: observable,
-      _isConnected: observable,
       address: computed,
       isConnected: computed,
       info: computed,

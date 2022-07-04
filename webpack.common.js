@@ -7,9 +7,8 @@ const framerProcess = "node_modules/framer-motion/dist/es/utils/process.mjs"
 module.exports = {
   context: __dirname,
   entry: {
-    // browserIntro: "./src/intro/index.tsx",
+    browserIntro: "./src/intro/index.tsx",
     browserMain: "./src/main/index.tsx",
-    // browserLanding: "./src/landing/index.ts",
   },
   output: {
     filename: "[name]-[chunkhash].js",
@@ -23,6 +22,14 @@ module.exports = {
       {
         test: /\.svg$/,
         loader: "react-svg-loader",
+      },
+      {
+        test: /\.mjs$/,
+        include: /node_modules\/framer-motion/,
+        type: "javascript/auto",
+        resolve: {
+          fullySpecified: false,
+        },
       },
     ],
   },
@@ -44,11 +51,6 @@ module.exports = {
       process: ["process/browser"],
       Buffer: ["buffer", "Buffer"],
     }),
-    new webpack.EnvironmentPlugin({
-      VERCEL_ENV: null,
-      VERCEL_GIT_COMMIT_SHA: null,
-      SENTRY_DSN: null,
-    }),
     new Dotenv({
       path: "./.env",
       safe: false,
@@ -56,16 +58,20 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       filename: "app.html",
+      chunks: ["browserMain"],
+
       template: path.join(__dirname, "public", "app.html"),
     }),
     new HtmlWebpackPlugin({
       inject: true,
       filename: "dojo.html",
+      chunks: ["browserMain"],
       template: path.join(__dirname, "public", "edit.html"),
     }),
     new HtmlWebpackPlugin({
       inject: true,
       filename: "index.html",
+      chunks: ["browserIntro"],
       template: path.join(__dirname, "public", "app.html"),
     }),
   ],

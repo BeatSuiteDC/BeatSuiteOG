@@ -11,6 +11,7 @@ export type RoutePath =
   | "sampler"
   | "dojo"
   | "bangers"
+  | "wallets"
 export default class Router {
   path: RoutePath = "upload"
 

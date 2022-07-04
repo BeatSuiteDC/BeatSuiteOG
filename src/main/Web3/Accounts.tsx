@@ -3,7 +3,7 @@ import { BigNumber, utils } from "ethers"
 import type { Web3ReactHooks } from "@web3-react/core"
 import { useEffect, useState } from "react"
 
-function useBalances(
+export function useBalances(
   provider?: ReturnType<Web3ReactHooks["useProvider"]>,
   accounts?: string[]
 ): BigNumber[] | undefined {
@@ -59,7 +59,9 @@ export function Accounts({
                 }}
               >
                 {ENSNames?.[i] ?? account}
-                {balances?.[i] ? ` (Ξ${utils.formatEther(balances[i])})` : null}
+                {balances?.[i]
+                  ? ` (Ξ ${utils.formatEther(balances[i])})`
+                  : null}
               </ul>
             ))}
       </b>

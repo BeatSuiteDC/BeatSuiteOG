@@ -14,20 +14,21 @@ import { MuiThemeProvider } from "../Theme/MuiThemeProvider"
 export function App() {
   return (
     <React.StrictMode>
-      <Web3Provider />
-      <ChakraProvider>
-        <StoreContext.Provider value={new RootStore()}>
-          <ThemeContext.Provider value={defaultTheme}>
-            <MuiThemeProvider>
-              <EmotionThemeProvider>
-                <GlobalKeyboardShortcut />
-                <GlobalCSS />
-                <MainRouter />
-              </EmotionThemeProvider>
-            </MuiThemeProvider>
-          </ThemeContext.Provider>
-        </StoreContext.Provider>
-      </ChakraProvider>
+      <Web3Provider>
+        <ChakraProvider>
+          <StoreContext.Provider value={new RootStore()}>
+            <ThemeContext.Provider value={defaultTheme}>
+              <MuiThemeProvider>
+                <EmotionThemeProvider>
+                  <GlobalKeyboardShortcut />
+                  <GlobalCSS />
+                  <MainRouter />
+                </EmotionThemeProvider>
+              </MuiThemeProvider>
+            </ThemeContext.Provider>
+          </StoreContext.Provider>
+        </ChakraProvider>
+      </Web3Provider>
     </React.StrictMode>
   )
 }
