@@ -33,9 +33,5 @@ module.exports = merge(common, {
         { from: "public/*.css", to: "[name][ext]" },
       ],
     }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: "static",
-      openAnalyzer: false,
-    }),
   ],
 })

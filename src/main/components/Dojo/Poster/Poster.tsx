@@ -14,6 +14,7 @@ import {
 import { Pause, PlayArrow } from "@mui/icons-material"
 import { useWeb3React } from "@web3-react/core"
 import { loadAlbums } from "../../../../common/sanity/Sanity"
+import { snapshot } from "../../../lib/firebase"
 
 export type PosterProps = {
   album: AlbumProps
@@ -28,6 +29,9 @@ const Poster: FC = () => {
     alert("Connect wallet")
   }
 
+  snapshot("Albums", (snap) => {
+    console.log("snap", snap)
+  })
   const loaded = web3.account ? loadAlbums(web3.account) : []
   console.log("loaded", loaded)
   return (

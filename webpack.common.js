@@ -48,7 +48,6 @@ module.exports = {
     },
   },
   plugins: [
-    new BundleAnalyzerPlugin(),
     new webpack.ProvidePlugin({
       process: ["process/browser"],
       Buffer: ["buffer", "Buffer"],
