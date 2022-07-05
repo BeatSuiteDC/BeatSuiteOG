@@ -6,7 +6,7 @@ import { User } from "../../common/sanity/Sanity"
 const INFURA_ID = process.env.REACT_APP_INFURA_ID as string
 
 export default class Authentication {
-  private _user: User = {}
+  private _user: User | undefined
 
   web3: Web3Context
 
@@ -28,12 +28,15 @@ export default class Authentication {
   }
 
   get info() {
+    if (!this._user) {
+      return undefined
+    }
     return {
       ...this._user,
     }
   }
 
-  set info(_user: User) {
+  set info(_user: User | undefined) {
     this._user = {
       ...this.info,
       ..._user,

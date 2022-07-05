@@ -6,9 +6,7 @@ import { Navigate } from "react-router-dom"
 const ConnectWallet: FC = observer(() => {
   const context = useWeb3React()
 
-  const login = async (event: any) => {
-    const result = await context.accounts
-  }
+  const login = async (event: any) => {}
 
   return (
     <div className="wrap">

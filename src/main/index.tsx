@@ -1,5 +1,6 @@
 import { configure } from "mobx"
-import ReactDOM from "react-dom"
+import { createRoot } from "react-dom/client"
+
 import { localized } from "../common/localize/localizedString"
 import { App } from "./components/App/App"
 
@@ -9,7 +10,9 @@ configure({
 
 function renderApp() {
   console.log("starting render main")
-  ReactDOM.render(<App />, document.querySelector("#root"))
+  const container = document.querySelector("#root")
+  const root = createRoot(container!) // createRoot(container!) if you use TypeScript
+  root.render(<App />)
 }
 
 window.onbeforeunload = (e: BeforeUnloadEvent) => {

@@ -1,6 +1,7 @@
 // import styled from "@emotion/styled"
 import { FC, useState } from "react"
 import ReactPlayer from "react-player"
+import { Navigate } from "react-router-dom"
 import { useWeb3Context } from "web3-react"
 import logo from "../../images/logo.png"
 import Loading from "../Dojo/Loading"
@@ -14,7 +15,7 @@ const Hero: FC<React.PropsWithChildren<unknown>> = () => {
 
   return (
     <div>
-      {context.account ? context.account : "none"}
+      {context.account ? <Navigate to="/app" /> : "none"}
       {/* {user.isConnected && <Navigate to="/app" />} */}
       <HeroCSS />
       <div className="heroContainer">
@@ -51,6 +52,7 @@ const Hero: FC<React.PropsWithChildren<unknown>> = () => {
           </div>
           <div className="wrap">
             <ConnectWallet />
+            {/* <Navigate to="/app" /> */}
           </div>
         </div>
       ) : (

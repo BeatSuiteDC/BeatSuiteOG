@@ -200,7 +200,7 @@ export class EmptyAlbum {
       ...this._songs,
       {
         album: this.title,
-        cover: this.cover,
+        cover: this.cover as string,
         title: `untitled banger ${this._tracks}`,
       },
     ]

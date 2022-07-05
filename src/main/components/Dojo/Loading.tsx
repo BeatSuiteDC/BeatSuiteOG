@@ -47,13 +47,13 @@ const LoadingCss = () => {
             0 0 0 20px #24ecff11, 0 0 40px #24ecff, 0 0 50px #24ecff;
         }
         /* Circle Position & Animation */
-        .container .ring:nth-child(1) {
+        .container .ring:nth-of-type(1) {
           animation: circle2 2s linear infinite;
         }
-        .container .ring:nth-child(2) {
+        .container .ring:nth-of-type(2) {
           animation: circle1 2s linear infinite;
         }
-        .container .ring:nth-child(3) {
+        .container .ring:nth-of-type(3) {
           position: absolute;
           top: -66.66px;
           animation: circle 2s linear infinite;
@@ -98,7 +98,7 @@ const LoadingCss = () => {
   )
 }
 
-const Loading = () => {
+const Loading = ({ title = "Loading" }) => {
   return (
     <>
       <LoadingCss />
@@ -107,7 +107,7 @@ const Loading = () => {
           <div className="ring"></div>
           <div className="ring"></div>
           <div className="ring"></div>
-          <p>Loading...</p>
+          <p>{title}...</p>
         </div>
       </div>
     </>

@@ -2,13 +2,14 @@ const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const webpack = require("webpack")
 const Dotenv = require("dotenv-webpack")
-const framerProcess = "node_modules/framer-motion/dist/es/utils/process.mjs"
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 
 module.exports = {
   context: __dirname,
   entry: {
-    browserIntro: "./src/intro/index.tsx",
-    browserMain: "./src/main/index.tsx",
+    intro: "./src/intro/index.tsx",
+    app: "./src/main/index.tsx",
   },
   output: {
     filename: "[name]-[chunkhash].js",
@@ -47,6 +48,7 @@ module.exports = {
     },
   },
   plugins: [
+    new BundleAnalyzerPlugin(),
     new webpack.ProvidePlugin({
       process: ["process/browser"],
       Buffer: ["buffer", "Buffer"],
@@ -58,20 +60,20 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       filename: "app.html",
-      chunks: ["browserMain"],
+      chunks: ["app"],
 
       template: path.join(__dirname, "public", "app.html"),
     }),
-    new HtmlWebpackPlugin({
-      inject: true,
-      filename: "dojo.html",
-      chunks: ["browserMain"],
-      template: path.join(__dirname, "public", "edit.html"),
-    }),
+    // new HtmlWebpackPlugin({
+    //   inject: true,
+    //   filename: "dojo.html",
+    //   chunks: ["dojo"],
+    //   template: path.join(__dirname, "public", "edit.html"),
+    // }),
     new HtmlWebpackPlugin({
       inject: true,
       filename: "index.html",
-      chunks: ["browserIntro"],
+      chunks: ["intro"],
       template: path.join(__dirname, "public", "app.html"),
     }),
   ],

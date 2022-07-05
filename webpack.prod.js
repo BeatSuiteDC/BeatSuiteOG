@@ -14,7 +14,7 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.(j|t)sx?$/,
-        exclude: /node_modules\/(?!(ethereum-cryptography|ANOTHER-ONE)\/)/,
+        exclude: /node_modules\/(?!(ethereum-cryptography|@0x)\/)/,
 
         use: {
           loader: "babel-loader",

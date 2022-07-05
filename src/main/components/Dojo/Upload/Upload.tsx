@@ -11,11 +11,16 @@ import BulkImport from "./Bulk"
 
 import AddCircleIcon from "@mui/icons-material/AddCircle"
 
+import { Modal } from "@mui/material"
+import { useWeb3React } from "@web3-react/core"
 import { observer } from "mobx-react-lite"
 import { useEffect, useState } from "react"
+import { getBase64FromUrl } from "../../../../common/file"
+import { sanityUser } from "../../../../common/sanity/Sanity"
 import Opensea from "../../../images/opensea.png"
 import ipfs from "../../../IPFS"
-import { Track } from "../Album/Album"
+import { AlbumProps, Track } from "../Album/Album"
+import Loading from "../Loading"
 import { SearchBar } from "../SearchBar"
 import AlbumDetails from "./AlbumDetails"
 import AlbumImage from "./AlbumImage"
@@ -26,9 +31,14 @@ import UploadAll from "./UploadAll"
 export default observer(() => {
   const rootStore = useStores()
   const { user, album, playlist } = rootStore
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState<string | undefined>()
+  const web3 = useWeb3React()
 
   useEffect(() => {
+    if (web3.account && !user.info) {
+      sanityUser(web3.account).then((res) => (user.info = res))
+    }
+
     const info = user.info
     if (info?.name) {
       album.artist = info.name
@@ -40,19 +50,57 @@ export default observer(() => {
   }
   const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    setLoading(true)
-    const ipfsUrl = "https://beatsuite.infura-ipfs.io/"
-    let hashes: string[] = []
-    await album.songs.forEach(async (song) => {
-      if (song.file) {
-        await ipfs(song.file).then((res) => {
-          if (res) hashes.push(ipfsUrl + res)
-        })
-      }
-    })
+    setLoading("Uploading...")
+    const ipfsUrl = "https://beatsuite.infura-ipfs.io/ipfs/"
 
-    console.log("hashes", hashes)
-    setLoading(false)
+    if (web3.account) {
+      let details: AlbumProps = {
+        artist: album.artist,
+        title: album.title,
+        year: Number(album.year),
+        cover: "",
+        songs: [],
+      }
+      if (!user.info) {
+        user.info = await sanityUser(web3.account, album.artist)
+      }
+
+      const coverBase64 = await getBase64FromUrl(album.cover)
+      const coverHash = await ipfs(coverBase64)
+
+      if (!coverHash) {
+        alert("Invalid cover image")
+        return
+      }
+      details.cover = ipfsUrl + coverHash
+      console.log({ coverHash }, details.cover)
+
+      album.songs.forEach(async (song) => {
+        if (song.src) {
+          setLoading("Generating hashes...")
+
+          console.log("Adding songs...", song.title)
+          const songBase64 = await getBase64FromUrl(song.src)
+          const songHash = await ipfs(songBase64)
+          const url = ipfsUrl + songHash
+
+          console.log({ url })
+          const track: Track = {
+            src: ipfsUrl + songHash,
+            title: song.title,
+            album: album.title,
+            cover: details.cover,
+            duration: song.duration,
+          }
+          details.songs.push(track)
+        }
+      })
+
+      console.log({ details })
+    } else {
+      alert("connect wallet first")
+    }
+    setLoading(undefined)
   }
 
   return (
@@ -85,6 +133,12 @@ export default observer(() => {
 
           <SearchBar />
         </TableHeader>
+
+        {loading && (
+          <Modal open={loading ? true : false}>
+            <Loading title={loading} />
+          </Modal>
+        )}
 
         <DropImport album={album}>
           {album.songs.map((song: Track, i) => {

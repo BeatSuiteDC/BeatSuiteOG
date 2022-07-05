@@ -5,7 +5,8 @@ const projectSecret = process.env.REACT_APP_IPFS_SECRET
 const auth =
   "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64")
 
-const ipfs = async (file: File) => {
+const ipfs = async (file: any) => {
+  console.log("uploading to IPFS")
   let client: IPFSHTTPClient | undefined
 
   try {
@@ -22,7 +23,7 @@ const ipfs = async (file: File) => {
 
     return path
   } catch (error) {
-    console.error("IPFS error ", error)
+    console.error("IPFS error", error)
     client = undefined
   }
 }

@@ -37,7 +37,6 @@ const Body: FC = observer(() => {
   const { router } = useStores()
   const path = router.path
 
-  console.log({ path })
   return (
     <BodyContainer>
       {path === "sampler" && <Effect />}
