@@ -100,31 +100,6 @@ export const DojoCSS = () => {
           min-width: 20vw;
         }
 
-        .otherSoundsContainer {
-          width: 100%;
-          height: 10%;
-          text-align: center;
-          font-size: 3rem;
-          color: white;
-          display: flex;
-          flex-direction: row;
-          justify-content: end;
-          z-index: 1;
-        }
-
-        .otherSounds {
-          min-height: 40px;
-          min-width: 40px;
-          border-radius: 50%;
-          border: #c7c7c7 1px solid;
-          margin-top: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-left: 6px;
-          margin-right: 6px;
-        }
-
         .imgSizing {
           min-width: 20px;
           height: 20px;
@@ -184,17 +159,6 @@ export const DojoCSS = () => {
           border-bottom: 1px white solid;
         }
 
-        .socialIcons {
-          filter: invert(100%) sepia(0%) saturate(7485%) hue-rotate(253deg)
-            brightness(112%) contrast(103%);
-          width: 18px;
-          height: 18px;
-          margin-bottom: 20px;
-          position: absolute;
-          top: 112%;
-          left: 45%;
-        }
-
         .videoContainer {
           position: absolute;
           filter: blur(10px);
@@ -203,114 +167,6 @@ export const DojoCSS = () => {
           width: 100%;
           top: -220px;
           left: -230px;
-        }
-
-        .liveStreamPlayer {
-          position: absolute;
-          top: -1000px;
-          left: -1000px;
-        }
-
-        .pauseScreen {
-          background-color: black;
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          top: 0px;
-          left: 0px;
-          opacity: 0.9;
-          z-index: 0;
-          text-align: center;
-          justify-content: center;
-          align-content: center;
-          font-size: 1rem;
-          color: white;
-          font-family: "Montserrat", sans-serif;
-          font-weight: 200;
-          letter-spacing: 7px;
-        }
-
-        .unpauseScreen {
-          display: none;
-        }
-
-        .container {
-          position: absolute;
-          top: 50%;
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        /* Line */
-        .container .ring {
-          position: relative;
-          width: 150px;
-          height: 150px;
-          margin: -30px;
-          border: 4px solid transparent;
-          border-radius: 50%;
-          border-top: 4px solid #24ecff;
-        }
-        /* Head of line */
-        .container .ring::before {
-          content: "";
-          position: absolute;
-          top: 12px;
-          right: 12px;
-          border-radius: 50%;
-          width: 15px;
-          height: 15px;
-          background: #24ecff;
-          box-shadow: 0 0 0 5px #24ecff33, 0 0 0 10px #24ecff22,
-            0 0 0 20px #24ecff11, 0 0 40px #24ecff, 0 0 50px #24ecff;
-        }
-        /* Circle Position & Animation */
-        .container .ring:nth-child(1) {
-          animation: circle2 2s linear infinite;
-        }
-        .container .ring:nth-child(2) {
-          animation: circle1 2s linear infinite;
-        }
-        .container .ring:nth-child(3) {
-          position: absolute;
-          top: -66.66px;
-          animation: circle 2s linear infinite;
-        }
-        /* Loading Text */
-        .container p {
-          overflow: hidden;
-          position: absolute;
-          color: #fff;
-          font-size: 32px;
-          font-family: consolas;
-          bottom: -120px;
-          letter-spacing: 4px;
-        }
-        /* Animation */
-        @keyframes circle {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-        @keyframes circle1 {
-          0% {
-            transform: rotate(120deg);
-          }
-          100% {
-            transform: rotate(480deg);
-          }
-        }
-        @keyframes circle2 {
-          0% {
-            transform: rotate(240deg);
-          }
-          100% {
-            transform: rotate(600deg);
-          }
         }
 
         svg {

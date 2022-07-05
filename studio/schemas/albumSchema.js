@@ -4,6 +4,12 @@ export default {
   type: "document",
   fields: [
     {
+      name: "creator",
+      title: "Creator",
+      description: "user Wallet address",
+      type: "string",
+    },
+    {
       name: "title",
       title: "Title",
       type: "string",
@@ -20,11 +26,6 @@ export default {
       type: "string",
     },
     {
-      name: "createdAt",
-      title: "Created At",
-      type: "date",
-    },
-    {
       name: "contract",
       title: "Contract",
       description: "Contract address",
@@ -35,6 +36,12 @@ export default {
       title: "Chain ID",
       description: "Chain ID used if minted",
       type: "string",
+    },
+    {
+      name: "year",
+      title: "Year",
+      description: "Year descriptor",
+      type: "number",
     },
     {
       name: "songs",

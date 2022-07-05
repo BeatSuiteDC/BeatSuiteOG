@@ -1,3 +1,4 @@
+import { AlbumProps, Track } from "../../main/components/Dojo/Album/Album"
 import client from "../../main/lib/sanity"
 
 export type User = {
@@ -13,16 +14,40 @@ export const sanityUser = async (address: string, name = "Lejihn Daire") => {
       _id: address,
       _type: "user",
       address: address,
-      name,
     }
     const result = await client.createIfNotExists(userDoc)
     return <User>{
       address: result.address,
-      name: result.name,
       id: result._id,
+      name,
     }
   } catch (e) {
     console.error(e)
     return undefined
   }
 }
+export const uploadAlbum = async (
+  address: string,
+  album: AlbumProps,
+  _songs: Promise<(Track | undefined)[]>
+) => {
+  let songs = await _songs
+  try {
+    console.log("Uploading Album")
+    const albumDoc = {
+      _type: "album",
+      creator: address,
+      ...album,
+      songs,
+    }
+    const uploadedAlbum = await client.create(albumDoc)
+    // const result = await client.patch({id: address,
+    // set: {}})
+    return uploadedAlbum
+  } catch (e) {
+    console.error(e)
+    return undefined
+  }
+}
+
+export const updateUser = async () => {}

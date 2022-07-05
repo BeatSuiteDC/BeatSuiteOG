@@ -12,11 +12,12 @@ import BulkImport from "./Bulk"
 import AddCircleIcon from "@mui/icons-material/AddCircle"
 
 import { Modal } from "@mui/material"
+import { Box } from "@mui/system"
 import { useWeb3React } from "@web3-react/core"
 import { observer } from "mobx-react-lite"
 import { useEffect, useState } from "react"
 import { getBase64FromUrl } from "../../../../common/file"
-import { sanityUser } from "../../../../common/sanity/Sanity"
+import { sanityUser, uploadAlbum } from "../../../../common/sanity/Sanity"
 import Opensea from "../../../images/opensea.png"
 import ipfs from "../../../IPFS"
 import { AlbumProps, Track } from "../Album/Album"
@@ -61,6 +62,7 @@ export default observer(() => {
         cover: "",
         songs: [],
       }
+
       if (!user.info) {
         user.info = await sanityUser(web3.account, album.artist)
       }
@@ -70,37 +72,46 @@ export default observer(() => {
 
       if (!coverHash) {
         alert("Invalid cover image")
+        setLoading(undefined)
         return
       }
+
       details.cover = ipfsUrl + coverHash
       console.log({ coverHash }, details.cover)
 
-      album.songs.forEach(async (song) => {
-        if (song.src) {
-          setLoading("Generating hashes...")
+      const tracks = Promise.all(
+        album.songs.map(async (song) => {
+          if (song.src) {
+            setLoading(`Hashing... ${song.title}`)
 
-          console.log("Adding songs...", song.title)
-          const songBase64 = await getBase64FromUrl(song.src)
-          const songHash = await ipfs(songBase64)
-          const url = ipfsUrl + songHash
+            const songBase64 = await getBase64FromUrl(song.src)
+            const songHash = await ipfs(songBase64)
+            const src = ipfsUrl + songHash
 
-          console.log({ url })
-          const track: Track = {
-            src: ipfsUrl + songHash,
-            title: song.title,
-            album: album.title,
-            cover: details.cover,
-            duration: song.duration,
+            console.log({ src })
+            const track: Track = {
+              src,
+              title: song.title,
+              album: album.title,
+              cover: details.cover,
+              duration: song.duration,
+            }
+            return track
           }
-          details.songs.push(track)
-        }
-      })
+        })
+      )
 
-      console.log({ details })
+      setLoading("Uploading to Sanity...")
+      const result = await uploadAlbum(web3.account, details, tracks)
+
+      console.log({ details, result })
+
+      console.log("result", result)
+      setLoading(undefined)
     } else {
       alert("connect wallet first")
+      setLoading(undefined)
     }
-    setLoading(undefined)
   }
 
   return (
@@ -135,8 +146,10 @@ export default observer(() => {
         </TableHeader>
 
         {loading && (
-          <Modal open={loading ? true : false}>
-            <Loading title={loading} />
+          <Modal sx={{ style }} open={loading ? true : false}>
+            <Box>
+              <Loading title={loading} />
+            </Box>
           </Modal>
         )}
 
@@ -156,3 +169,14 @@ export default observer(() => {
     </>
   )
 })
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+}

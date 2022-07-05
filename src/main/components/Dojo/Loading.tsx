@@ -6,14 +6,12 @@ const LoadingCss = () => {
       styles={css`
         .loading {
           background-color: black;
-          width: 2rem;
-          height: 2rem;
+          width: 100%;
+          height: 100%;
           position: absolute;
           top: 0;
           left: 0;
           z-index: -200;
-          height: 100vh;
-          width: 100vw;
         }
         .container {
           position: absolute;
