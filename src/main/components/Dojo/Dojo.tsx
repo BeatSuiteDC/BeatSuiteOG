@@ -47,6 +47,15 @@ const Dojo = observer(() => {
                 Bangers
               </Link>
               <Link
+                aria-current={router.path === "dojo"}
+                underline="none"
+                color="grey"
+                onClick={(e) => (router.path = "dojo")}
+                href="/dojo"
+              >
+                DOJO
+              </Link>
+              <Link
                 aria-current={router.path === "sampler"}
                 underline="none"
                 color="grey"

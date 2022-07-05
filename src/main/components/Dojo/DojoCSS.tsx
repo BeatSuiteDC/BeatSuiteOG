@@ -279,7 +279,7 @@ export const SideBarContainer = styled.div`
 `
 
 export const LogoDiv = styled.div`
-  width: 60rem;
+  width: 65rem;
   height: 10%;
   margin-top: 10px;
   text-align: center;

@@ -12,6 +12,8 @@ import {
 } from "./CSS"
 
 import { Pause, PlayArrow } from "@mui/icons-material"
+import { useWeb3React } from "@web3-react/core"
+import { loadAlbums } from "../../../../common/sanity/Sanity"
 
 export type PosterProps = {
   album: AlbumProps
@@ -21,6 +23,13 @@ export type PosterProps = {
 const albums: Array<AlbumProps> = [demoAlbum]
 
 const Poster: FC = () => {
+  const web3 = useWeb3React()
+  if (!web3.account) {
+    alert("Connect wallet")
+  }
+
+  const loaded = web3.account ? loadAlbums(web3.account) : []
+  console.log("loaded", loaded)
   return (
     <Container>
       {/* <PosterCSS /> */}
@@ -53,7 +62,11 @@ const PosterCard: FC<PosterProps> = observer(({ album, key }) => {
       <IconDiv>
         <PlayPauseIcon>
           {/* album.songs.includes(playlist.active) && */}
-          {streamer.isPlaying ? <Pause /> : <PlayArrow />}
+          {streamer.isPlaying ? (
+            <Pause style={{ marginTop: "1px" }} />
+          ) : (
+            <PlayArrow style={{ marginTop: "1px" }} />
+          )}
         </PlayPauseIcon>
       </IconDiv>
       <div style={{ fontSize: "15px" }}>

@@ -1,8 +1,8 @@
 // import styled from "@emotion/styled"
+import { useWeb3React } from "@web3-react/core"
 import { FC, useState } from "react"
 import ReactPlayer from "react-player"
 import { Navigate } from "react-router-dom"
-import { useWeb3Context } from "web3-react"
 import logo from "../../images/logo.png"
 import Loading from "../Dojo/Loading"
 import ConnectWallet from "./ConnecBtn"
@@ -11,7 +11,7 @@ import { HeroCSS } from "./HeroCSS"
 const Hero: FC<React.PropsWithChildren<unknown>> = () => {
   // const { user } = useStores()
   const [ready, setReady] = useState(false)
-  const context = useWeb3Context()
+  const context = useWeb3React()
 
   return (
     <div>

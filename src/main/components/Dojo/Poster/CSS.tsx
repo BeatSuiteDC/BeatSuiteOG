@@ -178,6 +178,7 @@ export const PlayPauseIcon = styled.div`
   height: 2.5rem;
   width: 2.5rem;
   background: #99badd;
+  margin: 1px;
   border-radius: 100%;
   display: flex;
   align-items: center;
@@ -234,7 +235,7 @@ export const List = styled.div`
 `
 
 export const Container = styled.div`
-  height: 35%;
+  height: 100%;
   width: 100%;
   display: grid;
   justify-content: flex-start;

@@ -7,6 +7,19 @@ export type User = {
   id?: string | undefined
 }
 
+export const loadAlbums = async (address: string) => {
+  try {
+    console.log("Loading albums")
+
+    const result = await client.fetch(
+      `*[_type == "album" && creator == ${address}]`
+    )
+    return result
+  } catch (e) {
+    console.error(e)
+    return undefined
+  }
+}
 export const sanityUser = async (address: string, name = "Lejihn Daire") => {
   try {
     console.log("Loading sanity user")
