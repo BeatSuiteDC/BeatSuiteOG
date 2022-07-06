@@ -185,7 +185,7 @@ export const PlayPauseIcon = styled.div`
   justify-items: center;
   flex-shrink: 0;
   :hover {
-    background: white;
+    background: grey;
   }
 `
 

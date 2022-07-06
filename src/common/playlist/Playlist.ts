@@ -142,5 +142,7 @@ export default class Playlist {
     }
   }
 
-  skipTo = (idx: Number) => {}
+  skipTo = (idx: Number) => {
+    this.active
+  }
 }

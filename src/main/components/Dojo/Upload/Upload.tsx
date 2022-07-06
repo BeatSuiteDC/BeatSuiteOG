@@ -95,6 +95,7 @@ export default observer(() => {
               cover: details.cover,
               album: album.title,
               title: song.title,
+              id: song.id,
               src,
             }
             return track

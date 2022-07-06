@@ -74,22 +74,23 @@ const PosterCard: FC<{ album: AlbumProps }> = observer(({ album }) => {
   }
 
   return (
-    <CardDiv key={album.id} onClick={handlePlay}>
-      <AlbumImg src={album.cover} />
-      <IconDiv>
-        <PlayPauseIcon>
-          {/* album.songs.includes(playlist.active) && */}
-          {streamer.isPlaying ? (
-            <Pause style={{ marginTop: "1px" }} />
-          ) : (
-            <PlayArrow style={{ marginTop: "1px" }} />
-          )}
-        </PlayPauseIcon>
-      </IconDiv>
-      <div style={{ fontSize: "15px" }}>
-        <Title>{album.title}</Title>
-        <h6>{album.artist}</h6>
-      </div>
-    </CardDiv>
+    <>
+      <CardDiv key={album.id} onClick={handlePlay}>
+        <AlbumImg src={album.cover} />
+        <IconDiv>
+          <PlayPauseIcon>
+            {streamer.isPlaying ? (
+              <Pause style={{ marginTop: "1px" }} />
+            ) : (
+              <PlayArrow style={{ marginTop: "1px" }} />
+            )}
+          </PlayPauseIcon>
+        </IconDiv>
+        <div style={{ fontSize: "15px", position: "absolute" }}>
+          <Title>{album.title}</Title>
+          <h6>{album.artist}</h6>
+        </div>
+      </CardDiv>
+    </>
   )
 })
