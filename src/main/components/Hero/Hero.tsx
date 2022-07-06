@@ -1,28 +1,23 @@
 // import styled from "@emotion/styled"
-import { useWeb3React } from "@web3-react/core"
 import { FC, useState } from "react"
 import ReactPlayer from "react-player"
-import { Navigate } from "react-router-dom"
 import logo from "../../images/logo.png"
 import Loading from "../Dojo/Loading"
 import ConnectWallet from "./ConnecBtn"
 import { HeroCSS } from "./HeroCSS"
 
+const url = "https://www.youtube.com/watch?v=_ITiwPMUzho"
 const Hero: FC<React.PropsWithChildren<unknown>> = () => {
-  // const { user } = useStores()
   const [ready, setReady] = useState(false)
-  const context = useWeb3React()
 
   return (
     <div>
-      {context.account ? <Navigate to="/app" /> : "none"}
-      {/* {user.isConnected && <Navigate to="/app" />} */}
       <HeroCSS />
       <div className="heroContainer">
         <div className="videoContainer2">
           <ReactPlayer
             className="react-player"
-            url="https://www.youtube.com/watch?v=_ITiwPMUzho"
+            url={url}
             width="100%"
             height="100%"
             position="relative"
@@ -40,7 +35,7 @@ const Hero: FC<React.PropsWithChildren<unknown>> = () => {
         <div className="titleContainer">
           <img className="heroLogo" src={logo} alt="" />
           <h1 className="tracking-in-expand-fwd">BeatSuite</h1>
-          <h3 className="subTitle"> Lets make it happen! </h3>
+          <h3 className="subTitle">Lets make it happen!</h3>
           <div className="note-position-1 note-amination">&#9835;</div>
           <div className="note-position-2 note-amination animation-delay-2">
             &#9833;
@@ -52,7 +47,6 @@ const Hero: FC<React.PropsWithChildren<unknown>> = () => {
           </div>
           <div className="wrap">
             <ConnectWallet />
-            {/* <Navigate to="/app" /> */}
           </div>
         </div>
       ) : (

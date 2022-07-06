@@ -72,7 +72,7 @@ const TrackItem: FC<{
   }
 
   return (
-    <Container key={key}>
+    <Container key={"track-item-" + key}>
       <RemoveCircleOutlineIcon className="removeIcon" onClick={handleRemove} />
       <TrackInput
         type="text"

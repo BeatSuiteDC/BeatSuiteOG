@@ -4,7 +4,7 @@
   "display": "standalone",
   "scope": "/edit",
   "start_url": "/edit",
-  "name": "signal",
+  "name": "beatsuite",
   "short_name": "signal",
   "icons": [
     {

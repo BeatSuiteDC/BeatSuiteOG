@@ -1,7 +1,11 @@
 import { Breadcrumbs, Link } from "@mui/material"
+import { useWeb3React } from "@web3-react/core"
+import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore"
 import { observer } from "mobx-react-lite"
+import { useEffect } from "react"
 import { useStores } from "../../hooks/useStores"
 import dashboard from "../../images/dashboard.png"
+import { createDoc, snapshot } from "../../lib/firebase"
 import WalletInfo from "../Wallets/WalletInfo"
 import TimePatrol from "./Audio/TimePatrol"
 import {
@@ -17,7 +21,42 @@ import { MainePane } from "./MainePane"
 import { TrackPlayer } from "./TrackPlayer/TrackPlayer"
 
 const Dojo = observer(() => {
-  const { router } = useStores()
+  const { router, user } = useStores()
+  const { account } = useWeb3React()
+
+  useEffect(() => {
+    const setUser = async () => {
+      if (!account) {
+        return
+      }
+
+      let userDoc: QueryDocumentSnapshot<DocumentData> | undefined
+      snapshot("Users", async (snap) => {
+        userDoc = snap.docs.find((doc) => {
+          return doc.data().address === account
+        })
+
+        if (userDoc === undefined) {
+          console.warn("No user with specified wallet")
+          await createDoc("Users", {
+            address: account,
+          }).then((result) => {
+            user.info = {
+              address: account,
+              id: result.id,
+            }
+          })
+        } else {
+          user.info = {
+            ...userDoc.data(),
+            id: userDoc.id,
+          }
+        }
+      })
+      console.log("user", user.info)
+    }
+    setUser()
+  }, [account])
 
   return (
     <>

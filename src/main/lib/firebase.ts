@@ -1,12 +1,17 @@
 // Import the functions you need from the SDKs you need
 import { getAnalytics } from "firebase/analytics"
 import { initializeApp } from "firebase/app"
-import { collection, getFirestore, onSnapshot } from "firebase/firestore"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import {
+  addDoc,
+  collection,
+  doc,
+  DocumentData,
+  getFirestore,
+  onSnapshot,
+  QuerySnapshot,
+  setDoc,
+} from "firebase/firestore"
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAVejlKZDKwQxgNCIV8l0s_kXk_cAKWg-k",
   authDomain: "beatsuite.firebaseapp.com",
@@ -17,15 +22,31 @@ const firebaseConfig = {
   measurementId: "G-Q07WEL3LV0",
 }
 
+type Collection = "Albums" | "Users"
+
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig)
 const analytics = getAnalytics(firebase)
 const db = getFirestore(firebase)
 
-const snapshot = (query: string, callback: (snap: any) => void) => {
+const snapshot = (
+  query: Collection,
+  callback: (snap: QuerySnapshot<DocumentData>) => void
+) => {
   onSnapshot(collection(db, query), callback)
 }
 
-export { analytics, snapshot }
+const createDoc = async (query: Collection, payload: object) => {
+  const collectionRef = collection(db, query)
+  const docRef = await addDoc(collectionRef, payload)
+  return { collection: query, id: docRef.id }
+}
+
+const editDoc = async (query: Collection, payload: object, id: string) => {
+  const docRef = doc(db, query, id)
+  await setDoc(docRef, payload)
+}
+
+export { analytics, snapshot, createDoc }
 
 export default db

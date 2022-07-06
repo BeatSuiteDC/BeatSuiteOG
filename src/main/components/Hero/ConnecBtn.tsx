@@ -1,8 +1,7 @@
 import { useWeb3React } from "@web3-react/core"
-import { observer } from "mobx-react-lite"
 import { FC } from "react"
 
-const ConnectWallet: FC = observer(() => {
+const ConnectWallet: FC = () => {
   const context = useWeb3React()
 
   const login = async (event: any) => {
@@ -18,6 +17,6 @@ const ConnectWallet: FC = observer(() => {
       </a>
     </div>
   )
-})
+}
 
 export default ConnectWallet
