@@ -29,7 +29,7 @@ const importAlbum = (doc: DocumentData) => {
 const Poster: FC = () => {
   const { account, connector } = useWeb3React()
   if (!account) {
-    // connector.activate()
+    connector.activate()
   }
 
   const [albums, setAlbums] = useState<Array<any>>([])
@@ -63,8 +63,14 @@ const PosterCard: FC<{ album: AlbumProps }> = observer(({ album }) => {
   } = useStores()
 
   const handlePlay = (e: any) => {
-    const queue = playlist.queue
-    console.log({ queue })
+    console.log("album-poster", album)
+    album.songs.forEach((song) => {
+      if (!playlist.inQueue(song)) {
+        playlist.addToQueue(song)
+        console.log("song", song)
+      }
+    })
+    streamer.play()
   }
 
   return (

@@ -83,7 +83,6 @@ const Player = observer(() => {
       begin: loop.begin || 0,
     }
   }
-
   return (
     <>
       {streamer.canPlay() && (

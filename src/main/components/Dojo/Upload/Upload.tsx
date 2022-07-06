@@ -19,7 +19,7 @@ import { useEffect, useState } from "react"
 import Opensea from "../../../images/opensea.png"
 import ipfs from "../../../IPFS"
 import { createDoc } from "../../../lib/firebase"
-import { AlbumProps, Track } from "../Album/Album"
+import { AlbumProps, DEFAULT_ALBUM_COVER, Track } from "../Album/Album"
 import Loading from "../Loading"
 import { SearchBar } from "../SearchBar"
 import AlbumDetails from "./AlbumDetails"
@@ -63,6 +63,11 @@ export default observer(() => {
         return
       }
 
+      if (album.cover === DEFAULT_ALBUM_COVER) {
+        alert("Pick a cover photo first")
+        setLoading(undefined)
+        return
+      }
       const response = await fetch(album.cover)
       let arrayBuffer = await response.arrayBuffer()
       const coverHash = await ipfs(arrayBuffer)
@@ -96,7 +101,7 @@ export default observer(() => {
           }
         })
       ).then((tracks) => {
-        setLoading("Uploading to IPFS...")
+        setLoading("Storing to Db...")
         createDoc("Albums", {
           ...details,
           creator: account,
@@ -160,6 +165,7 @@ export default observer(() => {
     </>
   )
 })
+
 const style = {
   position: "absolute",
   top: "50%",

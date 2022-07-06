@@ -22,7 +22,6 @@ import RepeatOneOnIcon from "@mui/icons-material/RepeatOneOn"
 import UpdateDisabledIcon from "@mui/icons-material/UpdateDisabled"
 import { Loop } from "../Streamer/Looper"
 
-// renders late so these are off and index
 const LoopIcons = [
   AllInclusiveIcon,
   RepeatOnIcon,
@@ -69,7 +68,6 @@ export const TransportPlayer: FC = observer(() => {
     streamer.audio?.setState({ played: progress })
     streamer.audio?.seekTo(progress, "fraction")
   }
-
   const handleSeek = (e: React.MouseEvent) => {
     const { end, current } = streamer.loop
     const tick = current / end
@@ -78,7 +76,6 @@ export const TransportPlayer: FC = observer(() => {
     streamer.audio?.setState({ played: progress })
     streamer.audio?.seekTo(progress, "fraction")
   }
-
   const handlePlaylistPopper = (e: React.MouseEvent<SVGSVGElement>) => {
     setUnmount(unmount ? null : e.currentTarget)
   }
@@ -91,7 +88,7 @@ export const TransportPlayer: FC = observer(() => {
     setting = setting > 2 ? 0 : setting + 1
     const enabled = setting === Loop.OFF ? false : true
 
-    streamer.loop.enabled = setting === Loop.OFF ? false : true
+    streamer.loop.enabled = enabled
     streamer._loop.setting = setting
 
     console.log({ setting, enabled })
