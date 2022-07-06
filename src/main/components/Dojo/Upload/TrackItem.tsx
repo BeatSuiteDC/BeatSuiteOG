@@ -31,12 +31,12 @@ const TrackInput = styled.input`
 `
 
 const TrackItem: FC<{
-  key: number
   song: Track
   album: EmptyAlbum
   playlist: Playlist
-}> = observer(({ key, song, album, playlist }) => {
+}> = observer(({ song, album, playlist }) => {
   const audioRef = useRef<HTMLInputElement>(null)
+  const key = Math.floor(Math.random() * 1000)
 
   const handlePlay = () => {
     console.log("playing")

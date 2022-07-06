@@ -13,14 +13,18 @@ import {
 
 import { Pause, PlayArrow } from "@mui/icons-material"
 import { useWeb3React } from "@web3-react/core"
+import { DocumentData } from "firebase/firestore"
 import { snapshot } from "../../../lib/firebase"
 
-export type PosterProps = {
-  album: AlbumProps
-  key: number
-}
-
 // const albums: Array<AlbumProps> = [demoAlbum]
+
+const importAlbum = (doc: DocumentData) => {
+  const data = doc.data()
+  return {
+    ...data,
+    id: doc.id,
+  }
+}
 
 const Poster: FC = () => {
   const { account, connector } = useWeb3React()
@@ -32,19 +36,18 @@ const Poster: FC = () => {
 
   useEffect(() => {
     snapshot("Albums", (snap) => {
-      // console.log("snap", snap.docs)
-      setAlbums(snap.docs.map((doc) => doc.data()))
-      // console.log("albums", albums)
+      setAlbums(snap.docs.map(importAlbum))
+      console.log("albums", albums)
     })
   }, [])
 
   return (
     <Container>
       {/* <PosterCSS /> */}
-      {albums.map((album, index) => {
+      {albums.map((album) => {
         return (
           <>
-            <PosterCard album={album} key={index} />
+            <PosterCard album={album} />
           </>
         )
       })}
@@ -53,36 +56,34 @@ const Poster: FC = () => {
 }
 export default Poster
 
-const PosterCard: FC<{ album: AlbumProps; key: number }> = observer(
-  ({ album, key }) => {
-    const {
-      services: { streamer },
-      playlist,
-    } = useStores()
+const PosterCard: FC<{ album: AlbumProps }> = observer(({ album }) => {
+  const {
+    services: { streamer },
+    playlist,
+  } = useStores()
 
-    const handlePlay = (e: any) => {
-      const queue = playlist.queue
-      console.log({ queue })
-    }
-
-    return (
-      <CardDiv key={key} onClick={handlePlay}>
-        <AlbumImg src={album.cover} />
-        <IconDiv>
-          <PlayPauseIcon>
-            {/* album.songs.includes(playlist.active) && */}
-            {streamer.isPlaying ? (
-              <Pause style={{ marginTop: "1px" }} />
-            ) : (
-              <PlayArrow style={{ marginTop: "1px" }} />
-            )}
-          </PlayPauseIcon>
-        </IconDiv>
-        <div style={{ fontSize: "15px" }}>
-          <Title>{album.title}</Title>
-          <h6>{album.artist}</h6>
-        </div>
-      </CardDiv>
-    )
+  const handlePlay = (e: any) => {
+    const queue = playlist.queue
+    console.log({ queue })
   }
-)
+
+  return (
+    <CardDiv key={album.id} onClick={handlePlay}>
+      <AlbumImg src={album.cover} />
+      <IconDiv>
+        <PlayPauseIcon>
+          {/* album.songs.includes(playlist.active) && */}
+          {streamer.isPlaying ? (
+            <Pause style={{ marginTop: "1px" }} />
+          ) : (
+            <PlayArrow style={{ marginTop: "1px" }} />
+          )}
+        </PlayPauseIcon>
+      </IconDiv>
+      <div style={{ fontSize: "15px" }}>
+        <Title>{album.title}</Title>
+        <h6>{album.artist}</h6>
+      </div>
+    </CardDiv>
+  )
+})

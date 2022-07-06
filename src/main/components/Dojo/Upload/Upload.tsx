@@ -16,7 +16,6 @@ import { Box } from "@mui/system"
 import { useWeb3React } from "@web3-react/core"
 import { observer } from "mobx-react-lite"
 import { useEffect, useState } from "react"
-import { getBase64FromUrl } from "../../../../common/file"
 import Opensea from "../../../images/opensea.png"
 import ipfs from "../../../IPFS"
 import { createDoc } from "../../../lib/firebase"
@@ -44,9 +43,7 @@ export default observer(() => {
     }
   }, [])
 
-  const handleMint = (e: any) => {
-    console.log("active", user.web3)
-  }
+  const handleMint = async (e: any) => {}
 
   const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -66,8 +63,9 @@ export default observer(() => {
         return
       }
 
-      const coverBase64 = await getBase64FromUrl(album.cover)
-      const coverHash = await ipfs(coverBase64)
+      const response = await fetch(album.cover)
+      let arrayBuffer = await response.arrayBuffer()
+      const coverHash = await ipfs(arrayBuffer)
 
       if (!coverHash) {
         alert("Invalid cover image")
@@ -82,8 +80,9 @@ export default observer(() => {
         album.songs.map(async (song) => {
           if (song.src) {
             setLoading(`Hashing...`)
-            const songBase64 = await getBase64FromUrl(song.src)
-            const songHash = await ipfs(songBase64)
+            const songRes = await fetch(song.src)
+            const songBuff = await songRes.arrayBuffer()
+            const songHash = await ipfs(songBuff)
             const src = IPFS_URL + songHash
             console.log({ src })
             const track: Track = {
@@ -153,15 +152,8 @@ export default observer(() => {
         )}
 
         <DropImport album={album}>
-          {album.songs.map((song: Track, i) => {
-            return (
-              <TrackItem
-                song={song}
-                key={i}
-                playlist={playlist}
-                album={album}
-              />
-            )
+          {album.songs.map((song: Track) => {
+            return <TrackItem song={song} playlist={playlist} album={album} />
           })}
         </DropImport>
       </AlbumContent>

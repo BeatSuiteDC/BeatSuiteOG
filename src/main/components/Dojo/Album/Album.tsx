@@ -16,6 +16,7 @@ export type AlbumProps = {
   artist: string
   songs: Track[]
   contract?: string
+  id?: string
 }
 
 export const demoAlbum: AlbumProps = {
