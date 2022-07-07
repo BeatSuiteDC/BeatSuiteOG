@@ -1,5 +1,6 @@
 import { uniqueId } from "lodash"
 import { computed, makeObservable, observable } from "mobx"
+import { Sample } from "../Streamer/Looper"
 
 export type Track = {
   src?: string
@@ -10,6 +11,7 @@ export type Track = {
   data?: HTMLMediaElement
   file?: File
   id: number | string
+  sample?: Sample
 }
 export type AlbumProps = {
   cover: string

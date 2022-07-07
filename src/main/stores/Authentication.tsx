@@ -1,9 +1,14 @@
 import { computed, makeObservable, observable } from "mobx"
 import { useWeb3Context } from "web3-react"
 import { Web3Context } from "web3-react/dist/context"
-import { User } from "../../common/sanity/Sanity"
 
 const INFURA_ID = process.env.REACT_APP_INFURA_ID as string
+
+export type User = {
+  address?: string | undefined
+  name?: string | undefined
+  id?: string | undefined
+}
 
 export default class Authentication {
   private _user: User | undefined
