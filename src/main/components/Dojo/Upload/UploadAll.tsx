@@ -26,12 +26,15 @@ const UploadButton = styled.button`
 
 const UploadAll: FC<{
   album: EmptyAlbum
-
   playlist: Playlist
 }> = ({ album, playlist }) => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     album.songs.forEach((song) => {
-      playlist.addToQueue(song)
+      if (playlist.inQueue(song)) {
+        playlist.shift(song)
+      } else {
+        playlist.addToQueue(song)
+      }
     })
   }
 

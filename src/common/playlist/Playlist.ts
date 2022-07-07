@@ -22,6 +22,7 @@ export default class Playlist {
       active: computed,
       unmount: computed,
       skipTo: observable,
+      shift: observable,
     })
 
     this._queue = []
@@ -58,37 +59,35 @@ export default class Playlist {
     }
 
     const q = this.queue
-    const active = { ...q[this.active] }
+    const current = { ...q[this.active] }
 
-    if (active == { ...item }) {
+    if (current.id === item.id) {
       console.warn("track active already")
       return
     }
-    console.log("active != {..item}")
 
-    const inQueue = this.inQueue({ ...item })
-    const idx = q.indexOf({ ...item })
-    if (idx != -1) {
+    const idx = this.index(item)
+    if (idx != -1 && idx >= this.active) {
       console.debug(item.title, "is queued already ->", idx)
       q.splice(idx, 1)
     }
 
-    console.log({ inQueue, idx })
-    q.splice(this.active, 0, { ...item })
+    console.log({ idx })
+    q.splice(this.active, 0, item)
     this._queue = [...q]
   }
 
   inQueue = (item: Track) => {
     const q = this.queue
-
+    console.log("inqueue - id", item.id)
     return q.some((t) => {
-      return t.title === item.title && t.album === item.album
+      return t.id === item.id
     })
   }
 
   addNext = (item: Track) => {
     const queue = this.queue
-    if (this.inQueue({ ...item })) {
+    if (this.inQueue(item)) {
       console.warn("Track already in queue")
       return
     }
@@ -100,15 +99,17 @@ export default class Playlist {
   }
 
   addToQueue = (item: Track) => {
-    console.log("adding track", item.title)
+    console.log("adding track", item.title, item.id)
     this._queue = [...this.queue, item]
+  }
+
+  index(item: Track) {
+    return this.queue.findIndex((t) => t.id === item.id)
   }
 
   remove = (track: Track) => {
     const q = [...this.queue]
-    const idx = q.findIndex(
-      (x) => x.title === track.title && x.album === track.album
-    )
+    const idx = this.index(track)
     if (this.active === idx) {
       this._active = idx - 1 >= 0 ? idx - 1 : idx
     } else if (this.active && idx < this.active) {
@@ -140,6 +141,22 @@ export default class Playlist {
       const p = this.queue[this._active]
       return { ...p }
     }
+  }
+
+  shift = (item: Track, idx?: number) => {
+    if (!idx) {
+      idx = this.queue.length - 1
+    }
+
+    const q = this.queue
+
+    if (this.inQueue(item)) {
+      const oldIdx = this.index(item)
+      if (oldIdx < (this.active || 0)) q.splice(oldIdx, 1)
+    }
+
+    q.splice(idx, 0, item)
+    this._queue = [...q]
   }
 
   skipTo = (idx: Number) => {

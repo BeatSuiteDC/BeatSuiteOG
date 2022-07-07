@@ -167,17 +167,18 @@ export const TransportPlayer: FC = observer(() => {
         <Popper placement="right-start" id={id} open={open} anchorEl={unmount}>
           <Fade in={open} exit={true} timeout={300}>
             <Box className="playlistContainer">
-              Queue
               <List component="nav" aria-label="main playlist content">
                 {playlist.queue.map((track, i) => {
-                  const active = streamer.active === track
+                  const active = playlist.active === playlist.index(track)
                   return (
-                    <PlaylistPopper
-                      track={track}
-                      idx={i}
-                      active={active}
-                      playlist={playlist}
-                    />
+                    <div key={`playlist-item-${i}-${track.id}`}>
+                      <PlaylistPopper
+                        track={track}
+                        idx={i}
+                        active={active}
+                        playlist={playlist}
+                      />
+                    </div>
                   )
                 })}
               </List>

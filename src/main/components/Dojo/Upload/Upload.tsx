@@ -159,7 +159,11 @@ export default observer(() => {
 
         <DropImport album={album}>
           {album.songs.map((song: Track) => {
-            return <TrackItem song={song} playlist={playlist} album={album} />
+            return (
+              <div key={"track-item-" + song.id}>
+                <TrackItem song={song} playlist={playlist} album={album} />
+              </div>
+            )
           })}
         </DropImport>
       </AlbumContent>
