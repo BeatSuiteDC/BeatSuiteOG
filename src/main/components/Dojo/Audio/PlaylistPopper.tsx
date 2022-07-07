@@ -11,6 +11,7 @@ const PlaylistPopper: FC<{
   idx: number
 }> = ({ active, track, playlist, idx }) => {
   const handleQueue = (e: React.MouseEvent, track: Track) => {
+    const idx = playlist.index(track)
     playlist.skipTo(idx)
   }
 
@@ -20,7 +21,6 @@ const PlaylistPopper: FC<{
         className="playlistItem"
         key={"playlist-item-btn-" + idx * Math.random()}
         selected={active}
-        onClick={(e) => handleQueue(e, track)}
       >
         <ListItemIcon>
           <PlaylistRemoveIcon
@@ -29,7 +29,9 @@ const PlaylistPopper: FC<{
             onClick={(e) => playlist.remove(track)}
           />
         </ListItemIcon>
-        <span className="_trackTitle">{track.title}</span>
+        <span onClick={(e) => handleQueue(e, track)} className="_trackTitle">
+          {track.title}
+        </span>
       </ListItemButton>
     </>
   )

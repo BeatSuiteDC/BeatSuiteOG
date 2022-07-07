@@ -2,14 +2,12 @@ import { computed, makeObservable, observable } from "mobx"
 import { Track } from "../../main/components/Dojo/Album/Album"
 
 export default class Playlist {
-  private _queue: Track[]
+  private _queue: Track[] = []
   private _active: number | undefined
-  private _unmount: null | SVGSVGElement
 
   constructor() {
-    makeObservable<Playlist, "_unmount" | "_queue" | "_active">(this, {
+    makeObservable<Playlist, "_queue" | "_active">(this, {
       _queue: observable,
-      _unmount: observable,
       _active: observable,
       next: observable,
       previous: observable,
@@ -18,23 +16,11 @@ export default class Playlist {
       addNext: observable,
       remove: observable,
       reset: observable,
-      queue: computed,
-      active: computed,
-      unmount: computed,
       skipTo: observable,
       shift: observable,
+      queue: computed,
+      active: computed,
     })
-
-    this._queue = []
-    this._unmount = null
-  }
-
-  get unmount() {
-    return this._unmount
-  }
-
-  set unmount(_unmount: null | SVGSVGElement) {
-    this._unmount = _unmount
   }
 
   get queue() {
@@ -52,7 +38,7 @@ export default class Playlist {
 
   setActive = (item: Track) => {
     if (this.active === undefined) {
-      this._queue.unshift(item)
+      this.shift(item, 0)
       this._active = 0
       console.log("starting queue with", item.title)
       return
@@ -69,7 +55,8 @@ export default class Playlist {
     const idx = this.index(item)
     if (idx != -1 && idx >= this.active) {
       console.debug(item.title, "is queued already ->", idx)
-      q.splice(idx, 1)
+      this.shift(item, this.active)
+      return
     }
 
     console.log({ idx })
@@ -159,7 +146,14 @@ export default class Playlist {
     this._queue = [...q]
   }
 
-  skipTo = (idx: Number) => {
-    this.active
+  skipTo = (desired: number) => {
+    if (desired === -1) {
+      console.warn("Track not in queue?")
+      return
+    }
+    const track = this.queue[desired]
+    const idx = this.index(track)
+    console.log("skippping to", idx, "old active", this._active)
+    this._active = idx !== undefined ? idx : this.active
   }
 }
