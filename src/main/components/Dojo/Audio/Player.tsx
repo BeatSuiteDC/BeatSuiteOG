@@ -78,7 +78,7 @@ const Player = observer(() => {
 
       const sample = { ...streamer.active.sample }
       sample.current = streamer.audio.getCurrentTime() || 0
-      console.log("handle start", { sample })
+      // console.log("handle start", { sample })
 
       if (sample.end === -1) {
         sample.end = streamer.audio.getDuration() - 0.001

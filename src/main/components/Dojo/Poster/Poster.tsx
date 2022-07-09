@@ -16,8 +16,6 @@ import { useWeb3React } from "@web3-react/core"
 import { DocumentData } from "firebase/firestore"
 import { snapshot } from "../../../lib/firebase"
 
-// const albums: Array<AlbumProps> = [demoAlbum]
-
 const importAlbum = (doc: DocumentData) => {
   const data = doc.data()
   return {
@@ -43,7 +41,6 @@ const Poster: FC = () => {
 
   return (
     <Container>
-      {/* <PosterCSS /> */}
       {albums.map((album) => {
         return (
           <>
@@ -62,8 +59,13 @@ const PosterCard: FC<{ album: AlbumProps }> = observer(({ album }) => {
     playlist,
   } = useStores()
 
+  const inQueue = () => {
+    return album.songs.every((s) => playlist.inQueue(s))
+  }
+
   const handlePlay = (e: any) => {
     console.log("album-poster", album)
+    playlist.reset()
     album.songs.forEach((song) => {
       if (!playlist.inQueue(song)) {
         playlist.addToQueue(song)
@@ -79,14 +81,21 @@ const PosterCard: FC<{ album: AlbumProps }> = observer(({ album }) => {
         <AlbumImg src={album.cover} />
         <IconDiv>
           <PlayPauseIcon>
-            {streamer.isPlaying ? (
-              <Pause style={{ marginTop: "1px" }} />
+            {streamer.isPlaying && inQueue() ? (
+              <Pause style={{ margin: "1px" }} />
             ) : (
-              <PlayArrow style={{ marginTop: "1px" }} />
+              <PlayArrow style={{ margin: "1px" }} />
             )}
           </PlayPauseIcon>
         </IconDiv>
-        <div style={{ fontSize: "15px", position: "absolute" }}>
+        <div
+          style={{
+            marginTop: "5px",
+            fontSize: "15px",
+            position: "absolute",
+            textAlign: "center",
+          }}
+        >
           <Title>{album.title}</Title>
           <h6>{album.artist}</h6>
         </div>

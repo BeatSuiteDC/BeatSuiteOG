@@ -171,7 +171,6 @@ export const IconDiv = styled.div`
   inset-x: 0;
   display: flex;
   align-items: center;
-  margin-left: 0.875rem;
 `
 
 export const PlayPauseIcon = styled.div`
@@ -179,6 +178,7 @@ export const PlayPauseIcon = styled.div`
   width: 2.5rem;
   background: #99badd;
   margin: 1px;
+  margin-left: 2px;
   border-radius: 100%;
   display: flex;
   align-items: center;

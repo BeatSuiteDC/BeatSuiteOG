@@ -51,21 +51,23 @@ export const TransportPlayer: FC = observer(() => {
   }
   const handleRewind = (e: React.MouseEvent) => {
     const { begin, end, current, enabled } = streamer.active.sample
+    const setting = _loop.setting
+
     let progress = 0
     let tick = 0
     if (streamer.audio) {
       const duration = streamer.audio.getDuration()
+
       if (enabled) {
         progress = Math.max(begin / duration, 0.00001)
-        console.log("progress - enabled", progress)
       } else {
         tick = current / duration
         progress = Math.max(tick - 0.05 * end, 0.00001)
-        console.log("progress - ", progress)
       }
     }
 
-    const setting = _loop.setting
+    progress += 0.00001
+
     console.log({ tick, progress, current, begin, end })
     streamer.audio?.setState({ played: progress })
     streamer.audio?.seekTo(progress, "fraction")

@@ -8,6 +8,7 @@ module.exports = {
   entry: {
     intro: "./src/intro/index.tsx",
     app: "./src/main/index.tsx",
+    edit: "./src/edit/index.tsx",
   },
   output: {
     filename: "[name]-[chunkhash].js",
@@ -61,12 +62,12 @@ module.exports = {
 
       template: path.join(__dirname, "public", "app.html"),
     }),
-    // new HtmlWebpackPlugin({
-    //   inject: true,
-    //   filename: "dojo.html",
-    //   chunks: ["dojo"],
-    //   template: path.join(__dirname, "public", "edit.html"),
-    // }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      filename: "dojo.html",
+      chunks: ["edit"],
+      template: path.join(__dirname, "public", "edit.html"),
+    }),
     new HtmlWebpackPlugin({
       inject: true,
       filename: "index.html",
