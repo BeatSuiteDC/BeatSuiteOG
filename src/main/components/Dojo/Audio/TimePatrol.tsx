@@ -1,13 +1,15 @@
 import styled from "@emotion/styled"
-import { Input, Slider } from "@mui/material"
+import { Slider } from "@mui/material"
+
 import { observer } from "mobx-react-lite"
-import { SyntheticEvent, useEffect } from "react"
+import { SyntheticEvent, useEffect, useRef } from "react"
 import { useStores } from "../../../hooks/useStores"
 
 const Container = styled.div`
-  position: absolute;
-  bottom: 10%;
+  position: relative;
+  bottom: 50%;
   height: 70%;
+  width: 5rem;
 `
 
 function valuetext(value: number) {
@@ -19,17 +21,29 @@ const TimePatrol = observer(() => {
     services: { streamer },
   } = useStores()
 
-  const { end, begin, current } = streamer.dial(4)
+  const { end, begin, current, duration } = streamer.dial(4)
 
-  const max = streamer.audio ? streamer.audio.getDuration() * 1.2 : 10 ** 5
+  const currentRef = useRef<HTMLInputElement>(null)
+  const beginRef = useRef<HTMLInputElement>(null)
+  const endRef = useRef<HTMLInputElement>(null)
+  const range = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {}, [end, begin, current])
   const marks = [
+    {
+      value: begin,
+      label: `${Math.round(begin * 1)}s`,
+    },
     {
       value: current,
       label: `${Math.round(current * 1)}s`,
     },
+    {
+      value: end,
+      label: `${Math.round(end * 1)}s`,
+    },
   ]
+
+  useEffect(() => {}, [end, begin, current, duration])
 
   const handleChangeCommitted = (
     event: Event | SyntheticEvent<Element, Event>,
@@ -37,9 +51,9 @@ const TimePatrol = observer(() => {
   ) => {
     if (typeof value === "object") {
       const progress = value[1] / value[2]
-      console.log("progress", progress)
-      streamer.audio?.setState({ played: progress })
+      console.log("change commited", progress)
       streamer.audio?.seekTo(progress, "fraction")
+      streamer.audio?.setState({ played: progress })
       streamer.audio?.setState({ seeking: false })
     }
   }
@@ -53,93 +67,47 @@ const TimePatrol = observer(() => {
         streamer.audio.setState({ seeking: true })
       }
 
-      const loop = streamer.loop
-      streamer.loop = {
-        ...loop,
-        current: current,
+      const sample = streamer.active.sample
+      streamer.active.sample = {
+        ...sample,
+        current: _current,
         begin: _begin,
         end: _end,
       }
     }
   }
 
-  const setBegin = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.valueAsNumber
-    // if (value > current || value < 0) {
-    //   return
-    // }
-    streamer.loop.begin = value
-  }
-  const setEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.valueAsNumber
-    // if (value < current || value > max) {
-    //   return
-    // }
-    // console.log({ value, max })
-    streamer.loop.end = value
-  }
+  // const setPosition = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.valueAsNumber
+  //   streamer.active.sample.current = value
+  // }
+  // const setBegin = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.valueAsNumber
+  //   streamer.active.sample.begin = value
+  // }
+  // const setEnd = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.valueAsNumber
+
+  //   streamer.active.sample.end = value
+  // }
 
   return (
     <Container>
-      {
-        <>
-          <Input
-            sx={{
-              width: "100%",
-              margin: "1px",
-              position: "absolute",
-              left: "20%",
-              top: "-8%",
-              textAlign: "right",
-            }}
-            value={end}
-            size="small"
-            onChange={setEnd}
-            // onBlur={handleBlur}
-            inputProps={{
-              step: 0.05 * (end - begin) || current + 0.000001,
-              min: 0,
-              max: max,
-              type: "number",
-              "aria-labelledby": "input-slider",
-            }}
-          />
-          <Slider
-            getAriaLabel={() => "Temperature"}
-            orientation="vertical"
-            getAriaValueText={valuetext}
-            value={[begin, current, end]}
-            min={begin}
-            max={end}
-            defaultValue={[begin, current, end]}
-            valueLabelDisplay="auto"
-            onChange={handleSlider}
-            onChangeCommitted={handleChangeCommitted}
-            marks={marks}
-          />
-          <Input
-            sx={{
-              width: "100%",
-              margin: "1px",
-              position: "absolute",
-              left: "20%",
-              bottom: "-8%",
-              textAlign: "right",
-            }}
-            value={begin}
-            size="small"
-            onChange={setBegin}
-            // onBlur={handleBlur}
-            inputProps={{
-              step: 0.05 * (end - begin) || current - 0.00001,
-              min: 0,
-              max: current - 0.0001,
-              type: "number",
-              "aria-labelledby": "input-slider",
-            }}
-          />
-        </>
-      }
+      <>
+        <Slider
+          getAriaLabel={() => "Time Patrol"}
+          orientation="vertical"
+          getAriaValueText={valuetext}
+          value={[begin, current, end]}
+          min={0}
+          max={duration}
+          defaultValue={[begin, current, end]}
+          valueLabelDisplay="auto"
+          onChange={handleSlider}
+          onChangeCommitted={handleChangeCommitted}
+          marks={marks}
+        />
+      </>
     </Container>
   )
 })

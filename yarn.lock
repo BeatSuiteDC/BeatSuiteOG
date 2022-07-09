@@ -6997,6 +6997,11 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
+classnames@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
+  integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
+
 clean-css@^5.2.2:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-5.3.0.tgz#ad3d8238d5f3549e83d5f87205189494bc7cbb59"
@@ -14994,6 +14999,11 @@ range-parser@^1.2.1, range-parser@~1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
+
+range-slider-input@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/range-slider-input/-/range-slider-input-2.2.1.tgz#110a027d437d7b7e09e0dde75538774e027d4852"
+  integrity sha512-HlwZR+idp/3p4ZzbEIFv3NLTfcT2f2IyG5Ov184kTUzOi7pNPqoGXoJBKprOq7gQ43rtsIhMc4x9NCC/fh5h3A==
 
 raw-body@2.5.1:
   version "2.5.1"

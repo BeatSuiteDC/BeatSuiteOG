@@ -6,7 +6,6 @@ import {
   Artist,
   Bottom,
   Container,
-  Icon,
   PTag,
   Top,
   TopImg,
@@ -67,8 +66,6 @@ export const TrackPlayer: FC = observer(() => {
             onChange={handleVolume}
             type="range"
           />
-          <Icon></Icon>
-          <Icon></Icon>
         </Bottom>
       </Container>
     </>

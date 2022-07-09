@@ -65,9 +65,7 @@ export default class Playlist {
   }
 
   inQueue = (item: Track) => {
-    const q = this.queue
-    console.log("inqueue - id", item.id)
-    return q.some((t) => {
+    return this.queue.some((t) => {
       return t.id === item.id
     })
   }
@@ -139,10 +137,13 @@ export default class Playlist {
 
     if (this.inQueue(item)) {
       const oldIdx = this.index(item)
-      if (oldIdx < (this.active || 0)) q.splice(oldIdx, 1)
+      if (oldIdx < (this.active || 0)) {
+        q.splice(oldIdx, 1)
+      }
+    } else {
+      q.splice(idx, 0, item)
     }
 
-    q.splice(idx, 0, item)
     this._queue = [...q]
   }
 

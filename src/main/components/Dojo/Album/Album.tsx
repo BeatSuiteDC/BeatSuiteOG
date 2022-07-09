@@ -1,17 +1,17 @@
 import { uniqueId } from "lodash"
 import { computed, makeObservable, observable } from "mobx"
-import { Sample } from "../Streamer/Looper"
+import { DEFAULT_SAMPLE, Sample } from "../Streamer/Looper"
 
 export type Track = {
   src?: string
   album: string
   title: string
   cover: string
-  duration?: string | number
+  duration: number | undefined
   data?: HTMLMediaElement
   file?: File
   id: number | string
-  sample?: Sample
+  sample: Sample
 }
 export type AlbumProps = {
   cover: string
@@ -23,10 +23,19 @@ export type AlbumProps = {
   id?: number | string
 }
 
+export const EmptyTrack: Track = {
+  album: "",
+  title: "",
+  cover: "",
+  duration: -1,
+  sample: DEFAULT_SAMPLE,
+  id: -1,
+}
+
 export const DEFAULT_ALBUM_COVER = "https://thisartworkdoesnotexist.com/"
 // "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.youredm.com%2Fwp-content%2Fuploads%2F2018%2F09%2FYANDHI.jpg&f=1&nofb=1"
 export class EmptyAlbum {
-  _cover = DEFAULT_ALBUM_COVER
+  _cover: string
   _title = "untitled"
   _year = new Date().getFullYear().toString()
   _artist = "jose rando"
@@ -50,6 +59,8 @@ export class EmptyAlbum {
       cover: computed,
       ids: computed,
     })
+
+    this._cover = DEFAULT_ALBUM_COVER
   }
 
   get ids() {
@@ -100,6 +111,8 @@ export class EmptyAlbum {
         cover: this.cover as string,
         title: `untitled banger ${this._tracks}`,
         id: uniqueId(`untitled-${this._tracks}`),
+        sample: DEFAULT_SAMPLE,
+        duration: undefined,
       },
     ]
   }
@@ -113,6 +126,7 @@ export class EmptyAlbum {
       cover: this.cover,
       title: file.name,
       duration: data.duration,
+      sample: DEFAULT_SAMPLE,
       src,
       data,
       file,

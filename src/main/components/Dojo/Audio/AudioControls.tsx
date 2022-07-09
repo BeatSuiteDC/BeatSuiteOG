@@ -50,27 +50,41 @@ export const TransportPlayer: FC = observer(() => {
     streamer.skip()
   }
   const handleRewind = (e: React.MouseEvent) => {
-    const { begin, end, current, enabled } = streamer.loop
-
-    let progress
-    let tick
-    if (enabled) {
-      progress = Math.max(begin / end, 0.00001)
-      console.log("progress - enabled", progress)
-    } else {
-      tick = current / end
-      progress = Math.max(tick - 0.05 * end, 0.00001)
-      console.log("progress - ", progress)
+    const { begin, end, current, enabled } = streamer.active.sample
+    let progress = 0
+    let tick = 0
+    if (streamer.audio) {
+      const duration = streamer.audio.getDuration()
+      if (enabled) {
+        progress = Math.max(begin / duration, 0.00001)
+        console.log("progress - enabled", progress)
+      } else {
+        tick = current / duration
+        progress = Math.max(tick - 0.05 * end, 0.00001)
+        console.log("progress - ", progress)
+      }
     }
 
     const setting = _loop.setting
-    console.log({ tick, progress, setting })
+    console.log({ tick, progress, current, begin, end })
     streamer.audio?.setState({ played: progress })
     streamer.audio?.seekTo(progress, "fraction")
   }
   const handleSeek = (e: React.MouseEvent) => {
-    const { end, current } = streamer.loop
-    const tick = current / end
+    const { end } = streamer.active.sample
+    let duration = 0
+    let current = 0
+    let tick = 0
+
+    if (streamer.audio) {
+      duration = streamer.audio.getDuration()
+      current = streamer.audio.getCurrentTime()
+      if (_loop.setting === Loop.SAMPLE) {
+        tick = current / end
+      } else {
+        tick = current / duration
+      }
+    }
     const progress = tick + 0.05
     console.log({ tick, progress, current, end })
     streamer.audio?.setState({ played: progress })
@@ -100,6 +114,7 @@ export const TransportPlayer: FC = observer(() => {
   return (
     <Container>
       <CSS />
+
       <div className="centralControls">
         <ToolTip title={loopToolTips[_loop.setting]}>
           <LoopIcon

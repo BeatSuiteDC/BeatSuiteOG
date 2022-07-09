@@ -18,11 +18,11 @@ export interface SavedSample extends Sample {
   name: string
 }
 
-const DEFAULT_SAMPLE: Sample = {
+export const DEFAULT_SAMPLE: Sample = {
   begin: 0,
-  end: 100,
+  end: -1,
   enabled: true,
-  current: 0,
+  current: -1,
 }
 
 export default class Looper {

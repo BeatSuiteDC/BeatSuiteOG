@@ -1,17 +1,7 @@
-import styled from "@emotion/styled"
 import { observer } from "mobx-react-lite"
 import ReactPlayer from "react-player"
 import { useStores } from "../../../hooks/useStores"
 import { Loop } from "../Streamer/Looper"
-
-const BackgroundImage = styled.img`
-  background-size: cover;
-  filter: blur(10px);
-  width: 100%;
-  height: 100vh;
-  z-index: -10;
-  position: absolute;
-`
 
 const Player = observer(() => {
   const {
@@ -48,39 +38,53 @@ const Player = observer(() => {
   }
 
   const handleDuration = (d: number) => {
-    if (setting === Loop.SAMPLE) {
-      console.log("duration", { setting })
-      return
+    if (streamer.active) {
+      streamer.active.duration = d
     }
-
-    streamer.loop.end = d
   }
 
   const handleProgress = (p: {
     played: number
-    playedSeconds: number
     loaded: number
+    playedSeconds: number
     loadedSeconds: number
   }) => {
     let progress = p.playedSeconds
+    console.log("progress", progress)
 
-    if (progress >= loop.end) {
+    const end = active ? active.sample.end : -1
+    const begin = active ? active.sample.begin : 0
+    const duration = active ? active?.duration : 1
+
+    console.log("handle progress", { end, begin, duration })
+
+    if (progress >= end) {
       if (setting === Loop.SAMPLE) {
-        progress = loop.begin / (streamer.audio?.getDuration() || loop.end)
+        progress = begin / (duration || end)
+      } else if (setting === Loop.ONE) {
+        progress = 0
       }
+
       streamer.audio?.setState({ played: progress })
       streamer.audio?.seekTo(progress, "fraction")
     }
-    streamer.loop.current = progress
+
+    streamer.active.sample.current = progress
   }
 
   const handleStart = () => {
-    const loop = streamer.loop
-    streamer.loop = {
-      ...loop,
-      current: streamer.audio?.getCurrentTime() || 0,
-      end: streamer.audio?.getDuration() || loop.end,
-      begin: loop.begin || 0,
+    if (streamer.active && streamer.audio) {
+      streamer.active.duration = streamer.audio.getDuration()
+
+      const sample = { ...streamer.active.sample }
+      sample.current = streamer.audio.getCurrentTime() || 0
+      console.log("handle start", { sample })
+
+      if (sample.end === -1) {
+        sample.end = streamer.audio.getDuration() - 0.001
+      }
+
+      streamer.active.sample = { ...sample }
     }
   }
   return (
