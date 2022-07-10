@@ -12,23 +12,26 @@ import { StoreContext } from "../main/hooks/useStores"
 import RootStore from "../main/stores/RootStore"
 import Web3Provider from "../main/Web3/Web3Provider"
 
+import { ChakraProvider } from "@chakra-ui/react"
 import { localized } from "../common/localize/localizedString"
 
 function App() {
   return (
     <React.StrictMode>
       <Web3Provider>
-        <StoreContext.Provider value={new RootStore()}>
-          <ThemeContext.Provider value={defaultTheme}>
-            <MuiThemeProvider>
-              <EmotionThemeProvider>
-                <GlobalKeyboardShortcut />
-                <GlobalCSS />
-                <RootView />
-              </EmotionThemeProvider>
-            </MuiThemeProvider>
-          </ThemeContext.Provider>
-        </StoreContext.Provider>
+        <ChakraProvider>
+          <StoreContext.Provider value={new RootStore()}>
+            <ThemeContext.Provider value={defaultTheme}>
+              <MuiThemeProvider>
+                <EmotionThemeProvider>
+                  <GlobalKeyboardShortcut />
+                  <GlobalCSS />
+                  <RootView />
+                </EmotionThemeProvider>
+              </MuiThemeProvider>
+            </ThemeContext.Provider>
+          </StoreContext.Provider>
+        </ChakraProvider>
       </Web3Provider>
     </React.StrictMode>
   )

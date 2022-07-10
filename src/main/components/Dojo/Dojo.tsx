@@ -79,7 +79,7 @@ const Dojo = observer(() => {
               <Link
                 aria-current={router.path === "bangers"}
                 underline="none"
-                color="grey"
+                color="#99badd"
                 onClick={(e) => (router.path = "bangers")}
                 href="#bangers"
               >
@@ -88,7 +88,7 @@ const Dojo = observer(() => {
               <Link
                 aria-current={router.path === "dojo"}
                 underline="none"
-                color="grey"
+                color="#99badd"
                 onClick={(e) => (router.path = "dojo")}
                 href="/dojo"
               >

@@ -174,7 +174,7 @@ export const FileMenuButton: FC<React.PropsWithChildren<unknown>> = observer(
 
           <Divider />
 
-          <MenuItem href="/app">{localized("app", "App")}</MenuItem>
+          <MenuItem href="app">{localized("app", "App")}</MenuItem>
 
           <Divider />
 
