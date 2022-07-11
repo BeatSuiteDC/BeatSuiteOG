@@ -14,7 +14,7 @@ import {
   TitleContainer,
 } from "./CSS"
 
-import { Pause, PlayArrow } from "@mui/icons-material"
+import { PauseCircleOutline, PlayCircleOutline } from "@mui/icons-material"
 import { useWeb3React } from "@web3-react/core"
 import { DocumentData } from "firebase/firestore"
 import { snapshot } from "../../../lib/firebase"
@@ -83,9 +83,9 @@ const PosterCard: FC<{ album: AlbumProps }> = observer(({ album }) => {
           <IconDiv>
             <PlayPauseIcon>
               {streamer.isPlaying && inQueue() ? (
-                <Pause style={{ margin: "0px 5px 0px 5px" }} />
+                <PauseCircleOutline style={{ margin: "0px 5px 0px 5px" }} />
               ) : (
-                <PlayArrow style={{ margin: "0px 0px 0px 5px" }} />
+                <PlayCircleOutline style={{ margin: "0px 0px 0px 5px" }} />
               )}
             </PlayPauseIcon>
             <TitleContainer>

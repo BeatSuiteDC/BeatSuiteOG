@@ -35,6 +35,7 @@ export const CardDiv = styled.div`
   color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
   transition: ease-out 200ms;
+  box-shadow: 0px 0px 5px grey;
   margin-left: auto;
   margin-right: auto;
   :hover {

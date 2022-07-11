@@ -9,7 +9,7 @@ import { HeroCSS } from "./HeroCSS"
 const url = "https://www.youtube.com/watch?v=_ITiwPMUzho"
 
 const shortened =
-  "https://beatsuite.infura-ipfs.io/ipfs/QmR14pc7cbNymaJjYptCtDScd5DxEV9h87vWCVzu6fyGPT"
+  "https://beatsuite.infura-ipfs.io/ipfs/Qmaquyg5GrnsWDsxCxZ5zfzyEDfekLJAu7LoLT1BYF7vgg"
 const Hero: FC<React.PropsWithChildren<unknown>> = () => {
   const [ready, setReady] = useState(false)
 

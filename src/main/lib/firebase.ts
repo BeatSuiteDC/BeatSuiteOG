@@ -23,6 +23,7 @@ const firebaseConfig = {
 }
 
 type Collection = "Albums" | "Users"
+type Constraint = "asc" | "time"
 
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig)
@@ -30,10 +31,11 @@ const analytics = getAnalytics(firebase)
 const db = getFirestore(firebase)
 
 export const snapshot = (
-  query: Collection,
+  path: Collection,
   callback: (snap: QuerySnapshot<DocumentData>) => void
+  // constraint: Constraint = "asc"
 ) => {
-  onSnapshot(collection(db, query), callback)
+  onSnapshot(collection(db, path), callback)
 }
 
 export const createDoc = async (query: Collection, payload: object) => {
