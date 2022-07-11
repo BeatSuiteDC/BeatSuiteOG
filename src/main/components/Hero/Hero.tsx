@@ -7,6 +7,9 @@ import ConnectWallet from "./ConnecBtn"
 import { HeroCSS } from "./HeroCSS"
 
 const url = "https://www.youtube.com/watch?v=_ITiwPMUzho"
+
+const shortened =
+  "https://beatsuite.infura-ipfs.io/ipfs/QmR14pc7cbNymaJjYptCtDScd5DxEV9h87vWCVzu6fyGPT"
 const Hero: FC<React.PropsWithChildren<unknown>> = () => {
   const [ready, setReady] = useState(false)
 
@@ -17,7 +20,7 @@ const Hero: FC<React.PropsWithChildren<unknown>> = () => {
         <div className="videoContainer2">
           <ReactPlayer
             className="react-player"
-            url={url}
+            url={shortened}
             width="100%"
             height="100%"
             position="relative"

@@ -1,5 +1,6 @@
 import { computed, makeObservable, observable } from "mobx"
 import { v4 as uuid } from "uuid"
+import fakeImage, { DEFAULT_ALBUM_COVER } from "../../../actions/fakeImage"
 import { DEFAULT_SAMPLE, Sample } from "../Streamer/Looper"
 
 export type Track = {
@@ -32,8 +33,6 @@ export const EmptyTrack: Track = {
   id: -1,
 }
 
-export const DEFAULT_ALBUM_COVER = "https://thisartworkdoesnotexist.com/"
-// "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.youredm.com%2Fwp-content%2Fuploads%2F2018%2F09%2FYANDHI.jpg&f=1&nofb=1"
 export class EmptyAlbum {
   _cover: string
   _title = "untitled"
@@ -59,9 +58,14 @@ export class EmptyAlbum {
       title: computed,
       cover: computed,
       ids: computed,
+      resetImg: observable,
     })
 
     this._cover = DEFAULT_ALBUM_COVER
+  }
+
+  resetImg = async () => {
+    this._cover = fakeImage()
   }
 
   get editing() {

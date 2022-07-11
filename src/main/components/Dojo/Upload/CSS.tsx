@@ -102,6 +102,11 @@ export const OpenButton = styled.button`
     cursor: pointer;
     transform: scale(1.05);
   }
+  &[disabled="true"] {
+    background-color: transparent;
+
+    color: grey;
+  }
 `
 export const TableHeader = styled.div`
   border-bottom: 1px solid rgb(67, 67, 67);

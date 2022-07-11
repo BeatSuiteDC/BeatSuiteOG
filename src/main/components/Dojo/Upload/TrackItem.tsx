@@ -1,7 +1,7 @@
 import styled from "@emotion/styled"
-import AirplayIcon from "@mui/icons-material/Airplay"
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
 
+import AudiotrackIcon from "@mui/icons-material/Audiotrack"
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline"
 import UploadFileIcon from "@mui/icons-material/UploadFile"
 
@@ -91,7 +91,7 @@ const TrackItem: FC<{
 
       {song.data ? (
         <>
-          <AirplayIcon className="playIcon" onClick={handlePlay} />
+          <AudiotrackIcon className="playIcon" onClick={handlePlay} />
           <PlaylistAddIcon
             className="playIcon"
             onClick={(e) => handleQueue(song)}

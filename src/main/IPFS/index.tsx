@@ -5,6 +5,8 @@ const projectSecret = process.env.REACT_APP_IPFS_SECRET
 const auth =
   "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64")
 
+export const IPFS_URL = "https://beatsuite.infura-ipfs.io/ipfs/"
+
 const ipfs = async (file: any) => {
   console.log("uploading to IPFS")
   let client: IPFSHTTPClient | undefined

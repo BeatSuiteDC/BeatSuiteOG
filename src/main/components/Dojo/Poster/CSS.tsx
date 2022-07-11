@@ -55,6 +55,9 @@ export const AlbumImg = styled.img`
   }
 `
 export const IconDiv = styled.div`
+  position: relative;
+  top: 15px;
+
   display: flex;
   align-items: center;
 `
