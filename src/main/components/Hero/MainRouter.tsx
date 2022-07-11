@@ -1,19 +1,23 @@
-import { observer } from "mobx-react-lite"
+import React, { Suspense } from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Dojo from "../Dojo/Dojo"
-import RootView from "../RootView/RootView"
-import Hero from "./Hero"
+import Loading from "../Dojo/Loading"
 
-const MainRouter = observer(() => {
+const Dojo = React.lazy(() => import("../Dojo/Dojo"))
+const RootView = React.lazy(() => import("../RootView/RootView"))
+const Hero = React.lazy(() => import("./Hero"))
+
+const MainRouter = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Hero />} />
-        <Route path="/app" element={<Dojo />} />
-        <Route path="/edit" element={<RootView />} />
-      </Routes>
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path="/" element={<Hero />} />
+          <Route path="/app" element={<Dojo />} />
+          <Route path="/edit" element={<RootView />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   )
-})
+}
 
 export default MainRouter
