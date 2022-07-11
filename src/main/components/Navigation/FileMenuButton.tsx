@@ -2,8 +2,15 @@ import styled from "@emotion/styled"
 import { Divider, Menu, MenuItem } from "@mui/material"
 import Color from "color"
 import { observer } from "mobx-react-lite"
-import React, { ChangeEvent, FC, useCallback, useRef, VFC } from "react"
-import { useNavigate } from "react-router-dom"
+import React, {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useRef,
+  useState,
+  VFC,
+} from "react"
+import { Navigate } from "react-router-dom"
 import { localized } from "../../../common/localize/localizedString"
 import { createSong, openSong, saveSong } from "../../actions"
 import { hasFSAccess, openFile, saveFile, saveFileAs } from "../../actions/file"
@@ -111,6 +118,8 @@ export const FileMenuButton: FC<React.PropsWithChildren<unknown>> = observer(
     const isOpen = rootViewStore.openDrawer
     const handleClose = () => (rootViewStore.openDrawer = false)
 
+    const [nav, setNav] = useState(false)
+
     const onClickNew = () => {
       handleClose()
       if (
@@ -127,8 +136,7 @@ export const FileMenuButton: FC<React.PropsWithChildren<unknown>> = observer(
           localized("confirm-dojo", "Work of art in progress. Are you sure?")
         )
       ) {
-        const navigate = useNavigate()
-        navigate("/app")
+        setNav(true)
       }
     }
 
@@ -174,7 +182,10 @@ export const FileMenuButton: FC<React.PropsWithChildren<unknown>> = observer(
 
           <Divider />
 
-          <MenuItem href="app">{localized("app", "App")}</MenuItem>
+          <MenuItem onClick={onClickDojo}>
+            {localized("app", "App")}
+            {nav && <Navigate to="/app" />}
+          </MenuItem>
 
           <Divider />
 

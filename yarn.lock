@@ -3791,6 +3791,15 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.4.tgz#0c8b74c50f29ee44f423f7416829c0bf8bb5eb27"
   integrity sha512-LwzQKA4vzIct1zNZzBmRKI9QuNpLgTQMEjsQLf3BXuGYb3QPTP4Yjf6mkdX+X1mYttZ808QpOwAzZjv28kq7DA==
 
+"@ryohey/react-split-pane@^0.1.94":
+  version "0.1.94"
+  resolved "https://registry.yarnpkg.com/@ryohey/react-split-pane/-/react-split-pane-0.1.94.tgz#e5c602bbb93144d2b5ed0472f20f93b26d61f11c"
+  integrity sha512-E7UvYFa+gXmY+vT6yr81y6cl0KdfZjn9iV/fXXMqY5MwW78hNmv1WnmwmSDz+mcFR0ILdk+SDgjK4txRxRQYcg==
+  dependencies:
+    prop-types "^15.7.2"
+    react-lifecycles-compat "^3.0.4"
+    react-style-proptype "^3.2.2"
+
 "@ryohey/sf2parser@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@ryohey/sf2parser/-/sf2parser-1.2.0.tgz#5444ed5909183db5c09d26a1017b29ac82d681c2"
@@ -3804,10 +3813,10 @@
     "@ryohey/sf2parser" "^1.2.0"
     midifile-ts "^1.4.0"
 
-"@ryohey/webgl-react@^0.2.1":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@ryohey/webgl-react/-/webgl-react-0.2.2.tgz#8681038b56f84fde002860ddc605a900cc5f1460"
-  integrity sha512-yghpB/jiZMsjoBTbJZScDlQpIh0EO/AAC+UR2Fv0H222pwRVzBx0BZvg/Smd4U6npl3v6oE3OlylQfMZEQXjWQ==
+"@ryohey/webgl-react@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@ryohey/webgl-react/-/webgl-react-0.2.3.tgz#7d6662b96c37784c8e9dc763976728b667d688d6"
+  integrity sha512-08KLogX1qnc0TS2RCXGDwjr/UBRpFva3LcumOV0Z2lU/pntNgKLXRwEX/aSMBiBvSwM6SK9l4PdKpK6crsO2Mg==
   dependencies:
     "@rehooks/component-size" "^1.0.3"
     gl-matrix "^3.4.3"
@@ -15000,11 +15009,6 @@ range-parser@^1.2.1, range-parser@~1.2.1:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
 
-range-slider-input@2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/range-slider-input/-/range-slider-input-2.2.1.tgz#110a027d437d7b7e09e0dde75538774e027d4852"
-  integrity sha512-HlwZR+idp/3p4ZzbEIFv3NLTfcT2f2IyG5Ov184kTUzOi7pNPqoGXoJBKprOq7gQ43rtsIhMc4x9NCC/fh5h3A==
-
 raw-body@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.5.1.tgz#fe1b1628b181b700215e5fd42389f98b71392857"
@@ -15263,15 +15267,6 @@ react-side-effect@^2.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-2.1.2.tgz#dc6345b9e8f9906dc2eeb68700b615e0b4fe752a"
   integrity sha512-PVjOcvVOyIILrYoyGEpDN3vmYNLdy1CajSFNt4TDsVQC5KpTijDvWVoR+/7Rz2xT978D8/ZtFceXxzsPwZEDvw==
-
-react-split-pane@^0.1.92:
-  version "0.1.92"
-  resolved "https://registry.yarnpkg.com/react-split-pane/-/react-split-pane-0.1.92.tgz#68242f72138aed95dd5910eeb9d99822c4fc3a41"
-  integrity sha512-GfXP1xSzLMcLJI5BM36Vh7GgZBpy+U/X0no+VM3fxayv+p1Jly5HpMofZJraeaMl73b3hvlr+N9zJKvLB/uz9w==
-  dependencies:
-    prop-types "^15.7.2"
-    react-lifecycles-compat "^3.0.4"
-    react-style-proptype "^3.2.2"
 
 react-style-proptype@^3.2.2:
   version "3.2.2"
