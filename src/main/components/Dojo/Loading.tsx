@@ -105,7 +105,7 @@ const Loading = ({ title = "Loading" }) => {
           <div className="ring"></div>
           <div className="ring"></div>
           <div className="ring"></div>
-          <p>{title}...</p>
+          <p style={{ position: "absolute" }}>{title}...</p>
         </div>
       </div>
     </>

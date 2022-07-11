@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="UTF-8" />
-<title>BeatSuite - app</title>
+<title>BeatSuite</title>
 <head>
   <meta
     content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
@@ -22,23 +22,9 @@
     gtag("config", "UA-179088031-1")
   </script>
 
-  <!-- PWA -->
-  <link rel="manifest" href="/manifest.webmanifest" />
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/service-worker.js", {
-          scope: "/app",
-        })
-        .then(() => console.log("service worker loaded successfully"))
-        .catch((e) => console.error(e))
-    }
-  </script>
-
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="theme-color" content="#272a36" />
-  <link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png" />
 </head>
 <body>
   <div id="root"></div>

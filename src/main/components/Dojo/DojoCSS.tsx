@@ -5,7 +5,6 @@ import dashboard from "../../images/dashboard.png"
 
 export const DojoCSS = () => {
   const theme = useTheme()
-
   return (
     <Global
       styles={css`

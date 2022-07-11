@@ -1,6 +1,7 @@
 import styled from "@emotion/styled"
 import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
+import { localized } from "../../../common/localize/localizedString"
 import { useStores } from "../../hooks/useStores"
 import { ArrangeEditor } from "../ArrangeView/ArrangeEditor"
 import { BuildInfo } from "../BuildInfo"
@@ -59,5 +60,12 @@ const RootView: FC<React.PropsWithChildren<unknown>> = () => (
     <ExportProgressDialog />
   </>
 )
+
+window.onbeforeunload = (e: BeforeUnloadEvent) => {
+  e.returnValue = localized(
+    "confirm-close",
+    "Your edits have not been saved. Be sure to download it before exiting. Do you really want to close it?"
+  )
+}
 
 export default RootView

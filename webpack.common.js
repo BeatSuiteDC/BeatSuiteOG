@@ -5,11 +5,7 @@ const Dotenv = require("dotenv-webpack")
 
 module.exports = {
   context: __dirname,
-  entry: {
-    intro: "./src/intro/index.tsx",
-    app: "./src/main/index.tsx",
-    edit: "./src/edit/index.tsx",
-  },
+  entry: "./src/main/index.tsx",
   output: {
     filename: "[name]-[chunkhash].js",
   },
@@ -58,21 +54,17 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       filename: "app.html",
-      chunks: ["app"],
-
       template: path.join(__dirname, "public", "app.html"),
     }),
     new HtmlWebpackPlugin({
       inject: true,
       filename: "edit.html",
-      chunks: ["app"],
       template: path.join(__dirname, "public", "edit.html"),
     }),
     new HtmlWebpackPlugin({
       inject: true,
       filename: "index.html",
-      chunks: ["intro"],
-      template: path.join(__dirname, "public", "app.html"),
+      template: path.join(__dirname, "public", "index.html"),
     }),
   ],
   ignoreWarnings: [/not found/, /Failed to parse source map/],
