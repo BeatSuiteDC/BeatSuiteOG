@@ -1,5 +1,5 @@
-import { uniqueId } from "lodash"
 import { computed, makeObservable, observable } from "mobx"
+import { v4 as uuid } from "uuid"
 import { DEFAULT_SAMPLE, Sample } from "../Streamer/Looper"
 
 export type Track = {
@@ -41,6 +41,7 @@ export class EmptyAlbum {
   _artist = "jose rando"
   _songs: Track[] = []
   _tracks = 0
+  _editing: Track | undefined
 
   constructor() {
     makeObservable<
@@ -61,6 +62,14 @@ export class EmptyAlbum {
     })
 
     this._cover = DEFAULT_ALBUM_COVER
+  }
+
+  get editing() {
+    return this._editing
+  }
+
+  set editing(track: Track | undefined) {
+    this._editing = track
   }
 
   get ids() {
@@ -110,7 +119,7 @@ export class EmptyAlbum {
         album: this.title,
         cover: this.cover as string,
         title: `untitled banger ${this._tracks}`,
-        id: uniqueId(`untitled-${this._tracks}`),
+        id: uuid(`untitled-${this._tracks}`),
         sample: DEFAULT_SAMPLE,
         duration: undefined,
       },
@@ -120,7 +129,7 @@ export class EmptyAlbum {
   addFromFile(file: File) {
     const src = URL.createObjectURL(file)
     const data = new Audio(src)
-    const id = uniqueId(file.name.trim().replace(/\s/, "-"))
+    const id = uuid(file.name.trim().replace(/\s/g, "-"))
     const track: Track = {
       album: this.title,
       cover: this.cover,
@@ -134,6 +143,29 @@ export class EmptyAlbum {
     }
 
     this._songs = [...this.songs, track]
+    return track
+  }
+
+  addFromMidi(blob: Blob) {
+    const src = URL.createObjectURL(blob)
+    const data = new Audio(src)
+    const name = this.editing
+      ? this.editing.title
+      : `midiBanger-${this._tracks}`
+    const id = uuid(name)
+    const track: Track = {
+      album: this.title,
+      cover: this.cover,
+      title: name,
+      duration: data.duration,
+      sample: DEFAULT_SAMPLE,
+      src,
+      data,
+      id,
+    }
+    this._tracks++
+    this._songs = [...this.songs, track]
+    this.editing = undefined
     return track
   }
 

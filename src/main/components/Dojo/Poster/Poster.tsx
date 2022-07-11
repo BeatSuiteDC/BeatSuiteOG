@@ -4,11 +4,14 @@ import { useStores } from "../../../hooks/useStores"
 import { AlbumProps } from "../Album/Album"
 import {
   AlbumImg,
+  Artist,
+  BottomLayer,
   CardDiv,
   Container,
   IconDiv,
   PlayPauseIcon,
   Title,
+  TitleContainer,
 } from "./CSS"
 
 import { Pause, PlayArrow } from "@mui/icons-material"
@@ -26,9 +29,6 @@ const importAlbum = (doc: DocumentData) => {
 
 const Poster: FC = () => {
   const { account, connector } = useWeb3React()
-  if (!account) {
-    connector.activate()
-  }
 
   const [albums, setAlbums] = useState<Array<any>>([])
 
@@ -79,26 +79,21 @@ const PosterCard: FC<{ album: AlbumProps }> = observer(({ album }) => {
     <>
       <CardDiv key={album.id} onClick={handlePlay}>
         <AlbumImg src={album.cover} />
-        <IconDiv>
-          <PlayPauseIcon>
-            {streamer.isPlaying && inQueue() ? (
-              <Pause style={{ margin: "1px" }} />
-            ) : (
-              <PlayArrow style={{ margin: "1px" }} />
-            )}
-          </PlayPauseIcon>
-        </IconDiv>
-        <div
-          style={{
-            marginTop: "5px",
-            fontSize: "15px",
-            position: "absolute",
-            textAlign: "center",
-          }}
-        >
-          <Title>{album.title}</Title>
-          <h6>{album.artist}</h6>
-        </div>
+        <BottomLayer>
+          <IconDiv>
+            <PlayPauseIcon>
+              {streamer.isPlaying && inQueue() ? (
+                <Pause style={{ margin: "0px 5px 0px 5px" }} />
+              ) : (
+                <PlayArrow style={{ margin: "0px 0px 0px 5px" }} />
+              )}
+            </PlayPauseIcon>
+            <TitleContainer>
+              <Title>{album.title}</Title>
+              <Artist>{album.artist}</Artist>
+            </TitleContainer>
+          </IconDiv>
+        </BottomLayer>
       </CardDiv>
     </>
   )

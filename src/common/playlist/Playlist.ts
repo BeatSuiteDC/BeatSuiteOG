@@ -20,7 +20,12 @@ export default class Playlist {
       shift: observable,
       queue: computed,
       active: computed,
+      ids: computed,
     })
+  }
+
+  get ids() {
+    return this.queue.map((s) => s.id)
   }
 
   get queue() {

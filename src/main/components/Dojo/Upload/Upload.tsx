@@ -10,6 +10,7 @@ import CSS, {
 import BulkImport from "./Bulk"
 
 import AddCircleIcon from "@mui/icons-material/AddCircle"
+import CloudUploadIcon from "@mui/icons-material/CloudUpload"
 
 import { Modal } from "@mui/material"
 import { Box } from "@mui/system"
@@ -131,6 +132,7 @@ export default observer(() => {
         <TopBan>
           <OpenButton disabled={album.songs.length == 0} onClick={handleSave}>
             Upload
+            <CloudUploadIcon style={{ margin: "0.5px" }} />
           </OpenButton>
           <OpenButton disabled={album.songs.length == 0} onClick={handleMint}>
             Mint

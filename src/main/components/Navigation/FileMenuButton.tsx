@@ -130,12 +130,12 @@ export const FileMenuButton: FC<React.PropsWithChildren<unknown>> = observer(
     }
 
     const onClickDojo = () => {
-      handleClose()
       if (
         confirm(
           localized("confirm-dojo", "Work of art in progress. Are you sure?")
         )
       ) {
+        handleClose()
         setNav(true)
       }
     }

@@ -15,6 +15,7 @@ const waitForAnimationFrame = () =>
 export const exportSongAsWav = (rootStore: RootStore) => async () => {
   const {
     song,
+    album,
     services: { synth },
     exportStore,
   } = rootStore
@@ -60,6 +61,7 @@ export const exportSongAsWav = (rootStore: RootStore) => async () => {
 
     const blob = new Blob([wavData], { type: "audio/wav" })
     exportStore.openExportProgressDialog = false
+    album.addFromMidi(blob)
     downloadBlob(blob, "song.wav")
   } catch (e) {
     console.warn(e)

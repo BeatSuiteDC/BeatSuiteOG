@@ -1,6 +1,4 @@
 import { computed, makeObservable, observable } from "mobx"
-import { useWeb3Context } from "web3-react"
-import { Web3Context } from "web3-react/dist/context"
 
 const INFURA_ID = process.env.REACT_APP_INFURA_ID as string
 
@@ -13,7 +11,7 @@ export type User = {
 export default class Authentication {
   private _user: User | undefined
 
-  web3: Web3Context
+  web3: any
 
   constructor() {
     makeObservable<Authentication, "_user">(this, {
@@ -22,8 +20,6 @@ export default class Authentication {
       isConnected: computed,
       info: computed,
     })
-
-    this.web3 = useWeb3Context()
   }
 
   get isConnected() {

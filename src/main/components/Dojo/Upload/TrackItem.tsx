@@ -2,11 +2,13 @@ import styled from "@emotion/styled"
 import AirplayIcon from "@mui/icons-material/Airplay"
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
 
-import CloudUploadIcon from "@mui/icons-material/CloudUpload"
-import PlayDisabledIcon from "@mui/icons-material/PlayDisabled"
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline"
+import UploadFileIcon from "@mui/icons-material/UploadFile"
+
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh"
+import { Link } from "@mui/material"
 import { observer } from "mobx-react-lite"
-import { ChangeEvent, FC, useRef } from "react"
+import { ChangeEvent, FC, useRef, useState } from "react"
 import Playlist from "../../../../common/playlist/Playlist"
 import { EmptyAlbum, Track } from "../Album/Album"
 
@@ -38,6 +40,8 @@ const TrackItem: FC<{
   const audioRef = useRef<HTMLInputElement>(null)
   const key = Math.floor(Math.random() * 1000)
 
+  const [nav, setNav] = useState(false)
+
   const handlePlay = () => {
     console.log("playing")
     playlist.setActive(song)
@@ -55,6 +59,10 @@ const TrackItem: FC<{
 
   const triggerInput = () => {
     audioRef.current?.click()
+  }
+
+  const openDojo = () => {
+    album.editing = song
   }
 
   const uploadTrack = (e: ChangeEvent<HTMLInputElement>) => {
@@ -79,7 +87,7 @@ const TrackItem: FC<{
         onChange={(e) => (song.title = e.target.value)}
         value={song.title}
       />
-      <CloudUploadIcon className="uploadIcon" onClick={triggerInput} />
+      <UploadFileIcon className="uploadIcon" onClick={triggerInput} />
 
       {song.data ? (
         <>
@@ -90,7 +98,13 @@ const TrackItem: FC<{
           />
         </>
       ) : (
-        <PlayDisabledIcon id="disabled" className="playIcon" />
+        <Link href="/edit">
+          <AutoFixHighIcon
+            onClick={(e) => openDojo()}
+            id="disabled"
+            className="playIcon"
+          />
+        </Link>
       )}
       <input
         style={{ display: "none" }}
