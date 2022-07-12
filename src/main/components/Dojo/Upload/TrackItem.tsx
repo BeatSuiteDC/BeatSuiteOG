@@ -12,6 +12,8 @@ import { ChangeEvent, FC, useRef, useState } from "react"
 import Playlist from "../../../../common/playlist/Playlist"
 import { EmptyAlbum, Track } from "../Album/Album"
 
+import ethLogo from "../../../images/ethereum-logo.png"
+
 const Container = styled.div`
   border-bottom: 1px solid rgb(67, 67, 67);
   display: flex;
@@ -22,7 +24,6 @@ const Container = styled.div`
 const TrackInput = styled.input`
   color: #99badd;
   background: none;
-  margin-left: 4rem;
   border-radius: 5px;
   padding-left: 10px;
   overflow-x: scroll;
@@ -31,6 +32,22 @@ const TrackInput = styled.input`
     opacity: 0.5;
     color: white;
   }
+`
+const Value = styled.input`
+  color: white;
+  width: 4rem;
+  background: transparent;
+  :hover {
+    opacity: 0.5;
+  }
+`
+
+const EthLogo = styled.img`
+  position: relative;
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+  margin-left: 5px;
 `
 
 const TrackItem: FC<{
@@ -80,9 +97,23 @@ const TrackItem: FC<{
     }
   }
 
+  const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = Number(e.target.value)
+    if (isNaN(value)) {
+      return
+    }
+
+    song.value = value == 0 ? "0.0" : String(value)
+  }
+
   return (
     <Container key={"track-item-" + song.id}>
       <RemoveCircleOutlineIcon className="removeIcon" onClick={handleRemove} />
+      <div style={{ display: "flex", alignItems: "center", marginLeft: "5px" }}>
+        <EthLogo src={ethLogo} />
+        <Value type="text" onChange={handleValue} value={song.value} />
+      </div>
+
       <TrackInput
         type="text"
         onChange={(e) => (song.title = e.target.value)}

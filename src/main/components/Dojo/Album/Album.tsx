@@ -1,10 +1,10 @@
 import { computed, makeObservable, observable } from "mobx"
 import { v4 as uuid } from "uuid"
-import { DEFAULT_ALBUM_COVER } from "../../../actions/fakeImage"
+import { YAHNDI_COVER } from "../../../actions/fakeImage"
 import { DEFAULT_SAMPLE, Sample } from "../Streamer/Looper"
 
-const DEFAULT_ALBUM_VALUE = 0.05
-const DEFAULT_TRACK_VALUE = 0.005
+const DEFAULT_ALBUM_VALUE = "0.05"
+const DEFAULT_TRACK_VALUE = "0.005"
 export interface Track {
   src?: string
   album: string
@@ -15,7 +15,7 @@ export interface Track {
   file?: File
   id: number | string
   sample: Sample
-  value: number
+  value: string
 }
 export interface AlbumProps {
   cover: string
@@ -25,7 +25,7 @@ export interface AlbumProps {
   songs: Track[]
   contract?: string
   id?: number | string
-  value: number
+  value: string
 }
 
 export const EmptyTrack: Track = {
@@ -46,7 +46,7 @@ export class EmptyAlbum implements AlbumProps {
   _tracks = 0
   _editing: Track | undefined
   _id: any
-  _value: number = DEFAULT_ALBUM_VALUE
+  _value: string = DEFAULT_ALBUM_VALUE
 
   constructor() {
     makeObservable<
@@ -59,6 +59,7 @@ export class EmptyAlbum implements AlbumProps {
       _artist: observable,
       _songs: observable,
       _tracks: observable,
+      _value: observable,
       artist: computed,
       songs: computed,
       title: computed,
@@ -69,7 +70,7 @@ export class EmptyAlbum implements AlbumProps {
       value: computed,
     })
 
-    this._cover = DEFAULT_ALBUM_COVER
+    this._cover = YAHNDI_COVER
   }
 
   resetImg = async () => {}
@@ -77,15 +78,13 @@ export class EmptyAlbum implements AlbumProps {
   get value() {
     return this._value
   }
-
-  set value(_value: number) {
+  set value(_value: string) {
     this._value = _value
   }
 
   get editing() {
     return this._editing
   }
-
   set editing(track: Track | undefined) {
     this._editing = track
   }

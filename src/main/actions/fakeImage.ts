@@ -1,3 +1,6 @@
+import yahndi from "../images/YAHNDI-modified.png"
+
+export const YAHNDI_COVER = yahndi
 export const DEFAULT_ALBUM_COVER = "https://thisartworkdoesnotexist.com/"
 
 export const dne = () => {
