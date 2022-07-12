@@ -11,7 +11,6 @@ export interface Sample {
   begin: number
   end: number
   enabled: boolean
-  current: number
 }
 
 export interface SavedSample extends Sample {
@@ -22,7 +21,6 @@ export const DEFAULT_SAMPLE: Sample = {
   begin: 0,
   end: -1,
   enabled: true,
-  current: -1,
 }
 
 export default class Looper {

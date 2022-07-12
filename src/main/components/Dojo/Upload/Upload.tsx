@@ -48,6 +48,10 @@ export default observer(() => {
   const handleMint = async (e: any) => {
     // album.resetImg()
 
+    if (!album.id) {
+      alert("save album first")
+      return
+    }
     console.log(album.id)
   }
 
@@ -58,7 +62,8 @@ export default observer(() => {
       let details: AlbumProps = {
         artist: album.artist,
         title: album.title,
-        year: Number(album.year),
+        value: album.value,
+        year: album.year,
         cover: "",
         songs: [],
       }
@@ -91,7 +96,7 @@ export default observer(() => {
         album.songs.map(async (song) => {
           if (song.src) {
             setLoading(`Hashing...`)
-            createTrack(song, details)
+            return await createTrack(song, details)
           }
         })
       ).then((tracks) => {
@@ -126,7 +131,7 @@ export default observer(() => {
             aria-disabled={album.songs.length == 0}
             onClick={handleSave}
           >
-            Upload
+            Save
             <CloudUploadIcon style={{ margin: "0.5px" }} />
           </OpenButton>
           <OpenButton

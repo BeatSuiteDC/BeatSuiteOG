@@ -38,7 +38,7 @@ export const generateHash = async (src: string) => {
   return hash
 }
 
-export const createTrack = async (song: Track, album: AlbumProps) {
+export const createTrack = async (song: Track, album: AlbumProps) => {
   if (!song.src) {
     return EmptyTrack
   }
@@ -47,10 +47,9 @@ export const createTrack = async (song: Track, album: AlbumProps) {
   const src = (await IPFS_URL) + songHash
   console.log({ src })
   const track: Track = {
+    ...song,
     cover: album.cover,
     album: album.title,
-    title: song.title,
-    sample: song.sample,
     id,
     src,
   }

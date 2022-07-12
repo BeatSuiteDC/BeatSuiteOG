@@ -33,8 +33,7 @@ const Player = () => {
     }
     if (setting === Loop.SAMPLE) {
       const { begin } = active.sample
-      const progress = begin / active.duration || 0
-      streamer.currentTick = progress
+      streamer.currentTick = begin
       return
     }
     console.log("track ended")

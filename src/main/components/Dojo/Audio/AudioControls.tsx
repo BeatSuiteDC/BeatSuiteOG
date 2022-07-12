@@ -54,7 +54,7 @@ export const TransportPlayer: FC = observer(() => {
   const handleRewind = (e: React.MouseEvent) => {
     const { begin } = streamer.active.sample
     const current = streamer.position()
-    const duration = streamer.active.duration
+    const duration = streamer.active.duration || 1
 
     let progress = 0
     let tick = 0
@@ -74,7 +74,7 @@ export const TransportPlayer: FC = observer(() => {
     const { end } = streamer.active.sample
 
     const current = streamer.position()
-    const duration = streamer.active.duration
+    const duration = streamer.active.duration || 1
 
     let tick = 0
 

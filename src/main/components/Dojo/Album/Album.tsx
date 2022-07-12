@@ -3,6 +3,8 @@ import { v4 as uuid } from "uuid"
 import { DEFAULT_ALBUM_COVER } from "../../../actions/fakeImage"
 import { DEFAULT_SAMPLE, Sample } from "../Streamer/Looper"
 
+const DEFAULT_ALBUM_VALUE = 0.05
+const DEFAULT_TRACK_VALUE = 0.005
 export interface Track {
   src?: string
   album: string
@@ -13,6 +15,7 @@ export interface Track {
   file?: File
   id: number | string
   sample: Sample
+  value: number
 }
 export interface AlbumProps {
   cover: string
@@ -22,14 +25,16 @@ export interface AlbumProps {
   songs: Track[]
   contract?: string
   id?: number | string
+  value: number
 }
 
 export const EmptyTrack: Track = {
   album: "",
   title: "",
   cover: "",
-  sample: DEFAULT_SAMPLE,
   id: -1,
+  sample: DEFAULT_SAMPLE,
+  value: DEFAULT_TRACK_VALUE,
 }
 
 export class EmptyAlbum implements AlbumProps {
@@ -41,6 +46,7 @@ export class EmptyAlbum implements AlbumProps {
   _tracks = 0
   _editing: Track | undefined
   _id: any
+  _value: number = DEFAULT_ALBUM_VALUE
 
   constructor() {
     makeObservable<
@@ -60,12 +66,21 @@ export class EmptyAlbum implements AlbumProps {
       ids: computed,
       resetImg: observable,
       id: computed,
+      value: computed,
     })
 
     this._cover = DEFAULT_ALBUM_COVER
   }
 
   resetImg = async () => {}
+
+  get value() {
+    return this._value
+  }
+
+  set value(_value: number) {
+    this._value = _value
+  }
 
   get editing() {
     return this._editing
@@ -131,6 +146,7 @@ export class EmptyAlbum implements AlbumProps {
         title: `untitled banger ${this._tracks}`,
         id: uuid(`untitled-${this._tracks}`),
         sample: DEFAULT_SAMPLE,
+        value: DEFAULT_TRACK_VALUE,
       },
     ]
   }
@@ -144,6 +160,7 @@ export class EmptyAlbum implements AlbumProps {
       cover: this.cover,
       title: file.name,
       sample: DEFAULT_SAMPLE,
+      value: DEFAULT_TRACK_VALUE,
       src,
       data,
       file,
@@ -166,6 +183,7 @@ export class EmptyAlbum implements AlbumProps {
       cover: this.cover,
       title: name,
       sample: DEFAULT_SAMPLE,
+      value: DEFAULT_TRACK_VALUE,
       src,
       data,
       id,
