@@ -1,20 +1,20 @@
 import { computed, makeObservable, observable } from "mobx"
 import { v4 as uuid } from "uuid"
-import fakeImage, { DEFAULT_ALBUM_COVER } from "../../../actions/fakeImage"
+import { DEFAULT_ALBUM_COVER } from "../../../actions/fakeImage"
 import { DEFAULT_SAMPLE, Sample } from "../Streamer/Looper"
 
-export type Track = {
+export interface Track {
   src?: string
   album: string
   title: string
   cover: string
-  duration: number
+  duration?: number
   data?: HTMLMediaElement
   file?: File
   id: number | string
   sample: Sample
 }
-export type AlbumProps = {
+export interface AlbumProps {
   cover: string
   title: string
   year: number
@@ -28,19 +28,19 @@ export const EmptyTrack: Track = {
   album: "",
   title: "",
   cover: "",
-  duration: 1,
   sample: DEFAULT_SAMPLE,
   id: -1,
 }
 
-export class EmptyAlbum {
+export class EmptyAlbum implements AlbumProps {
   _cover: string
   _title = "untitled"
-  _year = new Date().getFullYear().toString()
+  _year = new Date().getFullYear()
   _artist = "jose rando"
   _songs: Track[] = []
   _tracks = 0
   _editing: Track | undefined
+  _id: any
 
   constructor() {
     makeObservable<
@@ -59,14 +59,13 @@ export class EmptyAlbum {
       cover: computed,
       ids: computed,
       resetImg: observable,
+      id: computed,
     })
 
     this._cover = DEFAULT_ALBUM_COVER
   }
 
-  resetImg = async () => {
-    this._cover = fakeImage()
-  }
+  resetImg = async () => {}
 
   get editing() {
     return this._editing
@@ -76,6 +75,13 @@ export class EmptyAlbum {
     this._editing = track
   }
 
+  get id() {
+    return this._id
+  }
+
+  set id(i: number | string) {
+    this._id = i
+  }
   get ids() {
     return this._songs.map((song) => song.id)
   }
@@ -125,7 +131,6 @@ export class EmptyAlbum {
         title: `untitled banger ${this._tracks}`,
         id: uuid(`untitled-${this._tracks}`),
         sample: DEFAULT_SAMPLE,
-        duration: 0,
       },
     ]
   }
@@ -133,12 +138,11 @@ export class EmptyAlbum {
   addFromFile(file: File) {
     const src = URL.createObjectURL(file)
     const data = new Audio(src)
-    const id = uuid(file.name.trim().replace(/\s/g, "-"))
+    const id = Buffer.from(file.name.trim().replace(/\s/g, "")).toString()
     const track: Track = {
       album: this.title,
       cover: this.cover,
       title: file.name,
-      duration: data.duration,
       sample: DEFAULT_SAMPLE,
       src,
       data,
@@ -161,7 +165,6 @@ export class EmptyAlbum {
       album: this.title,
       cover: this.cover,
       title: name,
-      duration: data.duration,
       sample: DEFAULT_SAMPLE,
       src,
       data,

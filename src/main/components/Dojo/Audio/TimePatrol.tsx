@@ -25,7 +25,7 @@ const TimePatrol = observer(() => {
   const [begin, setBegin] = useState(dial.begin)
   const [end, setEnd] = useState(dial.end)
 
-  useEffect(() => {}, [current, begin, end, streamer.currentTick])
+  useEffect(() => {}, [current, begin, end])
 
   const marks = [
     {
@@ -60,7 +60,6 @@ const TimePatrol = observer(() => {
     }
 
     if (current != position) {
-      console.log("changing here")
       streamer.currentTick = current
     }
   }

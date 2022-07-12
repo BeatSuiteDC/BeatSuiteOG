@@ -102,9 +102,8 @@ export const OpenButton = styled.button`
     cursor: pointer;
     transform: scale(1.05);
   }
-  &[disabled="true"] {
+  &[aria-disabled="true"] {
     background-color: transparent;
-
     color: grey;
   }
 `

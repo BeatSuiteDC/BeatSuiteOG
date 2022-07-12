@@ -73,8 +73,6 @@ const Player = () => {
     streamer.audio = player
     streamer.audio.getInternalPlayer()
     if (streamer.active) {
-      console.log("ready...")
-      // streamer.currentTick = player.getCurrentTime()
       streamer.active.duration = player.getDuration()
 
       let { end } = streamer.active.sample

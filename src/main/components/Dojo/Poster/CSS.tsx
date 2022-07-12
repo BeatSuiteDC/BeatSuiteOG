@@ -58,7 +58,7 @@ export const AlbumImg = styled.img`
 export const IconDiv = styled.div`
   position: relative;
   top: 15px;
-
+  margin-left: 8px;
   display: flex;
   align-items: center;
 `

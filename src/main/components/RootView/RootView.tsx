@@ -9,6 +9,7 @@ import { EventEditor } from "../EventEditor/EventEditor"
 import { ExportDialog } from "../ExportDialog/ExportDialog"
 import { ExportProgressDialog } from "../ExportDialog/ExportProgressDialog"
 import { HelpDialog } from "../Help/HelpDialog"
+import { GlobalKeyboardShortcut } from "../KeyboardShortcut/GlobalKeyboardShortcut"
 import { MIDIDeviceDialog } from "../MIDIDeviceView/MIDIDeviceDialog"
 import { Navigation } from "../Navigation/Navigation"
 import { PianoRollEditor } from "../PianoRoll/PianoRollEditor"
@@ -45,6 +46,7 @@ const Routes: FC<React.PropsWithChildren<unknown>> = observer(() => {
 
 const RootView: FC<React.PropsWithChildren<unknown>> = () => (
   <>
+    <GlobalKeyboardShortcut />
     <Column>
       <Navigation />
       <Container>

@@ -1,6 +1,6 @@
 export const DEFAULT_ALBUM_COVER = "https://thisartworkdoesnotexist.com/"
 
-export default () => {
+export const dne = () => {
   const img = new Image()
   img.src = DEFAULT_ALBUM_COVER
 
@@ -17,4 +17,22 @@ export default () => {
   console.log({ uri, b64 })
 
   return b64
+}
+
+export const tenor = async (lmt: number = 1) => {
+  const apiKey = process.env.REACT_APP_FIREBASE_API_KEY
+  const clientKey = "beatsuite"
+  const url = `https://tenor.googleapis.com/v2/featured?key=${apiKey}&client_key=${clientKey}&limit=${lmt}`
+
+  const response = await fetch(url)
+  const text = await response.text()
+  const json = await JSON.parse(text)
+  const results = await json.results
+  const idx = Math.floor(Math.random() * lmt)
+  const img = await results[idx].itemurl
+  const resp = await fetch(img)
+
+  const blob = await resp.blob()
+
+  return await URL.createObjectURL(blob)
 }

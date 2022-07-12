@@ -19,7 +19,7 @@ import { observer } from "mobx-react-lite"
 import { useEffect, useState } from "react"
 import { DEFAULT_ALBUM_COVER } from "../../../actions/fakeImage"
 import Opensea from "../../../images/opensea.png"
-import ipfs, { IPFS_URL } from "../../../IPFS"
+import { createTrack, generateHash, IPFS_URL } from "../../../IPFS"
 import { createDoc } from "../../../lib/firebase"
 import { AlbumProps, Track } from "../Album/Album"
 import Loading from "../Loading"
@@ -30,7 +30,7 @@ import DropImport from "./DropImport"
 import TrackItem from "./TrackItem"
 import UploadAll from "./UploadAll"
 
-import YAHNDI from "../../../images/YAHNDI.png"
+import YAHNDI from "../../../images/YAHNDI-modified.png"
 
 export default observer(() => {
   const rootStore = useStores()
@@ -46,7 +46,9 @@ export default observer(() => {
   }, [])
 
   const handleMint = async (e: any) => {
-    album.resetImg()
+    // album.resetImg()
+
+    console.log(album.id)
   }
 
   const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,9 +75,8 @@ export default observer(() => {
         // return
         album.cover = YAHNDI
       }
-      const response = await fetch(album.cover)
-      let arrayBuffer = await response.arrayBuffer()
-      const coverHash = await ipfs(arrayBuffer)
+
+      const coverHash = await generateHash(album.cover)
 
       if (!coverHash) {
         alert("Invalid cover image")
@@ -90,21 +91,7 @@ export default observer(() => {
         album.songs.map(async (song) => {
           if (song.src) {
             setLoading(`Hashing...`)
-            const songRes = await fetch(song.src)
-            const songBuff = await songRes.arrayBuffer()
-            const songHash = await ipfs(songBuff)
-            const src = IPFS_URL + songHash
-            console.log({ src })
-            const track: Track = {
-              duration: song.duration,
-              cover: details.cover,
-              album: album.title,
-              title: song.title,
-              sample: song.sample,
-              id: song.id,
-              src,
-            }
-            return track
+            createTrack(song, details)
           }
         })
       ).then((tracks) => {
@@ -115,6 +102,7 @@ export default observer(() => {
           songs: [...tracks],
         }).then((res) => {
           console.log("Album id:", res.id)
+          album.id = res.id
           setLoading(undefined)
         })
       })
@@ -134,11 +122,17 @@ export default observer(() => {
         </TopBan>
 
         <TopBan>
-          <OpenButton disabled={album.songs.length == 0} onClick={handleSave}>
+          <OpenButton
+            aria-disabled={album.songs.length == 0}
+            onClick={handleSave}
+          >
             Upload
             <CloudUploadIcon style={{ margin: "0.5px" }} />
           </OpenButton>
-          <OpenButton disabled={album.songs.length == 0} onClick={handleMint}>
+          <OpenButton
+            aria-disabled={album.songs.length == 0}
+            onClick={handleMint}
+          >
             Mint
             <img src={Opensea} style={{ height: "20px" }} />
           </OpenButton>
