@@ -29,6 +29,7 @@ const TrackInput = styled.input`
   width: 20rem;
   :hover {
     opacity: 0.5;
+    color: white;
   }
 `
 

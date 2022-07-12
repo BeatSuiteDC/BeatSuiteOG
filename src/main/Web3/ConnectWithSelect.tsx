@@ -21,6 +21,7 @@ function ChainSelect({
 }) {
   return (
     <select
+      style={{ background: "grey" }}
       value={chainId}
       onChange={(event) => {
         switchChain?.(Number(event.target.value))

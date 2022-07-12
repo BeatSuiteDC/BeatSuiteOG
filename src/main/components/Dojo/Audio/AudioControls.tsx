@@ -31,6 +31,8 @@ const LoopIcons = [
 
 const loopToolTips = ["Sampler", "Loop All", "Loop 1", "Loop off"]
 
+const increment = 0.05
+
 export const TransportPlayer: FC = observer(() => {
   const rootStore = useStores()
   const {
@@ -50,47 +52,41 @@ export const TransportPlayer: FC = observer(() => {
     streamer.skip()
   }
   const handleRewind = (e: React.MouseEvent) => {
-    const { begin, end, current, enabled } = streamer.active.sample
-    const setting = _loop.setting
+    const { begin } = streamer.active.sample
+    const current = streamer.position()
+    const duration = streamer.active.duration
 
     let progress = 0
     let tick = 0
-    if (streamer.audio) {
-      const duration = streamer.audio.getDuration()
 
-      if (enabled) {
-        progress = Math.max(begin / duration, 0.00001)
-      } else {
-        tick = current / duration
-        progress = Math.max(tick - 0.05 * end, 0.00001)
-      }
+    if (_loop.setting === Loop.SAMPLE) {
+      progress = begin
+    } else {
+      tick = duration * increment
+      progress = current - tick
     }
 
     progress += 0.00001
-
-    console.log({ tick, progress, current, begin, end })
-    streamer.audio?.setState({ played: progress })
-    streamer.audio?.seekTo(progress, "fraction")
+    streamer.currentTick = progress
   }
+
   const handleSeek = (e: React.MouseEvent) => {
     const { end } = streamer.active.sample
-    let duration = 0
-    let current = 0
+
+    const current = streamer.position()
+    const duration = streamer.active.duration
+
     let tick = 0
 
-    if (streamer.audio) {
-      duration = streamer.audio.getDuration()
-      current = streamer.audio.getCurrentTime()
-      if (_loop.setting === Loop.SAMPLE) {
-        tick = current / end
-      } else {
-        tick = current / duration
-      }
+    if (_loop.setting === Loop.SAMPLE) {
+      tick = (end - current) * increment
+    } else {
+      tick = duration * increment
     }
-    const progress = tick + 0.05
-    console.log({ tick, progress, current, end })
-    streamer.audio?.setState({ played: progress })
-    streamer.audio?.seekTo(progress, "fraction")
+
+    const progress = tick + current
+
+    streamer.currentTick = progress
   }
   const handlePlaylistPopper = (e: React.MouseEvent<SVGSVGElement>) => {
     setUnmount(unmount ? null : e.currentTarget)
@@ -181,7 +177,7 @@ export const TransportPlayer: FC = observer(() => {
             onClick={handlePlaylistPopper}
           />
         </ToolTip>
-        <Popper placement="right-start" id={id} open={open} anchorEl={unmount}>
+        <Popper placement="right-start" id={id} open={open}>
           <Fade in={open} exit={true} timeout={300}>
             <Box className="playlistContainer">
               <List component="nav" aria-label="main playlist content">

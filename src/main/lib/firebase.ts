@@ -19,7 +19,7 @@ const firebaseConfig = {
   storageBucket: "beatsuite.appspot.com",
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGE_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: "G-Q07WEL3LV0",
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 }
 
 type Collection = "Albums" | "Users"

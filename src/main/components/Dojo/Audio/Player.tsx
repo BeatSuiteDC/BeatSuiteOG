@@ -1,17 +1,21 @@
-import { observer } from "mobx-react-lite"
-import ReactPlayer from "react-player"
+import ReactPlayer from "react-player/lazy"
 import { useStores } from "../../../hooks/useStores"
 import { Loop } from "../Streamer/Looper"
 
-const Player = observer(() => {
-  const {
-    services: { streamer },
-  } = useStores()
+type Progress = {
+  played: number
+  playedSeconds: number
+  loaded: number
+  loadedSeconds: number
+}
+
+const Player = () => {
+  const rootStore = useStores()
+  const streamer = rootStore.services.streamer
 
   const {
     active,
     playlist,
-    loop,
     _loop: { setting },
   } = streamer
 
@@ -28,9 +32,9 @@ const Player = observer(() => {
       return
     }
     if (setting === Loop.SAMPLE) {
-      let progress = loop.begin / (streamer.audio?.getDuration() || loop.end)
-      streamer.audio?.setState({ played: progress })
-      streamer.audio?.seekTo(progress, "fraction")
+      const { begin } = active.sample
+      const progress = begin / active.duration || 0
+      streamer.currentTick = progress
       return
     }
     console.log("track ended")
@@ -38,23 +42,19 @@ const Player = observer(() => {
   }
 
   const handleDuration = (d: number) => {
+    console.log("handle-duration", d)
     if (streamer.active) {
       streamer.active.duration = d
     }
   }
 
-  const handleProgress = (p: {
-    played: number
-    loaded: number
-    playedSeconds: number
-    loadedSeconds: number
-  }) => {
-    let progress = p.playedSeconds
-    console.log("progress", progress)
+  const handleProgress = (e: Progress) => {
+    let progress = streamer.position()
+    console.log("handle-progress", progress)
 
-    const end = active ? active.sample.end : -1
-    const begin = active ? active.sample.begin : 0
-    const duration = active ? active?.duration : 1
+    const end = active ? active.sample.end : 0.99999
+    const begin = active ? active.sample.begin : 0.00001
+    const duration = active ? active.duration : 1
 
     console.log("handle progress", { end, begin, duration })
 
@@ -64,29 +64,37 @@ const Player = observer(() => {
       } else if (setting === Loop.ONE) {
         progress = 0
       }
-
-      streamer.audio?.setState({ played: progress })
-      streamer.audio?.seekTo(progress, "fraction")
     }
 
-    streamer.active.sample.current = progress
+    streamer.currentTick = progress
+  }
+
+  const handleReady = (player: ReactPlayer) => {
+    streamer.audio = player
+    streamer.audio.getInternalPlayer()
+    if (streamer.active) {
+      console.log("ready...")
+      // streamer.currentTick = player.getCurrentTime()
+      streamer.active.duration = player.getDuration()
+
+      let { end } = streamer.active.sample
+
+      if (end === -1) {
+        end = player.getDuration() - 0.00001
+      }
+
+      streamer.active.sample.end = end
+    }
   }
 
   const handleStart = () => {
+    console.log("starting...")
     if (streamer.active && streamer.audio) {
+      // streamer.position = streamer.audio.getCurrentTime()
       streamer.active.duration = streamer.audio.getDuration()
-
-      const sample = { ...streamer.active.sample }
-      sample.current = streamer.audio.getCurrentTime() || 0
-      // console.log("handle start", { sample })
-
-      if (sample.end === -1) {
-        sample.end = streamer.audio.getDuration() - 0.001
-      }
-
-      streamer.active.sample = { ...sample }
     }
   }
+
   return (
     <>
       {streamer.canPlay() && (
@@ -98,15 +106,15 @@ const Player = observer(() => {
           volume={streamer.volume}
           loop={streamer.loop.enabled}
           ref={(e) => (streamer.audio = e)}
-          onProgress={(p) => handleProgress(p)}
-          onDuration={(d) => handleDuration(d)}
+          onProgress={handleProgress}
+          onDuration={handleDuration}
           onEnded={handleEnded}
-          onReady={handleStart}
+          onReady={handleReady}
           onStart={handleStart}
         />
       )}
     </>
   )
-})
+}
 
 export default Player

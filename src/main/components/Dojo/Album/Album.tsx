@@ -8,7 +8,7 @@ export type Track = {
   album: string
   title: string
   cover: string
-  duration: number | undefined
+  duration: number
   data?: HTMLMediaElement
   file?: File
   id: number | string
@@ -28,7 +28,7 @@ export const EmptyTrack: Track = {
   album: "",
   title: "",
   cover: "",
-  duration: -1,
+  duration: 1,
   sample: DEFAULT_SAMPLE,
   id: -1,
 }
@@ -125,7 +125,7 @@ export class EmptyAlbum {
         title: `untitled banger ${this._tracks}`,
         id: uuid(`untitled-${this._tracks}`),
         sample: DEFAULT_SAMPLE,
-        duration: undefined,
+        duration: 0,
       },
     ]
   }

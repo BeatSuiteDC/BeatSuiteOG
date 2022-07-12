@@ -1,4 +1,4 @@
-import { computed, makeObservable, observable } from "mobx"
+import { action, computed, makeObservable, observable } from "mobx"
 import ReactPlayer from "react-player"
 
 import Playlist from "../../../../common/playlist/Playlist"
@@ -6,14 +6,14 @@ import { EmptyTrack, Track } from "../Album/Album"
 import Looper, { Sample } from "./Looper"
 
 export const DEFAULT_TEMPO = 120
+export const DEFAULT_VOLUME = 0.35
 
 export const LIVESTREAM_URL = "https://www.youtube.com/watch?v=_ITiwPMUzho"
 export default class Streamer {
   private _currentTempo = DEFAULT_TEMPO
   private _currentTick = 0
   private _isPlaying = false
-  private _isMuted = false
-  private _volume: number = 0.35
+  private _volume: number = DEFAULT_VOLUME
   private _playlist: Playlist
 
   disableSeek: boolean = false
@@ -22,18 +22,15 @@ export default class Streamer {
   _loop = new Looper()
 
   constructor(playlist: Playlist) {
-    makeObservable<
-      Streamer,
-      "_currentTick" | "_isPlaying" | "_volume" | "_isMuted"
-    >(this, {
+    makeObservable<Streamer, "_currentTick" | "_isPlaying" | "_volume">(this, {
       livestreamUrl: observable,
       _currentTick: observable,
       _isPlaying: observable,
       _audioRef: observable,
-      _isMuted: observable,
       _volume: observable,
+      currentTick: computed,
       isPlaying: computed,
-      position: computed,
+      position: action,
       playlist: computed,
       isMuted: computed,
       volume: computed,
@@ -49,35 +46,28 @@ export default class Streamer {
 
   dial = (decimals: number = 2) => {
     if (this.active) {
-      let { end, begin, current } = this.active.sample
-      let duration = this.active.duration || end
-
-      if (this.audio) {
-        current = this.audio.getCurrentTime()
-      }
+      let { end, begin } = this.active.sample
+      let duration = this.active.duration || 1
 
       const round = (v: number | 0) => {
         const d = 10 ** decimals
         return Math.floor(v * d) / d
       }
 
-      end = round(end)
-      begin = round(begin)
-      current = round(current)
       duration = round(duration)
+      begin = Math.max(0, round(begin)) + 0.000001
+      end = Math.min(duration, round(end)) - 0.000001
 
       return {
         duration,
-        current,
         begin,
         end,
       }
     }
     return {
-      duration: 100,
-      current: -1,
-      begin: 0,
-      end: -1,
+      duration: 1,
+      begin: 0.00001,
+      end: 0.999999,
     }
   }
 
@@ -130,7 +120,7 @@ export default class Streamer {
     }
     if (this.audio === null) return
 
-    this.audio?.setState({ url: this.active.src })
+    this.audio.setState({ url: this.active.src, playing: true })
     this._isPlaying = true
   }
 
@@ -154,7 +144,7 @@ export default class Streamer {
       const currentTime = this.audio.getCurrentTime()
       console.log("currentTime", currentTime)
       if (currentTime > 2.5) {
-        this.audio.seekTo(0)
+        this.currentTick = 0
         console.log("resetting track")
         return
       }
@@ -168,7 +158,7 @@ export default class Streamer {
   }
 
   stop() {
-    this.position = 0
+    this.currentTick = 0
     this._playlist.reset()
     this.pause()
   }
@@ -178,39 +168,39 @@ export default class Streamer {
   }
 
   mute(_mute: boolean) {
-    this._isMuted = _mute
     if (_mute) {
       this._volume = 0
-    } else if (this._volume === 0) {
-      this._volume = 0.35
+    } else if (this.volume === 0) {
+      this.volume = 0.35
     }
   }
 
-  set position(tick: number) {
+  set currentTick(tick: number) {
     if (this.disableSeek) {
       return
     }
 
-    this._currentTick = tick
+    if (this.audio !== null) {
+      const duration = this.audio.getDuration()
+      const progress = Math.min(tick / duration, 1)
 
-    if (this.audio != null) {
-      this.loop = {
-        ...this.loop,
-        current: tick,
-      }
-      // this.audio?.setState({ played: tick })
+      console.log("set-progress", { progress, duration, tick })
+      this.audio.setState({ played: progress, seeking: false })
+      this.audio.seekTo(progress, "fraction")
     }
+    this._currentTick = tick
   }
 
-  get position() {
-    if (this.audio && this.active !== undefined) {
+  get currentTick() {
+    return this._currentTick
+  }
+
+  position = () => {
+    if (this.audio !== null) {
       const current = this.audio.getCurrentTime()
-      const duration = this.audio.getDuration()
-      let tick = Math.max(current, 0) / duration
-      tick = Math.min(tick, duration)
-      this._currentTick = tick
-      return tick
+      this._currentTick = current
     }
+
     return this._currentTick
   }
 
@@ -222,7 +212,7 @@ export default class Streamer {
   }
 
   get isMuted() {
-    return this._isMuted
+    return this.volume === 0
   }
 
   get volume() {
@@ -230,13 +220,8 @@ export default class Streamer {
   }
 
   set volume(level: number) {
-    if (level === 0) {
-      this._isMuted = true
-      this._volume = 0
-    } else {
-      this._isMuted = false
-      this._volume = level
-    }
+    this._volume = level
+
     if (this.active?.data) {
       this.active.data.volume = level
     }

@@ -2,78 +2,89 @@ import styled from "@emotion/styled"
 import { Slider } from "@mui/material"
 
 import { observer } from "mobx-react-lite"
-import { SyntheticEvent, useEffect, useRef } from "react"
+import { SyntheticEvent, useEffect, useState } from "react"
 import { useStores } from "../../../hooks/useStores"
 
 const Container = styled.div`
   position: relative;
-  bottom: 50%;
-  height: 70%;
+  bottom: 10%;
+  height: 100%;
   width: 5rem;
 `
 
-function valuetext(value: number) {
-  return `${value}°C`
-}
-
 const TimePatrol = observer(() => {
-  const {
-    services: { streamer },
-  } = useStores()
+  const stores = useStores()
+  const streamer = stores.services.streamer
 
-  const { end, begin, current, duration } = streamer.dial(4)
+  const dial = streamer.dial(4)
+  const position = streamer.position()
 
-  const currentRef = useRef<HTMLInputElement>(null)
-  const beginRef = useRef<HTMLInputElement>(null)
-  const endRef = useRef<HTMLInputElement>(null)
-  const range = useRef<HTMLDivElement>(null)
+  const { duration } = dial
+
+  const [current, setCurrent] = useState(position)
+  const [begin, setBegin] = useState(dial.begin)
+  const [end, setEnd] = useState(dial.end)
+
+  useEffect(() => {}, [current, begin, end, streamer.currentTick])
 
   const marks = [
     {
       value: begin,
-      label: `${Math.round(begin * 1)}s`,
+      label: `${Math.round(begin)}s`,
     },
     {
       value: current,
-      label: `${Math.round(current * 1)}s`,
+      label: `${Math.round(current)}s`,
     },
     {
       value: end,
-      label: `${Math.round(end * 1)}s`,
+      label: `${Math.round(end)}s`,
+    },
+    {
+      value: duration,
+      label: `${Math.round(duration)}s`,
     },
   ]
-
-  useEffect(() => {}, [end, begin, current, duration])
 
   const handleChangeCommitted = (
     event: Event | SyntheticEvent<Element, Event>,
     value: number | number[]
   ) => {
     if (typeof value === "object") {
-      const progress = value[1] / value[2]
-      console.log("change commited", progress)
-      streamer.audio?.seekTo(progress, "fraction")
-      streamer.audio?.setState({ played: progress })
-      streamer.audio?.setState({ seeking: false })
+      const [_begin, _current, _end] = value
+      setCurrent(_current)
+      setBegin(_begin)
+      setEnd(_end)
+    } else {
+      setCurrent(value)
+    }
+
+    if (current != position) {
+      console.log("changing here")
+      streamer.currentTick = current
     }
   }
 
   const handleSlider = (event: Event, newValue: number | number[]) => {
     if (typeof newValue === "object") {
       const [_begin, _current, _end] = newValue
+      setCurrent(_current)
+      setBegin(_begin)
+      setEnd(_end)
 
-      if (_current != current && streamer.audio !== null) {
-        console.log("Seeking")
-        streamer.audio.setState({ seeking: true })
-      }
+      // if (_begin === begin && _end === end) {
+      //   console.log("Seeking")
+      //   streamer.audio?.setState({ seeking: true })
+      // }
+    } else {
+      setCurrent(newValue)
+    }
 
-      const sample = streamer.active.sample
-      streamer.active.sample = {
-        ...sample,
-        current: _current,
-        begin: _begin,
-        end: _end,
-      }
+    const sample = streamer.active.sample
+    streamer.active.sample = {
+      ...sample,
+      begin,
+      end,
     }
   }
 
@@ -97,11 +108,11 @@ const TimePatrol = observer(() => {
         <Slider
           getAriaLabel={() => "Time Patrol"}
           orientation="vertical"
-          getAriaValueText={valuetext}
           value={[begin, current, end]}
           min={0}
           max={duration}
-          defaultValue={[begin, current, end]}
+          step={0.0001 * duration}
+          defaultValue={current}
           valueLabelDisplay="auto"
           onChange={handleSlider}
           onChangeCommitted={handleChangeCommitted}
