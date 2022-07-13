@@ -1,4 +1,5 @@
 import { songFromMidi, songToMidi } from "../../common/midi/midiConversion"
+import { Track } from "../components/Dojo/Album/Album"
 import { writeFile } from "../services/fs-helper"
 import RootStore from "../stores/RootStore"
 import { setSong } from "./song"
@@ -33,6 +34,18 @@ export const openFile = async (rootStore: RootStore) => {
   const song = songFromMidi(new Uint8Array(buf))
   song.filepath = file.name
   song.fileHandle = fileHandle
+  setSong(rootStore)(song)
+}
+
+export const loadMidi = async (track: Track, rootStore: RootStore) => {
+  if (!track.src) {
+    return
+  }
+
+  const response = await fetch(track.src)
+  const buf = await response.arrayBuffer()
+  const song = songFromMidi(new Uint8Array(buf))
+  song.filepath = track.title
   setSong(rootStore)(song)
 }
 

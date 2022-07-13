@@ -11,13 +11,14 @@ import {
 
 import { Link } from "@mui/material"
 import { observer } from "mobx-react-lite"
-import { ChangeEvent, FC, useEffect, useRef, useState } from "react"
+import { ChangeEvent, FC, useRef } from "react"
 import { EmptyAlbum, Track } from "../Album/Album"
 
 import { useStores } from "../../../hooks/useStores"
 import ethLogo from "../../../images/ethereum-logo.png"
 import { createTrack } from "../../../IPFS"
 
+import { loadMidi } from "../../../actions/file"
 import { toolTip as ToolTip } from "../../../helpers/tootlTip"
 
 const Container = styled.div`
@@ -68,26 +69,11 @@ const TrackItem: FC<{
 }> = observer(({ song, album }) => {
   const audioRef = useRef<HTMLInputElement>(null)
 
+  const stores = useStores()
   const {
     services: { streamer },
     playlist,
-  } = useStores()
-
-  const [type, setType] = useState<string>()
-
-  useEffect(() => {
-    const getType = async () => {
-      if (song.src) {
-        const response = await fetch(song.src)
-        const blob = await response.blob()
-        console.log(await blob.type)
-        setType(blob.type)
-      } else {
-        setType(undefined)
-      }
-    }
-    getType()
-  }, [song.src])
+  } = stores
 
   const update = (song: Track) => {
     const idx = album.ids.indexOf(song.id)
@@ -128,6 +114,7 @@ const TrackItem: FC<{
 
   const openDojo = () => {
     album.editing = song
+    loadMidi(song, stores)
   }
 
   const uploadTrack = (e: ChangeEvent<HTMLInputElement>) => {
@@ -181,7 +168,7 @@ const TrackItem: FC<{
         <UploadFile className="playIcon" onClick={triggerInput} />
       </ToolTip>
 
-      {type && type !== "audio/midi" ? (
+      {song.type && song.type !== "audio/midi" ? (
         <>
           <ToolTip title={"Play track"}>
             <Audiotrack className="playIcon" onClick={handlePlay} />

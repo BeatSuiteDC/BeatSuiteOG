@@ -14,6 +14,7 @@ export interface Track {
   id: number | string
   sample: Sample
   value: string
+  type: string
   hash?: string
   contract?: string
   chainId?: string
@@ -37,6 +38,7 @@ export const EmptyTrack: Track = {
   id: -1,
   sample: DEFAULT_SAMPLE,
   value: DEFAULT_TRACK_VALUE,
+  type: "",
 }
 
 export class EmptyAlbum implements AlbumProps {
@@ -148,6 +150,7 @@ export class EmptyAlbum implements AlbumProps {
         id: uuid(`untitled-${this._tracks}`),
         sample: DEFAULT_SAMPLE,
         value: DEFAULT_TRACK_VALUE,
+        type: "",
       },
     ]
   }
@@ -161,6 +164,7 @@ export class EmptyAlbum implements AlbumProps {
       title: file.name,
       sample: DEFAULT_SAMPLE,
       value: DEFAULT_TRACK_VALUE,
+      type: file.type,
       src,
       id,
     }
@@ -181,6 +185,7 @@ export class EmptyAlbum implements AlbumProps {
       title: name,
       sample: DEFAULT_SAMPLE,
       value: DEFAULT_TRACK_VALUE,
+      type: blob.type,
       src,
       id,
     }

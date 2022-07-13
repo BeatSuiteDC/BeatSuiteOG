@@ -20,7 +20,7 @@ import { useEffect, useState } from "react"
 import { DEFAULT_ALBUM_COVER } from "../../../actions/fakeImage"
 import Opensea from "../../../images/opensea.png"
 import { createTrack, generateHash, IPFS_URL } from "../../../IPFS"
-import { createDoc } from "../../../lib/firebase"
+import { createDoc, editDoc } from "../../../lib/firebase"
 import { AlbumProps, Track } from "../Album/Album"
 import Loading from "../Loading"
 import { SearchBar } from "../SearchBar"
@@ -35,7 +35,7 @@ import YAHNDI from "../../../images/YAHNDI-modified.png"
 export default observer(() => {
   const rootStore = useStores()
   const { user, album, playlist } = rootStore
-  const [loading, setLoading] = useState<string | undefined>()
+  const [loading, setLoading] = useState<string | undefined>(undefined)
   const web3 = useWeb3React()
   const { account } = web3
 
@@ -59,6 +59,7 @@ export default observer(() => {
         }
       })
     )
+    setLoading(undefined)
   }
 
   const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -96,32 +97,45 @@ export default observer(() => {
       console.log({ coverHash })
 
       Promise.all(
-        album.songs.map(async (song) => {
+        album.songs.map(async (song, index) => {
+          let updated: Track = {
+            ...song,
+            cover: album.cover,
+            album: album.title,
+          }
+
           if (song.hash) {
             console.log(`Skipping ${song.title}`)
             setLoading(`Skipping ${song.title}`)
-            return {
-              ...song,
-              cover: album.cover,
-              album: album.title,
-            }
-          }
-          if (song.src) {
+          } else if (song.src) {
             setLoading(`Hashing...`)
-            return await createTrack(song, details)
+            updated = await createTrack(song, details)
+          } else {
+            return
           }
+          album.updateTrack(index, updated)
+          return updated
         })
       ).then((tracks) => {
         setLoading("Storing to Db...")
-        createDoc("Albums", {
-          ...details,
-          creator: account,
-          songs: [...tracks],
-        }).then((res) => {
-          console.log("Album id:", res.id)
-          album.id = res.id
-          setLoading(undefined)
-        })
+        album.id
+          ? editDoc(
+              "Albums",
+              {
+                ...details,
+                songs: [...tracks],
+              },
+              album.id as string
+            ).then((res) => setLoading(undefined))
+          : createDoc("Albums", {
+              ...details,
+              creator: account,
+              songs: [...tracks],
+            }).then((res) => {
+              console.log("Album id:", res.id)
+              album.id = res.id
+              setLoading(undefined)
+            })
       })
     } else {
       alert("connect wallet first")
