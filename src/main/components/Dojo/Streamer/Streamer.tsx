@@ -221,10 +221,6 @@ export default class Streamer {
 
   set volume(level: number) {
     this._volume = level
-
-    if (this.active?.data) {
-      this.active.data.volume = level
-    }
   }
 
   get currentTempo() {

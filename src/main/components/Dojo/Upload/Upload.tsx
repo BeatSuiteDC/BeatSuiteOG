@@ -36,23 +36,29 @@ export default observer(() => {
   const rootStore = useStores()
   const { user, album, playlist } = rootStore
   const [loading, setLoading] = useState<string | undefined>()
-  const { account } = useWeb3React()
+  const web3 = useWeb3React()
+  const { account } = web3
 
   useEffect(() => {
     const info = user.info
-    if (info?.name) {
-      album.artist = info.name
-    }
+    album.artist = info?.name ?? album.artist
   }, [])
 
-  const handleMint = async (e: any) => {
+  const handleMint = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     // album.resetImg()
 
     if (!album.id) {
-      alert("save album first")
       return
     }
-    console.log(album.id)
+
+    Promise.all(
+      album.songs.map(async (song) => {
+        if (!song.contract) {
+          setLoading(`Minting...`)
+        }
+      })
+    )
   }
 
   const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -75,9 +81,6 @@ export default observer(() => {
       }
 
       if (album.cover === DEFAULT_ALBUM_COVER) {
-        // alert("Pick a cover photo first")
-        // setLoading(undefined)
-        // return
         album.cover = YAHNDI
       }
 
@@ -90,10 +93,19 @@ export default observer(() => {
       }
 
       details.cover = IPFS_URL + coverHash
-      console.log({ coverHash }, details.cover)
+      console.log({ coverHash })
 
       Promise.all(
         album.songs.map(async (song) => {
+          if (song.hash) {
+            console.log(`Skipping ${song.title}`)
+            setLoading(`Skipping ${song.title}`)
+            return {
+              ...song,
+              cover: album.cover,
+              album: album.title,
+            }
+          }
           if (song.src) {
             setLoading(`Hashing...`)
             return await createTrack(song, details)

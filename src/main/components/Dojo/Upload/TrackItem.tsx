@@ -11,7 +11,7 @@ import {
 
 import { Link } from "@mui/material"
 import { observer } from "mobx-react-lite"
-import { ChangeEvent, FC, useRef } from "react"
+import { ChangeEvent, FC, useEffect, useRef, useState } from "react"
 import { EmptyAlbum, Track } from "../Album/Album"
 
 import { useStores } from "../../../hooks/useStores"
@@ -56,17 +56,43 @@ const EthLogo = styled.img`
   margin-left: 5px;
 `
 
+const PriceContainer = styled.div`
+  display: flex;
+  alignitems: center;
+  marginleft: 5px;
+`
+
 const TrackItem: FC<{
   song: Track
   album: EmptyAlbum
 }> = observer(({ song, album }) => {
   const audioRef = useRef<HTMLInputElement>(null)
-  const key = Math.floor(Math.random() * 1000)
 
   const {
     services: { streamer },
     playlist,
   } = useStores()
+
+  const [type, setType] = useState<string>()
+
+  useEffect(() => {
+    const getType = async () => {
+      if (song.src) {
+        const response = await fetch(song.src)
+        const blob = await response.blob()
+        console.log(await blob.type)
+        setType(blob.type)
+      } else {
+        setType(undefined)
+      }
+    }
+    getType()
+  }, [song.src])
+
+  const update = (song: Track) => {
+    const idx = album.ids.indexOf(song.id)
+    album.updateTrack(idx, song)
+  }
 
   const handlePlay = () => {
     console.log("playing")
@@ -87,13 +113,16 @@ const TrackItem: FC<{
   const triggerInput = () => {
     audioRef.current?.click()
   }
+
   const triggerHash = async () => {
     if (song.hash !== undefined) {
       // call ipfs remove hash function
+      alert("already hashed")
     } else {
-      const idx = album.ids.indexOf(song.id)
+      console.log("hashing...")
       const track = await createTrack(song, album)
-      album.updateTrack(idx, track)
+      console.log("hash", track.hash)
+      track && update(track)
     }
   }
 
@@ -123,20 +152,17 @@ const TrackItem: FC<{
       return
     }
 
-    if (value < 0.0001) {
-      value = 0.0001
-    }
-
     song.value = value == 0 ? "0.0" : String(value)
+    update(song)
   }
 
   return (
-    <Container key={"track-item-" + song.id}>
+    <Container key={"track-item-" + song.hash ?? song.id}>
       <RemoveCircleOutline className="removeIcon" onClick={handleRemove} />
-      <div style={{ display: "flex", alignItems: "center", marginLeft: "5px" }}>
+      <PriceContainer>
         <EthLogo src={ethLogo} />
         <Value type="text" onChange={handleValue} value={song.value} />
-      </div>
+      </PriceContainer>
 
       <TrackInput
         type="text"
@@ -155,13 +181,18 @@ const TrackItem: FC<{
         <UploadFile className="playIcon" onClick={triggerInput} />
       </ToolTip>
 
-      {song.data ? (
+      {type && type !== "audio/midi" ? (
         <>
-          <Audiotrack className="playIcon" onClick={handlePlay} />
-          <PlaylistAddIcon
-            className="playIcon"
-            onClick={(e) => handleQueue(song)}
-          />
+          <ToolTip title={"Play track"}>
+            <Audiotrack className="playIcon" onClick={handlePlay} />
+          </ToolTip>
+
+          <ToolTip title={"Add to queue"}>
+            <PlaylistAddIcon
+              className="playIcon"
+              onClick={(e) => handleQueue(song)}
+            />
+          </ToolTip>
         </>
       ) : (
         <Link href="/edit">

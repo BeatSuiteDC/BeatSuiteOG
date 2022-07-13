@@ -11,11 +11,12 @@ export interface Track {
   title: string
   cover: string
   duration?: number
-  data?: HTMLMediaElement
   id: number | string
   sample: Sample
   value: string
   hash?: string
+  contract?: string
+  chainId?: string
 }
 
 export interface AlbumProps {
@@ -153,8 +154,7 @@ export class EmptyAlbum implements AlbumProps {
 
   addFromFile(file: File) {
     const src = URL.createObjectURL(file)
-    const data = new Audio(src)
-    const id = Buffer.from(file.name.trim().replace(/\s/g, "")).toString()
+    const id = generateId(file.name)
     const track: Track = {
       album: this.title,
       cover: this.cover,
@@ -162,7 +162,6 @@ export class EmptyAlbum implements AlbumProps {
       sample: DEFAULT_SAMPLE,
       value: DEFAULT_TRACK_VALUE,
       src,
-      data,
       id,
     }
 
@@ -172,11 +171,10 @@ export class EmptyAlbum implements AlbumProps {
 
   addFromMidi(blob: Blob) {
     const src = URL.createObjectURL(blob)
-    const data = new Audio(src)
     const name = this.editing
       ? this.editing.title
       : `midiBanger-${this._tracks}`
-    const id = uuid(name)
+    const id = generateId(name)
     const track: Track = {
       album: this.title,
       cover: this.cover,
@@ -184,7 +182,6 @@ export class EmptyAlbum implements AlbumProps {
       sample: DEFAULT_SAMPLE,
       value: DEFAULT_TRACK_VALUE,
       src,
-      data,
       id,
     }
     this._tracks++
@@ -208,20 +205,9 @@ export class EmptyAlbum implements AlbumProps {
     })
     this.songs = songs
   }
-  // updateTrack(idx: number, file: File) {
-  //   const songs = this.songs
-  //   const song = songs[idx]
+}
 
-  //   const src = URL.createObjectURL(file)
-  //   const data = new Audio(src)
-
-  //   songs.splice(idx, 1, {
-  //     ...song,
-  //     album: this.title,
-  //     title: file.name,
-  //     src,
-  //     data,
-  //   })
-  //   this.songs = songs
-  // }
+const generateId = (source: string) => {
+  const name = source.trim().replace(/\s/g, "")
+  return Buffer.from(uuid(name)).toString()
 }
