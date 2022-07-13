@@ -167,7 +167,7 @@ export default observer(() => {
           {album.songs.map((song: Track) => {
             return (
               <div key={"track-item-" + song.id}>
-                <TrackItem song={song} playlist={playlist} album={album} />
+                <TrackItem song={song} album={album} />
               </div>
             )
           })}

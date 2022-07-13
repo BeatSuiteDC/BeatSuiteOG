@@ -3,32 +3,29 @@ import React, { FC, useState } from "react"
 import { useStores } from "../../../hooks/useStores"
 import CSS, { Container } from "./AudioControlCSS"
 
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive"
-import FastForwardIcon from "@mui/icons-material/FastForward"
-import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline"
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline"
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
-import RestoreIcon from "@mui/icons-material/Restore"
-import SkipNextIcon from "@mui/icons-material/SkipNext"
-import SkipPreviousIcon from "@mui/icons-material/SkipPrevious"
-import ToolTip from "../../../helpers/tootlTip"
+import {
+  AllInclusive,
+  FastForward,
+  PauseCircleOutline,
+  PlayCircleOutline,
+  PlaylistAdd,
+  RepeatOn,
+  RepeatOneOn,
+  Restore,
+  SkipNext,
+  SkipPrevious,
+  UpdateDisabled,
+} from "@mui/icons-material"
+
+import { toolTip as ToolTip } from "../../../helpers/tootlTip"
 
 import { Fade, List, Popper } from "@mui/material"
 import { Box } from "@mui/system"
 import PlaylistPopper from "./PlaylistPopper"
 
-import RepeatOnIcon from "@mui/icons-material/RepeatOn"
-import RepeatOneOnIcon from "@mui/icons-material/RepeatOneOn"
-import UpdateDisabledIcon from "@mui/icons-material/UpdateDisabled"
 import { Loop } from "../Streamer/Looper"
 
-const LoopIcons = [
-  AllInclusiveIcon,
-  RepeatOnIcon,
-  RepeatOneOnIcon,
-  UpdateDisabledIcon,
-]
-
+const LoopIcons = [AllInclusive, RepeatOn, RepeatOneOn, UpdateDisabled]
 const loopToolTips = ["Sampler", "Loop All", "Loop 1", "Loop off"]
 
 const increment = 0.05
@@ -122,14 +119,14 @@ export const TransportPlayer: FC = observer(() => {
           />
         </ToolTip>
         <ToolTip title="Previous">
-          <SkipPreviousIcon
+          <SkipPrevious
             className="seekIcon"
             fontSize="medium"
             onClick={handlePrevious}
           />
         </ToolTip>
         <ToolTip title="Loop back">
-          <RestoreIcon
+          <Restore
             className="seekIcon"
             fontSize="medium"
             onClick={handleRewind}
@@ -138,7 +135,7 @@ export const TransportPlayer: FC = observer(() => {
 
         {streamer.isPlaying ? (
           <ToolTip title="Pause">
-            <PauseCircleOutlineIcon
+            <PauseCircleOutline
               className="playPause"
               fontSize="large"
               onClick={handlePlay}
@@ -146,7 +143,7 @@ export const TransportPlayer: FC = observer(() => {
           </ToolTip>
         ) : (
           <ToolTip title="Play">
-            <PlayCircleOutlineIcon
+            <PlayCircleOutline
               className="playPause"
               fontSize="large"
               onClick={handlePlay}
@@ -154,7 +151,7 @@ export const TransportPlayer: FC = observer(() => {
           </ToolTip>
         )}
         <ToolTip title="Seek">
-          <FastForwardIcon
+          <FastForward
             className="seekIcon"
             fontSize="medium"
             onClick={handleSeek}
@@ -162,7 +159,7 @@ export const TransportPlayer: FC = observer(() => {
         </ToolTip>
 
         <ToolTip title="Skip">
-          <SkipNextIcon
+          <SkipNext
             className="seekIcon"
             fontSize="medium"
             onClick={handleNext}
@@ -170,7 +167,7 @@ export const TransportPlayer: FC = observer(() => {
         </ToolTip>
 
         <ToolTip title="Open queue">
-          <PlaylistAddIcon
+          <PlaylistAdd
             aria-describedby={id}
             className="seekIcon"
             fontSize="medium"

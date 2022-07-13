@@ -27,10 +27,7 @@ const Hero: FC<React.PropsWithChildren<unknown>> = () => {
             overflow="hidden"
             playing={true}
             loop={true}
-            muted={true}
-            onStart={() => {
-              setReady(true)
-            }}
+            onStart={() => setReady(true)}
           />
         </div>
       </div>

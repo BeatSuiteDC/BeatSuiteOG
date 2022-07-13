@@ -12,11 +12,12 @@ export interface Track {
   cover: string
   duration?: number
   data?: HTMLMediaElement
-  file?: File
   id: number | string
   sample: Sample
   value: string
+  hash?: string
 }
+
 export interface AlbumProps {
   cover: string
   title: string
@@ -24,8 +25,8 @@ export interface AlbumProps {
   artist: string
   songs: Track[]
   contract?: string
-  id?: number | string
   value: string
+  id?: number | string
 }
 
 export const EmptyTrack: Track = {
@@ -162,7 +163,6 @@ export class EmptyAlbum implements AlbumProps {
       value: DEFAULT_TRACK_VALUE,
       src,
       data,
-      file,
       id,
     }
 
@@ -198,20 +198,30 @@ export class EmptyAlbum implements AlbumProps {
     this._songs.splice(idx, 1)
   }
 
-  updateTrack(idx: number, file: File) {
+  updateTrack(idx: number, item: Track) {
     const songs = this.songs
     const song = songs[idx]
 
-    const src = URL.createObjectURL(file)
-    const data = new Audio(src)
-
     songs.splice(idx, 1, {
       ...song,
-      album: this.title,
-      title: file.name,
-      src,
-      data,
+      ...item,
     })
     this.songs = songs
   }
+  // updateTrack(idx: number, file: File) {
+  //   const songs = this.songs
+  //   const song = songs[idx]
+
+  //   const src = URL.createObjectURL(file)
+  //   const data = new Audio(src)
+
+  //   songs.splice(idx, 1, {
+  //     ...song,
+  //     album: this.title,
+  //     title: file.name,
+  //     src,
+  //     data,
+  //   })
+  //   this.songs = songs
+  // }
 }

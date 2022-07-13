@@ -1,10 +1,10 @@
 import { Tooltip } from "@mui/material"
 import { FC, ReactElement } from "react"
 
-const toolTip: FC<{ title: string; children: ReactElement<any, any> }> = ({
-  title,
-  children,
-}) => {
+export const toolTip: FC<{
+  title: string
+  children: ReactElement<any, any>
+}> = ({ title, children }) => {
   return (
     <>
       <Tooltip
@@ -18,5 +18,3 @@ const toolTip: FC<{ title: string; children: ReactElement<any, any> }> = ({
     </>
   )
 }
-
-export default toolTip

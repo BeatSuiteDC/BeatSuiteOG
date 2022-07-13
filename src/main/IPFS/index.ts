@@ -42,15 +42,16 @@ export const createTrack = async (song: Track, album: AlbumProps) => {
   if (!song.src) {
     return EmptyTrack
   }
+
   const songHash = await generateHash(song.src)
-  const id = songHash ? songHash : song.id
-  const src = (await IPFS_URL) + songHash
-  console.log({ src })
+  const hash = songHash ? songHash : undefined
+  const src = IPFS_URL + (await songHash)
+  console.log({ hash })
   const track: Track = {
     ...song,
     cover: album.cover,
     album: album.title,
-    id,
+    hash,
     src,
   }
   return track

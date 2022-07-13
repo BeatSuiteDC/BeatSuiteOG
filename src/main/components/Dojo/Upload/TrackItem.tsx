@@ -1,18 +1,24 @@
 import styled from "@emotion/styled"
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
 
-import AudiotrackIcon from "@mui/icons-material/Audiotrack"
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline"
-import UploadFileIcon from "@mui/icons-material/UploadFile"
+import {
+  Audiotrack,
+  AutoFixHigh,
+  CloudUpload,
+  RemoveCircleOutline,
+  UploadFile,
+} from "@mui/icons-material"
 
-import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh"
 import { Link } from "@mui/material"
 import { observer } from "mobx-react-lite"
-import { ChangeEvent, FC, useRef, useState } from "react"
-import Playlist from "../../../../common/playlist/Playlist"
+import { ChangeEvent, FC, useRef } from "react"
 import { EmptyAlbum, Track } from "../Album/Album"
 
+import { useStores } from "../../../hooks/useStores"
 import ethLogo from "../../../images/ethereum-logo.png"
+import { createTrack } from "../../../IPFS"
+
+import { toolTip as ToolTip } from "../../../helpers/tootlTip"
 
 const Container = styled.div`
   border-bottom: 1px solid rgb(67, 67, 67);
@@ -53,16 +59,19 @@ const EthLogo = styled.img`
 const TrackItem: FC<{
   song: Track
   album: EmptyAlbum
-  playlist: Playlist
-}> = observer(({ song, album, playlist }) => {
+}> = observer(({ song, album }) => {
   const audioRef = useRef<HTMLInputElement>(null)
   const key = Math.floor(Math.random() * 1000)
 
-  const [nav, setNav] = useState(false)
+  const {
+    services: { streamer },
+    playlist,
+  } = useStores()
 
   const handlePlay = () => {
     console.log("playing")
-    playlist.setActive(song)
+    streamer.active = song
+    streamer.play()
   }
   const handleQueue = (song: Track) => {
     playlist.addNext(song)
@@ -78,6 +87,15 @@ const TrackItem: FC<{
   const triggerInput = () => {
     audioRef.current?.click()
   }
+  const triggerHash = async () => {
+    if (song.hash !== undefined) {
+      // call ipfs remove hash function
+    } else {
+      const idx = album.ids.indexOf(song.id)
+      const track = await createTrack(song, album)
+      album.updateTrack(idx, track)
+    }
+  }
 
   const openDojo = () => {
     album.editing = song
@@ -85,12 +103,13 @@ const TrackItem: FC<{
 
   const uploadTrack = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.item(0)
+    console.log("** removed **")
     if (file) {
       try {
-        album.updateTrack(key, file)
-        const track = { ...album.songs[key] }
-        playlist.addToQueue(track)
-        console.log("uploaded", track.title)
+        // album.updateTrack(key, file)
+        // const track = { ...album.songs[key] }
+        // playlist.addToQueue(track)
+        // console.log("uploaded", track.title)
       } catch (ex) {
         console.error(ex)
       }
@@ -99,8 +118,13 @@ const TrackItem: FC<{
 
   const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = Number(e.target.value)
+
     if (isNaN(value)) {
       return
+    }
+
+    if (value < 0.0001) {
+      value = 0.0001
     }
 
     song.value = value == 0 ? "0.0" : String(value)
@@ -108,7 +132,7 @@ const TrackItem: FC<{
 
   return (
     <Container key={"track-item-" + song.id}>
-      <RemoveCircleOutlineIcon className="removeIcon" onClick={handleRemove} />
+      <RemoveCircleOutline className="removeIcon" onClick={handleRemove} />
       <div style={{ display: "flex", alignItems: "center", marginLeft: "5px" }}>
         <EthLogo src={ethLogo} />
         <Value type="text" onChange={handleValue} value={song.value} />
@@ -119,11 +143,21 @@ const TrackItem: FC<{
         onChange={(e) => (song.title = e.target.value)}
         value={song.title}
       />
-      <UploadFileIcon className="uploadIcon" onClick={triggerInput} />
+
+      <ToolTip title={"Save track"}>
+        <CloudUpload
+          className={song.hash ? "playIcon" : "uploadIcon"}
+          onClick={triggerHash}
+        />
+      </ToolTip>
+
+      <ToolTip title={"Upload file"}>
+        <UploadFile className="playIcon" onClick={triggerInput} />
+      </ToolTip>
 
       {song.data ? (
         <>
-          <AudiotrackIcon className="playIcon" onClick={handlePlay} />
+          <Audiotrack className="playIcon" onClick={handlePlay} />
           <PlaylistAddIcon
             className="playIcon"
             onClick={(e) => handleQueue(song)}
@@ -131,11 +165,13 @@ const TrackItem: FC<{
         </>
       ) : (
         <Link href="/edit">
-          <AutoFixHighIcon
-            onClick={(e) => openDojo()}
-            id="disabled"
-            className="playIcon"
-          />
+          <ToolTip title={"Open editor"}>
+            <AutoFixHigh
+              onClick={(e) => openDojo()}
+              id="disabled"
+              className="playIcon"
+            />
+          </ToolTip>
         </Link>
       )}
       <input
