@@ -46,7 +46,6 @@ export default observer(() => {
 
   const handleMint = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    // album.resetImg()
 
     if (!album.id) {
       return

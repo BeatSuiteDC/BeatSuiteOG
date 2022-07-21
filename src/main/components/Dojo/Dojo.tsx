@@ -111,7 +111,7 @@ const Dojo = observer(() => {
               </Link>
               <Link
                 aria-current={router.path === "bangers"}
-                underline="none"
+                underline="hover"
                 color="#99badd"
                 onClick={(e) => (router.path = "bangers")}
                 href="#bangers"
@@ -120,7 +120,7 @@ const Dojo = observer(() => {
               </Link>
               <Link
                 aria-current={router.path === "/track"}
-                underline="none"
+                underline="hover"
                 color="#99badd"
                 onClick={(e) => (router.path = "/track")}
                 href="/edit"

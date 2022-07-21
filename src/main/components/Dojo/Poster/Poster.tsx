@@ -1,5 +1,4 @@
-import { observer } from "mobx-react-lite"
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect, useRef, useState } from "react"
 import { useStores } from "../../../hooks/useStores"
 import { AlbumProps } from "../Album/Album"
 import {
@@ -19,6 +18,9 @@ import { useWeb3React } from "@web3-react/core"
 import { DocumentData } from "firebase/firestore"
 import { snapshot } from "../../../lib/firebase"
 
+import { Modal, SxProps, Theme } from "@mui/material"
+import { AlbumPage } from "../Album/Page"
+
 const importAlbum = (doc: DocumentData) => {
   const data = doc.data()
   return {
@@ -29,31 +31,48 @@ const importAlbum = (doc: DocumentData) => {
 
 const Poster: FC = () => {
   const { account, connector } = useWeb3React()
+  const [page, setPage] = useState<AlbumProps | undefined>()
+  const [albums, setAlbums] = useState<AlbumProps[]>([])
 
-  const [albums, setAlbums] = useState<Array<any>>([])
+  const divRef = useRef<HTMLDivElement>(null)
+
+  const [unmount, setUnmount] = useState<null | HTMLDivElement>(null)
 
   useEffect(() => {
     snapshot("Albums", (snap) => {
       setAlbums(snap.docs.map(importAlbum))
-      console.log("albums", albums)
     })
   }, [])
 
   return (
-    <Container>
-      {albums.map((album) => {
-        return (
-          <>
-            <PosterCard album={album} />
-          </>
-        )
-      })}
-    </Container>
+    <div>
+      {page && (
+        <Modal
+          sx={popStyle}
+          open={Boolean(page)}
+          onClose={() => setPage(undefined)}
+        >
+          <AlbumPage album={page} />
+        </Modal>
+      )}
+      <Container ref={divRef}>
+        {albums.map((album) => {
+          return (
+            <>
+              <PosterCard album={album} setPage={setPage} />
+            </>
+          )
+        })}
+      </Container>
+    </div>
   )
 }
 export default Poster
 
-const PosterCard: FC<{ album: AlbumProps }> = observer(({ album }) => {
+const PosterCard: FC<{
+  album: AlbumProps
+  setPage: React.Dispatch<React.SetStateAction<AlbumProps | undefined>>
+}> = ({ album, setPage }) => {
   const {
     services: { streamer },
     playlist,
@@ -69,19 +88,22 @@ const PosterCard: FC<{ album: AlbumProps }> = observer(({ album }) => {
     album.songs.forEach((song) => {
       if (!playlist.inQueue(song)) {
         playlist.addToQueue(song)
-        console.log("song", song)
       }
     })
     streamer.play()
   }
 
+  const handlePage = (e: any) => {
+    setPage(album)
+  }
+
   return (
     <>
-      <CardDiv key={album.id} onClick={handlePlay}>
+      <CardDiv key={album.id} onClick={handlePage}>
         <AlbumImg src={album.cover} />
         <BottomLayer>
           <IconDiv>
-            <PlayPauseIcon>
+            <PlayPauseIcon onClick={handlePlay}>
               {streamer.isPlaying && inQueue() ? (
                 <PauseCircleOutline style={{ margin: "0px 5px 0px 5px" }} />
               ) : (
@@ -97,4 +119,15 @@ const PosterCard: FC<{ album: AlbumProps }> = observer(({ album }) => {
       </CardDiv>
     </>
   )
-})
+}
+
+const popStyle: SxProps<Theme> = {
+  left: "5vw",
+  background: "#676767",
+  borderRadius: "25px",
+  border: "4mm ridge cyan",
+  position: "absolute ",
+  top: "5vh",
+  width: "50vw",
+  height: "50vw",
+}
